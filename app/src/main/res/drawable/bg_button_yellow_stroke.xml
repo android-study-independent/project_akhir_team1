@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <!-- Set the border color and width -->
+            <stroke
+                android:width="3dp"
+                android:color="@color/secondary_yellow"
+                />
+            <corners android:radius="8dp"/>
+            <!-- Set the solid color to fully transparent to remove the fill -->
+            <solid android:color="@color/transparant" />
+        </shape>
+    </item>
+</layer-list>
