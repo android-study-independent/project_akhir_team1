@@ -31,6 +31,7 @@ class CustomButtonFillGreen: AppCompatButton {
         gravity = Gravity.CENTER
         textSize = 14f
         textAlignment = TEXT_ALIGNMENT_CENTER
+        isAllCaps = false
 
     }
     private fun init() {
