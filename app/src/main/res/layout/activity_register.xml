@@ -106,6 +106,7 @@
         app:boxCornerRadiusBottomEnd="10dp"
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopStart="10dp"
+        app:endIconMode="password_toggle"
         style="@style/TextInputLayoutStyle">
 
         <com.example.tanify.custom.CustomEditText
@@ -137,6 +138,7 @@
         app:boxCornerRadiusBottomEnd="10dp"
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopStart="10dp"
+        app:endIconMode="password_toggle"
         style="@style/TextInputLayoutStyle">
 
         <com.example.tanify.custom.CustomEditText
