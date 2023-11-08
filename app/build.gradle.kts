@@ -64,4 +64,5 @@ dependencies {
     implementation("io.coil-kt:coil:2.3.0")
     implementation ("com.squareup.picasso:picasso:2.8")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+
 }
