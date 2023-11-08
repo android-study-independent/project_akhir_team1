@@ -110,32 +110,40 @@
         android:fontFamily="@font/poppins_regular"
         android:textStyle="bold"/>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        >
-
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="32dp"
+        android:gravity="center">
         <View
             android:id="@+id/vGaris"
             android:layout_width="50dp"
             android:layout_height="1dp"
-            android:background="@color/black"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@color/black"/>
 
         <TextView
             android:id="@+id/tvAtau"
+            android:layout_weight="0"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/atau"
-            app:layout_constraintBottom_toBottomOf="@id/vGaris"
-            app:layout_constraintStart_toEndOf="@id/vGaris"
-            app:layout_constraintTop_toTopOf="@id/vGaris" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textAlignment="center"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/atau"/>
+
+        <View
+            android:id="@+id/vGaris2"
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/black"/>
+    </LinearLayout>
 
     <com.example.tanify.custom.CustomButtonFillYellow
         android:layout_width="match_parent"
