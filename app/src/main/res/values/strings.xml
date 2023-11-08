@@ -18,4 +18,13 @@
     <string name="daftar_register">Daftar</string>
     <string name="sudah_punya_akun">Sudah punya akun ?</string>
     <string name="login">Login</string>
+    <string name="slogan_login">Silahkan masukkan sesuai akun anda</string>
+    <string name="masukkan_email_login">Masukkan Email Anda</string>
+    <string name="masukkan_password">Masukkan Password</string>
+    <string name="masukkan_password_login">Masukkan Password Anda</string>
+    <string name="lupa_kata_sandi">lupa kata sandi?</string>
+    <string name="masuk">Masuk</string>
+    <string name="atau">atau</string>
+    <string name="masuk_google_login">Masuk dengan Google</string>
+    <string name="daftar_login">Daftar</string>
 </resources>
