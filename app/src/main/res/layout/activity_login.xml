@@ -48,7 +48,7 @@
         style="@style/TextInputLayoutStyle">
 
         <EditText
-            android:id="@+id/ed_register_nama"
+            android:id="@+id/ed_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:height="50dp"
@@ -80,22 +80,22 @@
         style="@style/TextInputLayoutStyle">
 
         <com.example.tanify.custom.CustomEditText
-            android:id="@+id/ed_register_password"
+            android:id="@+id/ed_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:height="50dp"
             android:textSize="12sp"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
             android:fontFamily="@font/poppins_regular"
             android:hint="@string/masukkan_password_login"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/tvLupaSandi"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/lupa_kata_sandi"
-        android:layout_gravity="right"
+        android:textAlignment="textEnd"
         android:paddingTop="10dp"/>
 
     <com.example.tanify.custom.CustomButtonFillGreen
