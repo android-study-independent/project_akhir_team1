@@ -3,12 +3,13 @@ package com.example.tanify.ui.login
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
-import com.example.tanify.R
 import com.example.tanify.data.api.ApiConfig
+import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.response.LoginResponse
 import com.example.tanify.databinding.ActivityLoginBinding
-import org.json.JSONObject
+import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,19 +54,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun postLogin(email: String, password: String) {
+        val data = LoginData(email, password)
         ApiConfig.instanceRetrofit.postLogin(
-            email, password
+            data
         ).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
                     val accessToken = response.body()?.token
                     val message = response.body()?.message
-                    if (accessToken.isNullOrEmpty() && message.isNullOrEmpty()) {
-                        Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this@LoginActivity, "Data tidak ada", Toast.LENGTH_SHORT)
-                            .show()
-                    }
+                    Log.d(TAG, "onSuccess: $message")
+                    Log.d(TAG, "onSuccess: $accessToken")
+                    showSnackbar(message.toString())
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
@@ -75,5 +74,11 @@ class LoginActivity : AppCompatActivity() {
                 Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
             }
         })
+    }
+
+    private fun showSnackbar(message: String) {
+        val rootView: View = findViewById(android.R.id.content)
+        val snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT)
+        snackbar.show()
     }
 }
