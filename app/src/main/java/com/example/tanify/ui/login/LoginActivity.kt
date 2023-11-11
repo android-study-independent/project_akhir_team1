@@ -1,6 +1,7 @@
 package com.example.tanify.ui.login
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import com.example.tanify.data.api.ApiConfig
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.response.LoginResponse
 import com.example.tanify.databinding.ActivityLoginBinding
+import com.example.tanify.ui.register.RegisterActivity
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
@@ -53,6 +55,10 @@ class LoginActivity : AppCompatActivity() {
 
                 (email.isNotEmpty() && password.isNotEmpty()) -> postLogin(email, password)
             }
+        }
+        binding.btnMasuk.setOnClickListener{
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
     }
 
