@@ -1,9 +1,11 @@
 package com.example.tanify.ui.login
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.tanify.data.api.ApiConfig
 import com.example.tanify.data.data.LoginData
@@ -34,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
         binding.btnMasuk.setOnClickListener {
             val email = binding.edEmail.text.toString()
             val password = binding.edPassword.text.toString()
+            hideKeyboard()
 
             when {
                 email.isEmpty() -> {
@@ -80,5 +83,13 @@ class LoginActivity : AppCompatActivity() {
         val rootView: View = findViewById(android.R.id.content)
         val snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT)
         snackbar.show()
+    }
+
+    private fun hideKeyboard() {
+        val view: View? = currentFocus
+        if (view != null) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 }
