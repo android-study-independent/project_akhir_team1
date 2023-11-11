@@ -10,11 +10,11 @@
     <ImageView
         android:layout_width="375dp"
         android:layout_height="159dp"
-        app:srcCompat="@drawable/logo_tanify"
+        app:srcCompat="@drawable/logo_tanofy_svg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

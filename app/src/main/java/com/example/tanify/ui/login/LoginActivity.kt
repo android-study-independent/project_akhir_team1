@@ -58,10 +58,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun postLogin(email: String, password: String) {
         val data = LoginData(email, password)
+        showLoading(true)
         ApiConfig.instanceRetrofit.postLogin(
             data
         ).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                showLoading(false)
                 if (response.isSuccessful) {
                     val accessToken = response.body()?.token
                     val message = response.body()?.message
@@ -75,6 +77,7 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
+                showLoading(false)
             }
         })
     }
@@ -90,6 +93,14 @@ class LoginActivity : AppCompatActivity() {
         if (view != null) {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean){
+        if (isLoading) {
+            binding.progressCircular.visibility = View.VISIBLE
+        } else {
+            binding.progressCircular.visibility = View.GONE
         }
     }
 }
