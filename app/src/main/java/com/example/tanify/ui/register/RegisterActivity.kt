@@ -10,6 +10,7 @@ import com.example.tanify.data.data.RegisterData
 import com.example.tanify.data.response.RegisterRespons
 import com.example.tanify.databinding.ActivityRegisterBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -91,28 +92,39 @@ class RegisterActivity : AppCompatActivity() {
                                 finish()
                             }, 2000)
                         }
-                        if(response.body()?.error != null){
-                            val error = response.body()?.error
-                            when{
-                                (error?.nama != null)->{
-                                    showSnackbar(error.nama.msg.toString())
-                                    binding.edRegisterNama.requestFocus()
+                    } else {
+                        Log.d("gagal regis ", "================================ 1")
+                        if (response.code() == 400) {
+                            try {
+                                val errorResponse: RegisterRespons? = Gson().fromJson(response.errorBody()?.charStream(), RegisterRespons::class.java)
+                                if (errorResponse != null) {
+                                    val error = errorResponse.error
+                                    when{
+                                        (error?.nama != null)->{
+                                            showSnackbar(error.nama.msg.toString())
+                                            binding.edRegisterNama.requestFocus()
+                                        }
+                                        (error?.email != null)->{
+                                            showSnackbar(error.email.msg.toString())
+                                            binding.edRegisterEmail.requestFocus()
+                                        }
+                                        (error?.password != null)->{
+                                            showSnackbar(error.password.msg.toString())
+                                            binding.edRegisterPassword.requestFocus()
+                                        }
+                                        (error?.konfirmasiPassword != null)->{
+                                            showSnackbar(error.konfirmasiPassword.msg.toString())
+                                            binding.edRegisterConfirmPassword.requestFocus()
+                                        }
+                                    }
+                                } else {
+                                    // Handle jika parsing respons gagal
                                 }
-                                (error?.email != null)->{
-                                    showSnackbar(error.email.msg.toString())
-                                    binding.edRegisterEmail.requestFocus()
-                                }
-                                (error?.password != null)->{
-                                    showSnackbar(error.password.msg.toString())
-                                    binding.edRegisterPassword.requestFocus()
-                                }
-                                (error?.konfirmasiPassword != null)->{
-                                    showSnackbar(error.konfirmasiPassword.msg.toString())
-                                    binding.edRegisterConfirmPassword.requestFocus()
-                                }
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                // Handle kesalahan saat parsing JSON
                             }
                         }
-                    } else {
                         Log.e(TAG, "onFailure: ${response.message()}")
                     }
                 }
