@@ -6,15 +6,14 @@ import com.example.tanify.data.response.LoginResponse
 import com.example.tanify.data.response.RegisterRespons
 import retrofit2.Call
 import retrofit2.http.Body
-import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface ApiService {
 
-    @POST("registrasi")
+    @POST("register")
     fun postRegister(
-        @Body data: LoginData
+        @Body data: RegisterData
     ): Call<RegisterRespons>
 
     @POST("login")
