@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -11,9 +12,12 @@ import android.widget.Toast
 import com.example.tanify.data.api.ApiConfig
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.response.LoginResponse
+import com.example.tanify.data.response.RegisterRespons
 import com.example.tanify.databinding.ActivityLoginBinding
+import com.example.tanify.ui.MainActivity
 import com.example.tanify.ui.register.RegisterActivity
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -76,13 +80,37 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, "onSuccess: $message")
                     Log.d(TAG, "onSuccess: $accessToken")
                     showSnackbar(message.toString())
+                    Handler().postDelayed({
+                        // Buka laman MainActivity dengan mengirimkan token
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        intent.putExtra("accessToken", accessToken)
+                        startActivity(intent)
+
+                        // Akhiri laman login
+                        finish()
+                    }, 1000)
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
+                    if (response.code() == 400) {
+                        try {
+                            val errorResponse: LoginResponse? = Gson().fromJson(response.errorBody()?.charStream(), LoginResponse::class.java)
+                            if (errorResponse != null) {
+                                val error = errorResponse.message
+                                showSnackbar(error.toString())
+                            } else {
+                                // Handle jika parsing respons gagal
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            // Handle kesalahan saat parsing JSON
+                        }
+                    }
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
+
                 showLoading(false)
             }
         })
