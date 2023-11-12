@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
                 (email.isNotEmpty() && password.isNotEmpty()) -> postLogin(email, password)
             }
         }
-        binding.btnMasuk.setOnClickListener{
+        binding.btnRegis.setOnClickListener{
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
