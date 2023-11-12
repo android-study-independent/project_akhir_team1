@@ -1,4 +1,4 @@
-package com.example.tanify.ui.ui.home
+package com.example.tanify.ui.bottomNav.beranda
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

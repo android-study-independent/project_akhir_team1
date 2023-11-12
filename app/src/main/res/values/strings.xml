@@ -27,4 +27,7 @@
     <string name="atau">atau</string>
     <string name="masuk_google_login">Masuk dengan Google</string>
     <string name="daftar_login">Daftar</string>
+    <string name="latitude_0">latitude = 0</string>
+    <string name="longitude_0">longitude = 0</string>
+    <string name="logout">Logout</string>
 </resources>

@@ -154,7 +154,7 @@
         </LinearLayout>
 
         <com.example.tanify.custom.CustomButtonFillYellow
-            android:id="@+id/btn_regis"
+            android:id="@+id/btn_daftar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:height="50dp"

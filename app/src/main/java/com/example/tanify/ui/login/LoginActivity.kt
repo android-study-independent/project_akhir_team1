@@ -2,16 +2,17 @@ package com.example.tanify.ui.login
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
-import com.example.tanify.data.api.ApiConfig
+import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.response.LoginResponse
 import com.example.tanify.databinding.ActivityLoginBinding
+import com.example.tanify.ui.MainActivity
 import com.example.tanify.ui.register.RegisterActivity
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
@@ -21,6 +22,7 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var sharedPref: SharedPreferences
 
     companion object {
         private const val TAG = "LoginActivity"
@@ -30,6 +32,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        sharedPref = getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
 
         setAction()
     }
@@ -56,7 +60,8 @@ class LoginActivity : AppCompatActivity() {
                 (email.isNotEmpty() && password.isNotEmpty()) -> postLogin(email, password)
             }
         }
-        binding.btnRegis.setOnClickListener{
+
+        binding.btnDaftar.setOnClickListener{
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
@@ -76,6 +81,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, "onSuccess: $message")
                     Log.d(TAG, "onSuccess: $accessToken")
                     showSnackbar(message.toString())
+                    handledLogginSuccess(accessToken.toString())
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
@@ -100,6 +106,13 @@ class LoginActivity : AppCompatActivity() {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
+    }
+
+    private fun handledLogginSuccess(token: String) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("token", token)
+        startActivity(intent)
+        finish()
     }
 
     private fun showLoading(isLoading: Boolean){
