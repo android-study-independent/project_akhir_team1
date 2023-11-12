@@ -1,4 +1,4 @@
-package com.example.tanify.data.api
+package com.example.tanify.data.api.tanify
 
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.data.RegisterData

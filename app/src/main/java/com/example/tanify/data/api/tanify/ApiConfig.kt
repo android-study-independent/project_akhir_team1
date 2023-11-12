@@ -1,4 +1,4 @@
-package com.example.tanify.data.api
+package com.example.tanify.data.api.tanify
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
