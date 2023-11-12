@@ -60,6 +60,7 @@ class LoginActivity : AppCompatActivity() {
                 (email.isNotEmpty() && password.isNotEmpty()) -> postLogin(email, password)
             }
         }
+
         binding.btnDaftar.setOnClickListener{
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
