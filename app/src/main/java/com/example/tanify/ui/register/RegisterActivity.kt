@@ -2,11 +2,14 @@ package com.example.tanify.ui.register
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.View
 import com.example.tanify.data.api.ApiConfig
 import com.example.tanify.data.data.RegisterData
 import com.example.tanify.data.response.RegisterRespons
 import com.example.tanify.databinding.ActivityRegisterBinding
+import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,7 +37,6 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.edRegisterEmail.text.toString()
             val password = binding.edRegisterPassword.text.toString()
             val cpassword = binding.edRegisterConfirmPassword.text.toString()
-            Log.d("daftar", "================================ 1 ================================")
 
             when {
                 nama.isEmpty() -> {
@@ -70,18 +72,46 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun actiondaftar(nama: String, email: String, password: String, cpassword: String) {
         val data = RegisterData(nama, email, password, cpassword)
-        // loading
-        Log.d("daftar", "================================ 2 ================================")
+        showLoading(true)
         ApiConfig.instanceRetrofit.postRegister(data)
             .enqueue(object : Callback<RegisterRespons>{
                 override fun onResponse(
                     call: Call<RegisterRespons>,
                     response: Response<RegisterRespons>,
                 ) {
+                    showLoading(false)
                     if (response.isSuccessful) {
-                        val message = response.body()?.message
-                        Log.d(TAG, "onSuccess: $message")
-                        Log.d("tasim", "berhasil : ============================ ")
+                        // jika regis berhasil, maka ada parameter msg
+                        Log.d("berasil ", "================================ 1")
+                        if(response.body()?.message != null){
+                            val message = response.body()?.message
+                            Log.d(TAG, "onSuccess: $message")
+                            showSnackbar(message.toString())
+                            Handler().postDelayed({
+                                finish()
+                            }, 2000)
+                        }
+                        if(response.body()?.error != null){
+                            val error = response.body()?.error
+                            when{
+                                (error?.nama != null)->{
+                                    showSnackbar(error.nama.msg.toString())
+                                    binding.edRegisterNama.requestFocus()
+                                }
+                                (error?.email != null)->{
+                                    showSnackbar(error.email.msg.toString())
+                                    binding.edRegisterEmail.requestFocus()
+                                }
+                                (error?.password != null)->{
+                                    showSnackbar(error.password.msg.toString())
+                                    binding.edRegisterPassword.requestFocus()
+                                }
+                                (error?.konfirmasiPassword != null)->{
+                                    showSnackbar(error.konfirmasiPassword.msg.toString())
+                                    binding.edRegisterConfirmPassword.requestFocus()
+                                }
+                            }
+                        }
                     } else {
                         Log.e(TAG, "onFailure: ${response.message()}")
                     }
@@ -91,5 +121,18 @@ class RegisterActivity : AppCompatActivity() {
                 }
             })
     }
+    private fun showSnackbar(message: String) {
+        val rootView: View = findViewById(android.R.id.content)
+        val snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT)
+        snackbar.show()
+    }
+    private fun showLoading(isLoading: Boolean){
+        if (isLoading) {
+            binding.progressCircular.visibility = View.VISIBLE
+        } else {
+            binding.progressCircular.visibility = View.GONE
+        }
+    }
+
 
 }
