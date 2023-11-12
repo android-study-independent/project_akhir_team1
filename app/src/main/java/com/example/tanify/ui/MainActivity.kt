@@ -22,10 +22,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         sharedPreferences = getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
-
         val token = sharedPreferences.getString("token", "")
-        val navView: BottomNavigationView = binding.navView
         Log.d("token : ", token.toString())
+        val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main2)
         // Passing each menu ID as a set of Ids because each

@@ -46,7 +46,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun getTokenFromPreferences(): String? {
-        sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
         return sharedPreferences.getString("token", "")
     }
 }

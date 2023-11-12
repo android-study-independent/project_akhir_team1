@@ -109,8 +109,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun handledLogginSuccess(token: String) {
+        with(sharedPref.edit()) {
+            putString("token", token)
+            apply()
+        }
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("token", token)
         startActivity(intent)
         finish()
     }

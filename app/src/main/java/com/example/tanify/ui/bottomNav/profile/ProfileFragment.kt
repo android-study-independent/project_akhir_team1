@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ class ProfileFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
 
     companion object {
+        private const val TAG = "ProfileFragment"
         private const val PREF_NAME = "MyAppPreferences"
         private const val TOKEN = "token"
     }
@@ -48,14 +50,21 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         binding.btnLogout.setOnClickListener {
-            val token = sharedPreferences.getString(TOKEN, "")
+            val tokenBefore = sharedPreferences.getString(TOKEN, "")
+            Log.d(TAG, "token sebelum : $tokenBefore")
+
             with(sharedPreferences.edit()) {
                 remove(TOKEN)
                 apply()
+
+                val tokenAfter = sharedPreferences.getString(TOKEN, "")
+                Log.d(TAG, "token setelah : $tokenAfter")
             }
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(requireContext(), LoginActivity::class.java)
+//            startActivity(intent)
         }
     }
 

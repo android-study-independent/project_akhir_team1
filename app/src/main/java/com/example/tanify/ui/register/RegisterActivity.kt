@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
-import com.example.tanify.data.api.ApiConfig
+import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.data.RegisterData
 import com.example.tanify.data.response.RegisterRespons
 import com.example.tanify.databinding.ActivityRegisterBinding
