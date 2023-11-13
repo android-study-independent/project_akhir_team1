@@ -1,6 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/bg_header_profil_green"
+        android:paddingTop="30dp"
+        android:paddingBottom="20dp"
+        tools:ignore="MissingConstraints">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ubah Profil"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_marginLeft="18dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/icon_left_arrow_white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="102dp"
+                android:layout_height="102dp"
+                app:cardCornerRadius="61dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="2dp"
+                    android:layout_marginHorizontal="2dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border_circle_50"
+                    app:cardCornerRadius="60dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icon_user" />
+                </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                app:cardCornerRadius="14dp"
+                app:layout_constraintBottom_toBottomOf="@+id/cardView"
+                app:layout_constraintEnd_toEndOf="@+id/cardView">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/icon_pencil_green"/>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_marginBottom="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Ubah foto profil" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Nama Pengguna"
+            android:textStyle="bold"
+            android:textColor="@color/primary_green"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:boxStrokeWidth="0dp"
+            android:background="@drawable/bg_edittext_slowgreen"
+            style="@style/TextInputLayoutStyle">
+
+            <EditText
+                android:id="@+id/ipt_nama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:height="50dp"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Muktashim Billah"
+                android:hint="@string/hint_nama_lengkap"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Email"
+            android:textStyle="bold"
+            android:textColor="@color/primary_green"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:boxStrokeWidth="0dp"
+            android:background="@drawable/bg_edittext_slowgreen"
+            style="@style/TextInputLayoutStyle">
+
+            <EditText
+                android:id="@+id/ipt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:height="50dp"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="@string/hint_register_email"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.example.tanify.custom.CustomButtonFillGreen
+            android:id="@+id/btn_simpan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:height="50dp"
+            android:layout_marginTop="32dp"
+            android:textAllCaps="false"
+            android:text="Simpan"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_regular"
+            android:textStyle="bold"/>
+
+        <com.example.tanify.custom.CustomButtonStrokeGreen
+            android:id="@+id/btn_batalkan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:height="50dp"
+            android:layout_marginTop="12dp"
+            android:textAllCaps="false"
+            android:text="Batalkan"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_regular"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
