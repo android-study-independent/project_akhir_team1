@@ -3,6 +3,7 @@ package com.example.tanify.ui.bottomNav.beranda
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.tanify.data.api.weather.ApiWeatherConfig
+import com.example.tanify.data.response.CurrentWeatherResponse
 import com.example.tanify.databinding.FragmentHomeBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class BerandaFragment : Fragment() {
 
@@ -23,6 +29,10 @@ class BerandaFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    companion object {
+        private const val TAG = "BerandaFragment"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,12 +64,42 @@ class BerandaFragment : Fragment() {
         _binding = null
     }
 
+    private fun getCurrentWeather(lat: Double, lon: Double){
+        val apiKey = "8b0d3e065374bc20917c353d319277e0"
+        ApiWeatherConfig.intanceRetrofit.getCurrentWeather(lat, lon, apiKey)
+            .enqueue(object : Callback<CurrentWeatherResponse>{
+                override fun onResponse(
+                    call: Call<CurrentWeatherResponse>,
+                    response: Response<CurrentWeatherResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val currentWeather = response.body()
+                        val temprature = currentWeather?.main?.temp
+                        val icon = currentWeather?.weather?.get(0)?.icon
+                        val windSpeed = currentWeather?.wind?.speed
+                        binding.tvTemprature.text = "Suhu : ${temprature}°C"
+                        binding.tvIcon.text = "Kode icon : $icon"
+                        binding.tvWindSpeed.text = "Kecepatan angin : ${windSpeed.toString()}"
+                    }
+                }
+
+                override fun onFailure(call: Call<CurrentWeatherResponse>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+    }
+
     private fun getMyLocation() {
         if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) && checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 location?.let {
-                    binding.tvLat.text = it.latitude.toString()
-                    binding.tvLong.text = it.longitude.toString()
+                    val lat = it.latitude
+                    val lon = it.longitude
+                    Log.d(TAG, "lat = $lat\nlon = $lon")
+                    binding.tvLat.text = lat.toString()
+                    binding.tvLong.text = lon.toString()
+                    getCurrentWeather(lat, lon)
                 }
             }
         } else {
