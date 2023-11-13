@@ -6,4 +6,5 @@
     <color name="secondary_yellow">#FFFFC501</color>
     <color name="transparant">#00000000</color>
     <color name="grey">#FF98A2B3</color>
+    <color name="white_20">#20ffffff</color>
 </resources>
