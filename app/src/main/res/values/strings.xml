@@ -30,4 +30,5 @@
     <string name="latitude_0">latitude = 0</string>
     <string name="longitude_0">longitude = 0</string>
     <string name="logout">Logout</string>
+    <string name="_0">0</string>
 </resources>

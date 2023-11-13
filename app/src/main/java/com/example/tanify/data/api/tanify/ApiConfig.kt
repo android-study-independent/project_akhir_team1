@@ -1,5 +1,6 @@
 package com.example.tanify.data.api.tanify
 
+import com.example.tanify.data.api.service.ApiService
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
