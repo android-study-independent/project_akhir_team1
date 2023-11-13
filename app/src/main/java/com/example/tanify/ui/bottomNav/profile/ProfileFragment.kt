@@ -63,8 +63,12 @@ class ProfileFragment : Fragment() {
                 val tokenAfter = sharedPreferences.getString(TOKEN, "")
                 Log.d(TAG, "token setelah : $tokenAfter")
             }
-//            val intent = Intent(requireContext(), LoginActivity::class.java)
-//            startActivity(intent)
+
+            // Navigasi ke halaman login
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            requireActivity().finish()
         }
     }
 
