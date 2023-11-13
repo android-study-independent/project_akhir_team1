@@ -11,14 +11,15 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_header_profil_green"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/bg_header_profil_green"
         android:paddingTop="40dp"
         android:paddingBottom="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
         <TextView
@@ -28,36 +29,41 @@
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
+
         <androidx.cardview.widget.CardView
+            android:layout_width="62dp"
+            android:layout_height="62dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            app:cardCornerRadius="50dp"
-            android:layout_width="62dp"
-            android:layout_height="62dp">
+            app:cardCornerRadius="50dp">
+
             <androidx.cardview.widget.CardView
-                android:layout_gravity="center"
-                app:cardCornerRadius="50dp"
-                android:background="@drawable/border_circle_50"
                 android:layout_width="60dp"
-                android:layout_height="60dp">
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border_circle_50"
+                app:cardCornerRadius="50dp">
+
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/icon_user"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon_user" />
             </androidx.cardview.widget.CardView>
         </androidx.cardview.widget.CardView>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tasim"
             android:textColor="@color/white"
             android:textSize="17sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="muktasim.elfatih@gmail.com" />
+            android:text="muktasim.elfatih@gmail.com"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
