@@ -8,6 +8,7 @@
     <string name="profile">Profile</string>
     <string name="slogan_register">Daftar akun Tanify mu sekarang!</string>
     <string name="masukkan_nama_register">Masukkan Nama*</string>
+    <string name="masukan_konfirmasi_password">Konfirmasi Password*</string>
     <string name="hint_nama_lengkap">Masukan nama(nama lengkap)</string>
     <string name="hint_register_email">Masukkan email</string>
     <string name="masukkan_email">Masukkan Email*</string>

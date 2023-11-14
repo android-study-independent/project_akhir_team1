@@ -128,7 +128,7 @@
             android:fontFamily="@font/poppins_regular"
             android:layout_marginTop="16dp"
             android:textColor="@color/black"
-            android:text="@string/masukkan_nama_register"/>
+            android:text="@string/masukan_konfirmasi_password"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
