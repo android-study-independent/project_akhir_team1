@@ -28,6 +28,7 @@ interface ApiService {
     fun getCurrentWeather(
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
-        @Query("appid") apiid: String
+        @Query("appid") apiid: String,
+        @Query("units") unit: String="metric"
     ): Call<CurrentWeatherResponse>
 }

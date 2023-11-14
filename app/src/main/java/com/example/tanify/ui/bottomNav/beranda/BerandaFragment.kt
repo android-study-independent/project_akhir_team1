@@ -110,7 +110,7 @@ class BerandaFragment : Fragment() {
 
                         val celciusTemp = kelvinToCelcius(temprature!!)
                        // val setTemp = formattedNumber(temprature!!.toDouble())
-                        Log.d(TAG,"suhu: $celciusTemp")
+                        Log.d(TAG,"suhu: $kota")
                        // setWeatherCardData(setTemp, kota.toString(), description.toString() ,iconCode.toString())
                     }
                 }

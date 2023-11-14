@@ -1,7 +1,11 @@
 package com.example.tanify.helper
 
+import android.util.Log
+
 fun kelvinToCelcius(temprature: Double): Double {
+    Log.d("mhmdazhis","suhu kelvin: $temprature result: ${temprature-273.15}")
     return temprature - 273.15
+
 }
 fun limitDecimalPlaces(value: Double, places: Int): String {
     return String.format("%.${places}f", value)
