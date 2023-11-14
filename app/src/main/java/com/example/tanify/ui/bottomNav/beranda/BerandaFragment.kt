@@ -1,17 +1,20 @@
 package com.example.tanify.ui.bottomNav.beranda
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.tanify.data.api.weather.ApiWeatherConfig
 import com.example.tanify.data.response.CurrentWeatherResponse
 import com.example.tanify.databinding.FragmentHomeBinding
@@ -20,6 +23,8 @@ import com.google.android.gms.location.LocationServices
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.example.tanify.R
+import com.example.tanify.helper.kelvinToCelcius
 
 class BerandaFragment : Fragment() {
 
@@ -45,10 +50,10 @@ class BerandaFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        brandaViewModel.text.observe(viewLifecycleOwner) {
-             textView.text = it
-        }
+//        val textView: TextView = binding.textHome
+//        brandaViewModel.text.observe(viewLifecycleOwner) {
+//             textView.text = it
+//        }
         return root
     }
 
@@ -64,6 +69,28 @@ class BerandaFragment : Fragment() {
         _binding = null
     }
 
+    private fun setWeatherCardData(temprature: String, kota: String, description: String, iconCode: String){
+        val celciusTemprature = kelvinToCelcius(temprature.toDouble())
+        binding.tvTemprature.text = celciusTemprature.toString()
+        binding.tvDaerah.text = kota
+        binding.tvDeskripsi.text = description
+        setWeatherIcon(requireContext(), iconCode, binding.icWeather)
+    }
+
+    private fun setWeatherIcon(context: Context, iconCode: String?, imageView: ImageView){
+        if (!iconCode.isNullOrEmpty()) {
+            val iconUrl = "https://openweathermap.org/img/w/${iconCode}.png"
+
+            Glide.with(context)
+                .load(iconUrl)
+                .into(imageView)
+        } else {
+            Glide.with(context)
+                .load(R.drawable.awan_matahari)
+                .into(imageView)
+        }
+    }
+
     private fun getCurrentWeather(lat: Double, lon: Double){
         val apiKey = "8b0d3e065374bc20917c353d319277e0"
         ApiWeatherConfig.intanceRetrofit.getCurrentWeather(lat, lon, apiKey)
@@ -75,18 +102,17 @@ class BerandaFragment : Fragment() {
                     if (response.isSuccessful) {
                         val currentWeather = response.body()
                         val temprature = currentWeather?.main?.temp
-                        val icon = currentWeather?.weather?.get(0)?.icon
-                        val windSpeed = currentWeather?.wind?.speed
-                        binding.tvTemprature.text = "Suhu : ${temprature}°C"
-                        binding.tvIcon.text = "Kode icon : $icon"
-                        binding.tvWindSpeed.text = "Kecepatan angin : ${windSpeed.toString()}"
+                        val iconCode = currentWeather?.weather?.get(0)?.icon
+                        val kota = currentWeather?.name
+                        val description = currentWeather?.weather?.get(0)?.description
+                        val celciusTemp = "${temprature}°C"
+                        setWeatherCardData(celciusTemp, kota.toString(), description.toString() ,iconCode.toString())
                     }
                 }
 
                 override fun onFailure(call: Call<CurrentWeatherResponse>, t: Throwable) {
-                    TODO("Not yet implemented")
+                    Log.e(TAG, "onFailur: ${t.message}")
                 }
-
             })
     }
 
@@ -97,8 +123,6 @@ class BerandaFragment : Fragment() {
                     val lat = it.latitude
                     val lon = it.longitude
                     Log.d(TAG, "lat = $lat\nlon = $lon")
-                    binding.tvLat.text = lat.toString()
-                    binding.tvLong.text = lon.toString()
                     getCurrentWeather(lat, lon)
                 }
             }
