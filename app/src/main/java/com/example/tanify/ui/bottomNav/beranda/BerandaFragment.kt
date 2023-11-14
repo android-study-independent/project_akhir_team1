@@ -25,6 +25,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.example.tanify.R
 import com.example.tanify.helper.kelvinToCelcius
+import com.example.tanify.helper.limitDecimalPlaces
 
 class BerandaFragment : Fragment() {
 
@@ -105,8 +106,9 @@ class BerandaFragment : Fragment() {
                         val iconCode = currentWeather?.weather?.get(0)?.icon
                         val kota = currentWeather?.name
                         val description = currentWeather?.weather?.get(0)?.description
-                        val celciusTemp = "${temprature}°C"
-                        setWeatherCardData(celciusTemp, kota.toString(), description.toString() ,iconCode.toString())
+                        val celciusTemp = kelvinToCelcius(temprature!!)
+                        val setTemp = limitDecimalPlaces(celciusTemp, 2)
+                        setWeatherCardData(setTemp, kota.toString(), description.toString() ,iconCode.toString())
                     }
                 }
 
