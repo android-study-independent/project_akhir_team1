@@ -5,3 +5,6 @@ fun kelvinToCelcius(temprature: Double?): Double {
     val celcius = temprature?.minus(kelvinScale)
     return celcius?.toDouble() ?: 0.0
 }
+fun limitDecimalPlaces(value: Double, places: Int): String {
+    return String.format("%.${places}f", value)
+}
