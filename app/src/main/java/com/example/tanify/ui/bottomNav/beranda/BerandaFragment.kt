@@ -106,8 +106,10 @@ class BerandaFragment : Fragment() {
                         val iconCode = currentWeather?.weather?.get(0)?.icon
                         val kota = currentWeather?.name
                         val description = currentWeather?.weather?.get(0)?.description
-                        val celciusTemp = kelvinToCelcius(temprature)
-                        val setTemp = limitDecimalPlaces(celciusTemp,2)
+
+                        val celciusTemp = kelvinToCelcius(temprature!!)
+                        val setTemp = limitDecimalPlaces(celciusTemp, 2)
+
                         setWeatherCardData(setTemp, kota.toString(), description.toString() ,iconCode.toString())
                     }
                 }
