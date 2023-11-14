@@ -31,4 +31,7 @@
     <string name="longitude_0">longitude = 0</string>
     <string name="logout">Logout</string>
     <string name="_0">0</string>
+    <string name="_21_c">21°C</string>
+    <string name="bandung">Bandung</string>
+    <string name="hujan_gerimis">Hujan Gerimis</string>
 </resources>
