@@ -10,6 +10,7 @@ fun kelvinToCelcius(temprature: Double): Double {
 fun limitDecimalPlaces(value: Double, places: Int): String {
     return String.format("%.${places}f", value)
 
+
 }
 
 fun formattedNumber(number: Double): String{
@@ -18,4 +19,5 @@ fun formattedNumber(number: Double): String{
     val str = StringBuilder(split[1])
     str.insert(3, ',')
     return "${split[0]}.${str}"
+
 }
