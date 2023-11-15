@@ -43,4 +43,9 @@
     <string name="fitur_utama">Fitur Utama</string>
     <string name="artikel_pilihan">Artikel Pilihan</string>
     <string name="lihat_semua">Lihat semua</string>
+    <string name="batalkan">Batalkan</string>
+    <string name="simpan">Simpan</string>
+    <string name="email">Email</string>
+    <string name="nama_pengguna">Nama Pengguna</string>
+    <string name="ubah_foto_profil">Ubah foto profil</string>
 </resources>
