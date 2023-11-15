@@ -4,5 +4,5 @@ fun kelvinToCelcius(temprature: Double): Double {
     return temprature - 273.15
 }
 fun limitDecimalPlaces(value: Double, places: Int): String {
-    return String.format("%.${places}°C", value)
+    return String.format("%.${places}f", value)
 }
