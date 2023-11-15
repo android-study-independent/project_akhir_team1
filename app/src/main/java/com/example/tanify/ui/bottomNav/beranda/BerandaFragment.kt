@@ -28,7 +28,6 @@ import com.example.tanify.R
 import com.example.tanify.data.data.ArtikelBerandaItemData
 import com.example.tanify.data.data.FiturItemData
 import com.example.tanify.helper.kelvinToCelcius
-import com.example.tanify.helper.limitDecimalPlaces
 import com.example.tanify.ui.bottomNav.beranda.items.ItemBerandaArtikelAdapter
 import com.example.tanify.ui.bottomNav.beranda.items.ItemFiturAdapter
 
