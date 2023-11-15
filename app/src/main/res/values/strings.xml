@@ -34,4 +34,12 @@
     <string name="_21_c">21°C</string>
     <string name="bandung">Bandung</string>
     <string name="hujan_gerimis">Hujan Gerimis</string>
+    <string name="lorem_ipsum1">Lorem ipsum asnos sabo insam masnus kasman</string>
+    <string name="title_lms">LMS</string>
+    <string name="cerah_berawan">Cerah Berawan</string>
+    <string name="hello">Hello,</string>
+    <string name="azizah">Azizah</string>
+    <string name="fitur_utama">Fitur Utama</string>
+    <string name="artikel_pilihan">Artikel Pilihan</string>
+    <string name="lihat_semua">Lihat semua</string>
 </resources>

@@ -11,8 +11,8 @@
         android:id="@+id/cv_border_foto"
         android:layout_width="43dp"
         android:layout_height="43dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         app:cardCornerRadius="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:text="Hello,"
+        android:text="@string/hello"
         android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/cv_border_foto"
         app:layout_constraintTop_toTopOf="@+id/cv_border_foto" />
@@ -41,7 +41,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Azizah"
+        android:text="@string/azizah"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textView2"
@@ -51,7 +51,7 @@
         android:id="@+id/imageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/icon_bell"
         app:layout_constraintBottom_toBottomOf="@+id/cv_border_foto"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,159 +61,186 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="63dp"
-        android:layout_marginHorizontal="32dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="32dp"
+        android:elevation="0dp"
+        android:outlineAmbientShadowColor="@color/white"
+        android:background="@drawable/bg_weather_card"
         android:backgroundTint="@color/white_20"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_border_foto">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ic_weather"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/awan_matahari"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_temprature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@string/_21_c"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ic_weather"
+                app:layout_constraintStart_toEndOf="@+id/ic_weather"
+                app:layout_constraintTop_toTopOf="@+id/ic_weather" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_daerah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textAlignment="textEnd"
+                    android:textSize="14sp"
+                    android:text="@string/bandung"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_deskripsi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="12sp"
+                    android:text="@string/cerah_berawan"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <ImageView
-        android:id="@+id/ic_weather"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@drawable/awan_matahari"
-        app:layout_constraintBottom_toBottomOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
-        app:layout_constraintTop_toTopOf="@+id/cardView"
-        android:layout_marginLeft="18dp"/>
-
-    <TextView
-        android:id="@+id/tv_temprature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/_21_c"
-        android:fontFamily="@font/poppins_bold"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ic_weather"
-        app:layout_constraintStart_toEndOf="@+id/ic_weather"
-        app:layout_constraintTop_toTopOf="@+id/ic_weather"
-        android:layout_marginLeft="10dp"/>
-
-    <TextView
-        android:id="@+id/tv_daerah"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/bandung"
-        android:textColor="@color/white"
-        android:layout_margin="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toTopOf="@+id/cardView" />
-
-    <TextView
-        android:id="@+id/tv_deskripsi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cerah Berawan"
-        android:textColor="@color/white"
-        android:fontFamily="@font/poppins_regular"
-        app:layout_constraintTop_toBottomOf="@+id/tv_daerah"
-        app:layout_constraintRight_toRightOf="@+id/tv_daerah"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="match_parent"
         android:layout_height="530dp"
-        android:layout_marginTop="30dp"
-        app:cardCornerRadius="15dp"
+        android:layout_marginTop="32dp"
         android:orientation="horizontal"
+        app:cardCornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="10dp">
-
-    <TextView
-        android:id="@+id/tv_fitur_utama"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fitur Utama"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_fitur_fitur"
-        android:layout_width="match_parent"
-        android:layout_height="85dp"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical"/>
-
-    </LinearLayout>
-
-        <View
-            android:id="@+id/vGaris"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:background="#d3d3d3"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content">
+            <View
+                android:layout_width="102dp"
+                android:layout_height="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_radius_view"/>
 
-        <TextView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="Artikel Pilihan"
-         android:layout_marginTop="10dp"
-         android:layout_marginLeft="8dp"
-         android:textSize="20dp"
-         android:fontFamily="@font/poppins_semibold"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tv_fitur_utama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/fitur_utama"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-         <Button
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_gravity="end"
-             android:text="Lihat Semua"
-             android:gravity="end|right"
-             android:layout_marginLeft="100dp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_fitur_utama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal" />
 
-     </LinearLayout>
+            </LinearLayout>
 
+            <View
+                android:id="@+id/vGaris"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@color/grey" />
 
-      <androidx.recyclerview.widget.RecyclerView
-          android:layout_width="match_parent"
-          android:layout_height="160dp"
-          android:layout_marginTop="10dp"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16sp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/artikel_pilihan"
+                    android:textSize="22sp"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <com.example.tanify.custom.CustomButtonFillYellow
+                    android:id="@+id/btn_halaman_artikel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/lihat_semua"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_artikel_beranda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"/>
 
-    </LinearLayout>
-
-
-
+            <com.example.tanify.custom.CustomButtonBeranda
+                android:id="@+id/btn_survey_petani"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:drawableEnd="@drawable/ic_survey_petani"/>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-
-
-
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
