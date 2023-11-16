@@ -27,10 +27,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ubah Profil"
+                android:text="@string/ubah_profil"
                 android:textSize="20sp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
+                android:fontFamily="@font/poppins_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -96,6 +97,7 @@
             android:layout_marginBottom="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
             android:textColor="@color/white"
             android:text="@string/ubah_foto_profil" />
     </LinearLayout>
@@ -112,7 +114,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
+            android:textSize="18sp"
+            android:fontFamily="@font/poppins_regular"
             android:text="@string/nama_pengguna"
             android:textStyle="bold"
             android:textColor="@color/primary_green"/>
@@ -132,15 +135,16 @@
                 android:height="50dp"
                 android:textSize="12sp"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Muktashim Billah"
+                android:text="@string/muktashim_billah"
                 android:hint="@string/hint_nama_lengkap"/>
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:text="@string/email"
+            android:fontFamily="@font/poppins_regular"
             android:textStyle="bold"
             android:textColor="@color/primary_green"/>
         <com.google.android.material.textfield.TextInputLayout

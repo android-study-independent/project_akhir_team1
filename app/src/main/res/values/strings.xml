@@ -48,4 +48,8 @@
     <string name="email">Email</string>
     <string name="nama_pengguna">Nama Pengguna</string>
     <string name="ubah_foto_profil">Ubah foto profil</string>
+    <string name="ubah_profil">Ubah Profil</string>
+    <string name="muktashim_billah">Muktashim Billah</string>
+    <string name="password_lama">Password Lama</string>
+    <string name="password_baru">Password Baru</string>
 </resources>
