@@ -85,6 +85,7 @@ class BerandaFragment : Fragment() {
         getMyLocation()
     }
 
+    //On destroy
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
