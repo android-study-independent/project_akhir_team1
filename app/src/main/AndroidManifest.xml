@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
+        <activity
+            android:name=".ui.weather.WeatherActivity"
+            android:exported="false" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDfM4Cgp3X6tGdtH-K4u0oM059DMsy2uMk"/>
