@@ -13,4 +13,7 @@
         <item name="boxStrokeColor">#fff</item>
         <item name="boxStrokeWidth">2dp</item>
     </style>
+    <style name="Theme.RemoveSplashScreenTheme" parent="@style/Base.Theme.Tanify">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>
