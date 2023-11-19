@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tanify.databinding.FragmentProfileBinding
+import com.example.tanify.ui.bottomNav.profile.editProfile.ChangePasswordActivity
+import com.example.tanify.ui.bottomNav.profile.editProfile.ChangeProfileActivity
 import com.example.tanify.ui.login.LoginActivity
 
 class ProfileFragment : Fragment() {
@@ -70,7 +72,12 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btnUbahProfil.setOnClickListener{
-            val intent = Intent(requireContext(), LoginActivity::class.java)
+            val intent = Intent(requireContext(), ChangeProfileActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+        binding.btnUbahPw.setOnClickListener{
+            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
