@@ -24,7 +24,7 @@ class ProfileFragment : Fragment() {
     companion object {
         private const val TAG = "ProfileFragment"
         private const val PREF_NAME = "MyAppPreferences"
-        private const val TOKEN = "token"
+        private var TOKEN = "token"
     }
 
     override fun onCreateView(
@@ -40,10 +40,11 @@ class ProfileFragment : Fragment() {
 
         sharedPreferences = requireContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
-        //val textView: TextView = binding.textNotifications
-        profileViewModel.text.observe(viewLifecycleOwner) {
-            //textView.text = it
-        }
+        //ambil data login
+        TOKEN = sharedPreferences.getString("token", "").toString()
+        Log.d("token", TOKEN)
+
+
         return root
     }
 
@@ -73,12 +74,10 @@ class ProfileFragment : Fragment() {
 
         binding.btnUbahProfil.setOnClickListener{
             val intent = Intent(requireContext(), ChangeProfileActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
         binding.btnUbahPw.setOnClickListener{
             val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
     }
