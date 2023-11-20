@@ -1,16 +1,19 @@
 package com.example.tanify.helper
 
 import android.util.Log
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
-fun kelvinToCelcius(temprature: Double): Double {
-    Log.d("mhmdazhis","suhu kelvin: $temprature result: ${temprature-273.15}")
-    return temprature - 273.15
+fun calculateElapsedTime(createdDateTime: String): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    val currentDate = Calendar.getInstance().time
+    val createdAtDate = sdf.parse(createdDateTime)
 
-}
-fun limitDecimalPlaces(value: Double, places: Int): String {
-    return String.format("%.${places}f", value)
+    val diff = StrictMath.abs(currentDate.time - createdAtDate!!.time)
+    val diffMinutes = (diff / (60 * 1000)) % 60
 
-
+    return "$diffMinutes"
 }
 
 fun formattedNumber(number: Double): String{

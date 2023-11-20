@@ -1,7 +1,9 @@
 package com.example.tanify.ui.bottomNav.beranda
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -16,8 +18,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.tanify.data.api.weather.ApiWeatherConfig
-import com.example.tanify.data.response.CurrentWeatherResponse
 import com.example.tanify.databinding.FragmentHomeBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -25,11 +25,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.example.tanify.R
+import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.data.ArtikelBerandaItemData
 import com.example.tanify.data.data.FiturItemData
-import com.example.tanify.helper.kelvinToCelcius
+import com.example.tanify.data.response.CurrentWeatherResponse
 import com.example.tanify.ui.bottomNav.beranda.items.ItemBerandaArtikelAdapter
 import com.example.tanify.ui.bottomNav.beranda.items.ItemFiturAdapter
+import com.example.tanify.ui.login.LoginActivity
 
 class BerandaFragment : Fragment() {
 
@@ -68,10 +70,12 @@ class BerandaFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.rvFiturUtama.setHasFixedSize(true)
-        binding.rvFiturUtama.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvFiturUtama.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         binding.rvArtikelBeranda.setHasFixedSize(true)
-        binding.rvArtikelBeranda.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvArtikelBeranda.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
 
         addDataToList()
@@ -83,12 +87,55 @@ class BerandaFragment : Fragment() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         getMyLocation()
+        setAction()
     }
 
     //On destroy
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setWeatherCardData(icon: String, temp: Double, city: String, description: String){
+        binding.tvTemprature.text = "${temp.toString()}°"
+        binding.tvDaerah.text = city
+        binding.tvDeskripsi.text = description
+        val iconPath = "http://195.35.32.179:8001/icons/${icon}.svg"
+        Log.d(TAG, iconPath)
+        Glide.with(requireContext())
+            .load(iconPath)
+            .into(binding.icWeather)
+    }
+
+    private fun getCurrentWeather(long: Double?, lat: Double?) {
+        ApiConfig.instanceRetrofit.getCurrentWeather(long!!, lat!!)
+            .enqueue(object : Callback<CurrentWeatherResponse> {
+                override fun onResponse(
+                    call: Call<CurrentWeatherResponse>,
+                    response: Response<CurrentWeatherResponse>
+                ) {
+                    if (response.isSuccessful){
+                        val data = response.body()?.currentWeather
+                        val temp = data?.temperature
+                        val city = data?.location
+                        val icon = data?.icon
+                        val desc = data?.description
+                        setWeatherCardData(icon!!, temp!!, city!!, desc!!)
+                    } else {
+                        Log.e(TAG, "onFailur: ${response.message()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<CurrentWeatherResponse>, t: Throwable) {
+                    Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
+                }
+
+            })
+    }
+
+    private fun setAction() {
+
     }
 
     //Get user lat & lon
@@ -99,6 +146,7 @@ class BerandaFragment : Fragment() {
                     val lat = it.latitude
                     val lon = it.longitude
                     Log.d(TAG, "lat = $lat\nlon = $lon")
+                    getCurrentWeather(lon, lat)
                 }
             }
         } else {
@@ -147,11 +195,23 @@ class BerandaFragment : Fragment() {
         fiturList.add(FiturItemData(R.drawable.lms_icon, "LMS"))
         fiturList.add(FiturItemData(R.drawable.lms_icon, "LMS"))
 
-        artikelList.add(ArtikelBerandaItemData(R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
-                "dengan metode ini..."))
-        artikelList.add(ArtikelBerandaItemData(R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
-                "dengan metode ini..."))
-        artikelList.add(ArtikelBerandaItemData(R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
-                "dengan metode ini..."))
+        artikelList.add(
+            ArtikelBerandaItemData(
+                R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
+                        "dengan metode ini..."
+            )
+        )
+        artikelList.add(
+            ArtikelBerandaItemData(
+                R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
+                        "dengan metode ini..."
+            )
+        )
+        artikelList.add(
+            ArtikelBerandaItemData(
+                R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
+                        "dengan metode ini..."
+            )
+        )
     }
 }
