@@ -22,7 +22,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:src="@drawable/foto_profile" />
+            android:src="@drawable/foto_profile"
+            tools:ignore="MissingClass" />
 
     </androidx.cardview.widget.CardView>
 
