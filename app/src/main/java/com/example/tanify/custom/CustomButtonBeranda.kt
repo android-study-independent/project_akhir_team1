@@ -33,6 +33,11 @@ class CustomButtonBeranda: AppCompatButton {
         textAlignment = TEXT_ALIGNMENT_TEXT_START
         isAllCaps = false
     }
+
+    private fun Int.dpToPx(context: Context): Int {
+        val density = context.resources.displayMetrics.density
+        return (this * density).toInt()
+    }
     private fun init() {
         txtColor = ContextCompat.getColor(context, android.R.color.background_light)
         enabledBackground = ContextCompat.getDrawable(context, R.drawable.bg_button_green_ennabled) as Drawable
