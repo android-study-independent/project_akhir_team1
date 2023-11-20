@@ -52,4 +52,21 @@
     <string name="muktashim_billah">Muktashim Billah</string>
     <string name="password_lama">Password Lama</string>
     <string name="password_baru">Password Baru</string>
+    <string name="cuaca">Cuaca Hari Ini</string>
+    <string name="jakut">Jakarta Utara</string>
+    <string name="tanggal">Jumat, 26 Agustus 2022</string>
+    <string name="derajat">30 C</string>
+    <string name="waterdrop">70%</string>
+    <string name="jarak">5 KM/J</string>
+    <string name="perkiraan_cuaca_5_hari_kedepan">Perkiraan Cuaca 5 Hari Kedepan</string>
+    <string name="berkabut">Berkabut</string>
+    <string name="sabtu">Sabtu</string>
+    <string name="cerah_panas">Cerah Panas</string>
+    <string name="hujan_badai">Hujan Badai</string>
+    <string name="minggu">Minggu</string>
+    <string name="senin">Senin</string>
+    <string name="selasa">Selasa</string>
+    <string name="rabu">Rabu</string>
+    <string name="kamis">Kamis</string>
+
 </resources>
