@@ -35,4 +35,21 @@
     <string name="_21_c">21°C</string>
     <string name="bandung">Bandung</string>
     <string name="hujan_gerimis">Hujan Gerimis</string>
+    <string name="lorem_ipsum1">Lorem ipsum asnos sabo insam masnus kasman</string>
+    <string name="title_lms">LMS</string>
+    <string name="cerah_berawan">Cerah Berawan</string>
+    <string name="hello">Hello,</string>
+    <string name="azizah">Azizah</string>
+    <string name="fitur_utama">Fitur Utama</string>
+    <string name="artikel_pilihan">Artikel Pilihan</string>
+    <string name="lihat_semua">Lihat semua</string>
+    <string name="batalkan">Batalkan</string>
+    <string name="simpan">Simpan</string>
+    <string name="email">Email</string>
+    <string name="nama_pengguna">Nama Pengguna</string>
+    <string name="ubah_foto_profil">Ubah foto profil</string>
+    <string name="ubah_profil">Ubah Profil</string>
+    <string name="muktashim_billah">Muktashim Billah</string>
+    <string name="password_lama">Password Lama</string>
+    <string name="password_baru">Password Baru</string>
 </resources>

@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.tanify.data.api.weather.ApiWeatherConfig
 import com.example.tanify.data.response.CurrentWeatherResponse
@@ -24,14 +25,18 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.example.tanify.R
-import com.example.tanify.helper.formattedNumber
+import com.example.tanify.data.data.ArtikelBerandaItemData
+import com.example.tanify.data.data.FiturItemData
 import com.example.tanify.helper.kelvinToCelcius
-import com.example.tanify.helper.limitDecimalPlaces
+import com.example.tanify.ui.bottomNav.beranda.items.ItemBerandaArtikelAdapter
+import com.example.tanify.ui.bottomNav.beranda.items.ItemFiturAdapter
 
 class BerandaFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val fiturList = ArrayList<FiturItemData>()
+    private val artikelList = ArrayList<ArtikelBerandaItemData>()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -62,65 +67,31 @@ class BerandaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.rvFiturUtama.setHasFixedSize(true)
+        binding.rvFiturUtama.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        binding.rvArtikelBeranda.setHasFixedSize(true)
+        binding.rvArtikelBeranda.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+
+        addDataToList()
+        val adapterRvFitur = ItemFiturAdapter(fiturList)
+        binding.rvFiturUtama.adapter = adapterRvFitur
+
+        val adapterRvArtikel = ItemBerandaArtikelAdapter(artikelList)
+        binding.rvArtikelBeranda.adapter = adapterRvArtikel
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         getMyLocation()
     }
 
+    //On destroy
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    private fun setWeatherCardData(temprature: String, kota: String, description: String, iconCode: String){
-        val celciusTemprature = kelvinToCelcius(temprature.toDouble())
-        binding.tvTemprature.text = celciusTemprature.toString()
-        binding.tvDaerah.text = kota
-        binding.tvDeskripsi.text = description
-        setWeatherIcon(requireContext(), iconCode, binding.icWeather)
-    }
-
-    private fun setWeatherIcon(context: Context, iconCode: String?, imageView: ImageView){
-        if (!iconCode.isNullOrEmpty()) {
-            val iconUrl = "https://openweathermap.org/img/w/${iconCode}.png"
-
-            Glide.with(context)
-                .load(iconUrl)
-                .into(imageView)
-        } else {
-            Glide.with(context)
-                .load(R.drawable.awan_matahari)
-                .into(imageView)
-        }
-    }
-
-    private fun getCurrentWeather(lat: Double, lon: Double){
-        val apiKey = "8b0d3e065374bc20917c353d319277e0"
-        ApiWeatherConfig.intanceRetrofit.getCurrentWeather(lat, lon, apiKey)
-            .enqueue(object : Callback<CurrentWeatherResponse>{
-                override fun onResponse(
-                    call: Call<CurrentWeatherResponse>,
-                    response: Response<CurrentWeatherResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        val currentWeather = response.body()
-                        val temprature = currentWeather?.main?.temp
-                        val iconCode = currentWeather?.weather?.get(0)?.icon
-                        val kota = currentWeather?.name
-                        val description = currentWeather?.weather?.get(0)?.description
-
-                        val celciusTemp = kelvinToCelcius(temprature!!)
-                       // val setTemp = formattedNumber(temprature!!.toDouble())
-                        Log.d(TAG,"suhu: $kota")
-                       // setWeatherCardData(setTemp, kota.toString(), description.toString() ,iconCode.toString())
-                    }
-                }
-
-                override fun onFailure(call: Call<CurrentWeatherResponse>, t: Throwable) {
-                    Log.e(TAG, "onFailur: ${t.message}")
-                }
-            })
-    }
-
+    //Get user lat & lon
     private fun getMyLocation() {
         if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) && checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
@@ -128,7 +99,6 @@ class BerandaFragment : Fragment() {
                     val lat = it.latitude
                     val lon = it.longitude
                     Log.d(TAG, "lat = $lat\nlon = $lon")
-                    getCurrentWeather(lat, lon)
                 }
             }
         } else {
@@ -141,6 +111,7 @@ class BerandaFragment : Fragment() {
         }
     }
 
+    //User permission request
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
@@ -161,10 +132,26 @@ class BerandaFragment : Fragment() {
                 }
             }
         }
+
+    //User permission checker
     private fun checkPermission(permission: String): Boolean {
         return ContextCompat.checkSelfPermission(
             requireContext(),
             permission
         ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun addDataToList() {
+
+        fiturList.add(FiturItemData(R.drawable.lms_icon, "LMS"))
+        fiturList.add(FiturItemData(R.drawable.lms_icon, "LMS"))
+        fiturList.add(FiturItemData(R.drawable.lms_icon, "LMS"))
+
+        artikelList.add(ArtikelBerandaItemData(R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
+                "dengan metode ini..."))
+        artikelList.add(ArtikelBerandaItemData(R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
+                "dengan metode ini..."))
+        artikelList.add(ArtikelBerandaItemData(R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
+                "dengan metode ini..."))
     }
 }

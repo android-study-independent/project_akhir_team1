@@ -10,24 +10,37 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Tanify"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
+        <activity
+            android:name=".ui.weather.WeatherActivity"
+            android:exported="false" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDfM4Cgp3X6tGdtH-K4u0oM059DMsy2uMk"/>
-
+        <activity
+            android:name=".ui.bottomNav.profile.editProfile.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.bottomNav.profile.editProfile.ChangeProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.artikel.DetailArtikelActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.artikel.ArtikelActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.splashScreen.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

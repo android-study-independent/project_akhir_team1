@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tanify.databinding.FragmentProfileBinding
+import com.example.tanify.ui.bottomNav.profile.editProfile.ChangePasswordActivity
+import com.example.tanify.ui.bottomNav.profile.editProfile.ChangeProfileActivity
 import com.example.tanify.ui.login.LoginActivity
 
 class ProfileFragment : Fragment() {
@@ -22,7 +24,7 @@ class ProfileFragment : Fragment() {
     companion object {
         private const val TAG = "ProfileFragment"
         private const val PREF_NAME = "MyAppPreferences"
-        private const val TOKEN = "token"
+        private var TOKEN = "token"
     }
 
     override fun onCreateView(
@@ -38,10 +40,11 @@ class ProfileFragment : Fragment() {
 
         sharedPreferences = requireContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
-        //val textView: TextView = binding.textNotifications
-        profileViewModel.text.observe(viewLifecycleOwner) {
-            //textView.text = it
-        }
+        //ambil data login
+        TOKEN = sharedPreferences.getString("token", "").toString()
+        Log.d("token", TOKEN)
+
+
         return root
     }
 
@@ -70,8 +73,11 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btnUbahProfil.setOnClickListener{
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            val intent = Intent(requireContext(), ChangeProfileActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btnUbahPw.setOnClickListener{
+            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
             startActivity(intent)
         }
     }
