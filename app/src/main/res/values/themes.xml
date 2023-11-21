@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.Tanify" parent="Base.Theme.Tanify" />
+    
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator" >
+        <item name="android:color">@color/transparant</item>
+    </style>
+    <style name="App.Costum.IndicatorItem" parent="Widget.Material3.Button.IconButton.Filled">
+        <item name="android:color">@color/primary_green</item>
+    </style>
 </resources>

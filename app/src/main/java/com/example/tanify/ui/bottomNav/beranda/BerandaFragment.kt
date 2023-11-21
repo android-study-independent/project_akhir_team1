@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -32,6 +33,7 @@ import com.example.tanify.data.response.CurrentWeatherResponse
 import com.example.tanify.ui.bottomNav.beranda.items.ItemBerandaArtikelAdapter
 import com.example.tanify.ui.bottomNav.beranda.items.ItemFiturAdapter
 import com.example.tanify.ui.login.LoginActivity
+import com.squareup.picasso.Picasso
 
 class BerandaFragment : Fragment() {
 
@@ -69,9 +71,9 @@ class BerandaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvFiturUtama.setHasFixedSize(true)
-        binding.rvFiturUtama.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        binding.rvFiturUtama.setHasFixedSize(true)
+//        binding.rvFiturUtama.layoutManager =
+//            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         binding.rvArtikelBeranda.setHasFixedSize(true)
         binding.rvArtikelBeranda.layoutManager =
@@ -79,8 +81,8 @@ class BerandaFragment : Fragment() {
 
 
         addDataToList()
-        val adapterRvFitur = ItemFiturAdapter(fiturList)
-        binding.rvFiturUtama.adapter = adapterRvFitur
+//        val adapterRvFitur = ItemFiturAdapter(fiturList)
+//        binding.rvFiturUtama.adapter = adapterRvFitur
 
         val adapterRvArtikel = ItemBerandaArtikelAdapter(artikelList)
         binding.rvArtikelBeranda.adapter = adapterRvArtikel
@@ -101,11 +103,13 @@ class BerandaFragment : Fragment() {
         binding.tvTemprature.text = "${temp.toString()}°"
         binding.tvDaerah.text = city
         binding.tvDeskripsi.text = description
-        val iconPath = "http://195.35.32.179:8001/icons/${icon}.svg"
-        Log.d(TAG, iconPath)
-        Glide.with(requireContext())
-            .load(iconPath)
-            .into(binding.icWeather)
+        //val path = buildIconPath(icon)
+        Log.d(TAG, icon)
+        Picasso.get().load(icon).into(binding.icWeather)
+    }
+
+    private fun buildIconPath(iconPath: String): String{
+        return "http://195.35.32.179:8001${iconPath}"
     }
 
     private fun getCurrentWeather(long: Double?, lat: Double?) {
@@ -117,11 +121,11 @@ class BerandaFragment : Fragment() {
                 ) {
                     if (response.isSuccessful){
                         val data = response.body()?.currentWeather
-                        val temp = data?.temperature
-                        val city = data?.location
-                        val icon = data?.icon
-                        val desc = data?.description
-                        setWeatherCardData(icon!!, temp!!, city!!, desc!!)
+                        val temp = data?.temperature ?: 0.0
+                        val city = data?.location ?: "none"
+                        val icon = "http://195.35.32.179:8001/icons/04d.svg"
+                        val desc = data?.description ?: "none"
+                        setWeatherCardData(icon, temp, city, desc)
                     } else {
                         Log.e(TAG, "onFailur: ${response.message()}")
                     }
@@ -130,12 +134,13 @@ class BerandaFragment : Fragment() {
                 override fun onFailure(call: Call<CurrentWeatherResponse>, t: Throwable) {
                     Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
                 }
-
             })
     }
 
     private fun setAction() {
-
+        binding.btnFiturLms.setOnClickListener {
+            Toast.makeText(requireContext(), "Fitur dalam pengembangan!", Toast.LENGTH_SHORT).show()
+        }
     }
 
     //Get user lat & lon
@@ -191,8 +196,6 @@ class BerandaFragment : Fragment() {
 
     private fun addDataToList() {
 
-        fiturList.add(FiturItemData(R.drawable.lms_icon, "LMS"))
-        fiturList.add(FiturItemData(R.drawable.lms_icon, "LMS"))
         fiturList.add(FiturItemData(R.drawable.lms_icon, "LMS"))
 
         artikelList.add(
