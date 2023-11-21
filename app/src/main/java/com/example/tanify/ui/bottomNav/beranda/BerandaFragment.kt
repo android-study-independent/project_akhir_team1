@@ -33,6 +33,7 @@ import com.example.tanify.data.response.CurrentWeatherResponse
 import com.example.tanify.ui.bottomNav.beranda.items.ItemBerandaArtikelAdapter
 import com.example.tanify.ui.bottomNav.beranda.items.ItemFiturAdapter
 import com.example.tanify.ui.login.LoginActivity
+import com.example.tanify.ui.weather.WeatherActivity
 import com.squareup.picasso.Picasso
 
 class BerandaFragment : Fragment() {
@@ -89,9 +90,7 @@ class BerandaFragment : Fragment() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         getMyLocation()
-        setAction()
     }
-
     //On destroy
     override fun onDestroyView() {
         super.onDestroyView()
@@ -137,9 +136,15 @@ class BerandaFragment : Fragment() {
             })
     }
 
-    private fun setAction() {
+    private fun setAction(lat: Double, long: Double) {
         binding.btnFiturLms.setOnClickListener {
             Toast.makeText(requireContext(), "Fitur dalam pengembangan!", Toast.LENGTH_SHORT).show()
+        }
+        binding.cardViewWeather.setOnClickListener {
+            val intent = Intent(requireContext(), WeatherActivity::class.java)
+            intent.putExtra("latitude", lat)
+            intent.putExtra("longitude", long)
+            startActivity(intent)
         }
     }
 
@@ -152,6 +157,9 @@ class BerandaFragment : Fragment() {
                     val lon = it.longitude
                     Log.d(TAG, "lat = $lat\nlon = $lon")
                     getCurrentWeather(lon, lat)
+                    setAction(lat, lon)
+                } ?: run {
+                    Log.e(TAG, "Last location is null")
                 }
             }
         } else {

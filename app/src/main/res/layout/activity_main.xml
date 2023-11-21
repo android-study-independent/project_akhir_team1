@@ -16,7 +16,6 @@
         android:background="@drawable/bg_bottom_navigation"
         android:clipChildren="false"
         android:elevation="8dp"
-        fil
         app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
