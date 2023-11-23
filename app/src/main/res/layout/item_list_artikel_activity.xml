@@ -1,10 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:cardCornerRadius="10dp"
-    android:layout_margin="8dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+    
+    <ImageView
+        android:id="@+id/iv_listartikel"
+        android:layout_width="95dp"
+        android:layout_height="103dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/foto_list_artikel"/>
+
+    <TextView
+        android:id="@+id/tv_namapembuat_artikel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="wilson"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toRightOf="@+id/iv_listartikel"
+        app:layout_constraintTop_toTopOf="@+id/iv_listartikel" />
+
+    <TextView
+        android:id="@+id/tv_tanggal_artikel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="31 Oktober 2023"
+        android:layout_marginLeft="47dp"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_namapembuat_artikel"
+        app:layout_constraintTop_toTopOf="@+id/tv_namapembuat_artikel" />
+
+    <TextView
+        android:id="@+id/tv_judul_artikel"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:maxLines="2"
+        android:text="Optimalkan Pertumbuhan Padi dengan 5 Tips Efektif"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tv_namapembuat_artikel"
+        app:layout_constraintTop_toBottomOf="@+id/tv_namapembuat_artikel"
+        tools:ignore="TextSizeCheck" />
+
+    <TextView
+        android:id="@+id/deskripsi_list_artikel"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_judul_artikel"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_judul_artikel"
+        android:text="Optimalkan pertumbuhan padi secara efektif dengan beberapa tips yang sudah diberikan"
+        android:textSize="10sp"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_marginTop="3dp"
+        android:ellipsize="end"
+        android:maxLines="2"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@+id/iv_listartikel"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="11dp"
+        android:background="@android:color/darker_gray"/>
 
 
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
