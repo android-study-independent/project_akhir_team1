@@ -54,11 +54,7 @@
     <string name="password_baru">Password Baru</string>
     <string name="cuaca">Cuaca Hari Ini</string>
     <string name="jakut">Jakarta Utara</string>
-<<<<<<< HEAD
     <string name="tanggal">26 Agustus 2022</string>
-=======
-    <string name="tanggal">Jumat, 26 Agustus 2022</string>
->>>>>>> 859f870036639e54c5e6c13090cfc13f47975cdc
     <string name="derajat">30 C</string>
     <string name="waterdrop">70%</string>
     <string name="jarak">5 KM/J</string>
