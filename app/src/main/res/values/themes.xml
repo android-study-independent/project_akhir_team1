@@ -3,7 +3,15 @@
     <style name="Base.Theme.Tanify" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@color/primary_green</item>
     </style>
 
     <style name="Theme.Tanify" parent="Base.Theme.Tanify" />
+    
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator" >
+        <item name="android:color">@color/transparant</item>
+    </style>
+    <style name="App.Costum.IndicatorItem" parent="Widget.Material3.Button.IconButton.Filled">
+        <item name="android:color">@color/primary_green</item>
+    </style>
 </resources>

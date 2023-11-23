@@ -5,6 +5,23 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
+
+fun formatDate(inputDateString: String): String {
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    val date = inputFormat.parse(inputDateString)
+
+    val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+    return outputFormat.format(date!!)
+}
+
+fun getDayFromDate(dateString: String): String {
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    val date = inputFormat.parse(dateString)
+
+    val outputFormat = SimpleDateFormat("EEEE", Locale.getDefault())
+    return outputFormat.format(date!!)
+}
+
 fun calculateElapsedTime(createdDateTime: String): String {
     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
     val currentDate = Calendar.getInstance().time
@@ -23,4 +40,9 @@ fun formattedNumber(number: Double): String{
     str.insert(3, ',')
     return "${split[0]}.${str}"
 
+}
+
+fun weatherFormattedNumber(number: Double): String {
+    val formattedNumber = number.toInt().toString()
+    return formattedNumber
 }

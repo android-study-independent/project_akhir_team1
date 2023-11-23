@@ -57,7 +57,7 @@
                     android:layout_height="212dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginHorizontal="24dp"
-                    app:cardCornerRadius="10dp">
+                    app:cardCornerRadius="30dp">
 
                     <ImageView
                         android:id="@+id/image_view_poster"
@@ -175,6 +175,15 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/btn_font_size"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_survey_petani"
+                    app:layout_constraintEnd_toStartOf="@id/btn_share_network"
+                    app:layout_constraintTop_toTopOf="@+id/btn_share_network"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_share_network"/>
+
+                <ImageView
                     android:id="@+id/btn_share_network"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
@@ -193,7 +202,7 @@
                 android:layout_marginTop="12dp"
                 android:textAlignment="inherit"
                 android:fontFamily="@font/poppins_regular"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:text="@string/contoh_konten_artikel" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
