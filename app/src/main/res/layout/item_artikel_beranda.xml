@@ -2,10 +2,10 @@
 <com.google.android.material.circularreveal.cardview.CircularRevealCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="255dp"
+    android:layout_width="match_parent"
     app:cardBackgroundColor="@color/white"
-    android:layout_marginEnd="8dp"
-    android:layout_height="163dp">
+    android:layout_marginBottom="20dp"
+    android:layout_height="218dp">
     
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,29 +14,58 @@
         <ImageView
             android:id="@+id/iv_poster_artikel_beranda"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:scaleType="centerInside"
+            android:layout_height="149dp"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/unsplash_poster"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:srcCompat="@tools:sample/backgrounds/scenic"/>
+
+        <TextView
+            android:id="@+id/type_artikel"
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="16dp"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:text="@string/artikel"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:background="@drawable/bg_blurr_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SmallSp" />
 
         <TextView
             android:id="@+id/tv_title_poster_beranda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/poppins_regular"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins_semibold"
             android:maxLines="2"
             android:text="@string/lorem_ipsum1"
             android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/iv_poster"
-            app:layout_constraintStart_toStartOf="@+id/iv_poster"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_poster_artikel_beranda" />
+
+        <TextView
+            android:id="@+id/tv_tanggal_artikel_home_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="-16dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/tanggal"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_poster_beranda" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.circularreveal.cardview.CircularRevealCardView>

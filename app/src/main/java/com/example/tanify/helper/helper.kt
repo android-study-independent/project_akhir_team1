@@ -41,3 +41,8 @@ fun formattedNumber(number: Double): String{
     return "${split[0]}.${str}"
 
 }
+
+fun weatherFormattedNumber(number: Double): String {
+    val formattedNumber = number.toInt().toString()
+    return formattedNumber
+}

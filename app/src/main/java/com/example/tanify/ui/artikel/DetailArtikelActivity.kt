@@ -8,6 +8,7 @@ import android.view.View
 import com.example.tanify.R
 import com.example.tanify.databinding.ActivityDetailArtikelBinding
 
+@Suppress("DEPRECATION")
 class DetailArtikelActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailArtikelBinding
@@ -57,6 +58,9 @@ class DetailArtikelActivity : AppCompatActivity() {
         binding.btnBackCollapse.setOnClickListener {
             onBackPressed()
         }
+        binding.btnFontSize.setOnClickListener {
+            changeTextSize()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -66,6 +70,18 @@ class DetailArtikelActivity : AppCompatActivity() {
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun changeTextSize(){
+        val desc = binding.tvDescription
+        val currentSize = desc.textSize
+
+        val spSize = currentSize/resources.displayMetrics.scaledDensity
+        if (spSize == 12f) {
+            desc.textSize = 14f
+        } else {
+            desc.textSize = 12f
         }
     }
 }

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -30,11 +31,16 @@ import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.data.ArtikelBerandaItemData
 import com.example.tanify.data.data.FiturItemData
 import com.example.tanify.data.response.CurrentWeatherResponse
+import com.example.tanify.helper.weatherFormattedNumber
 import com.example.tanify.ui.bottomNav.beranda.items.ItemBerandaArtikelAdapter
 import com.example.tanify.ui.bottomNav.beranda.items.ItemFiturAdapter
 import com.example.tanify.ui.login.LoginActivity
 import com.example.tanify.ui.weather.WeatherActivity
 import com.squareup.picasso.Picasso
+import android.view.Window;
+import android.view.WindowInsets
+import android.view.WindowManager
+import com.example.tanify.ui.artikel.ArtikelActivity
 
 class BerandaFragment : Fragment() {
 
@@ -42,6 +48,8 @@ class BerandaFragment : Fragment() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val fiturList = ArrayList<FiturItemData>()
     private val artikelList = ArrayList<ArtikelBerandaItemData>()
+
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -78,7 +86,7 @@ class BerandaFragment : Fragment() {
 
         binding.rvArtikelBeranda.setHasFixedSize(true)
         binding.rvArtikelBeranda.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
 
         addDataToList()
@@ -90,6 +98,9 @@ class BerandaFragment : Fragment() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         getMyLocation()
+        setAction()
+//        getCurrentWeather(112.7747167,-7.2751638)
+//        setStatusBar()
     }
     //On destroy
     override fun onDestroyView() {
@@ -99,12 +110,14 @@ class BerandaFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setWeatherCardData(icon: String, temp: Double, city: String, description: String){
-        binding.tvTemprature.text = "${temp.toString()}°"
+        Log.d(TAG, weatherFormattedNumber(temp))
+        binding.tvTemprature.text = "${weatherFormattedNumber(temp)}°"
         binding.tvDaerah.text = city
         binding.tvDeskripsi.text = description
+        val iconPath = buildIconPath(icon)
         //val path = buildIconPath(icon)
-        Log.d(TAG, icon)
-        Picasso.get().load(icon).into(binding.icWeather)
+        Log.d(TAG, iconPath)
+        Picasso.get().load(iconPath).into(binding.icWeather)
     }
 
     private fun buildIconPath(iconPath: String): String{
@@ -122,7 +135,7 @@ class BerandaFragment : Fragment() {
                         val data = response.body()?.currentWeather
                         val temp = data?.temperature ?: 0.0
                         val city = data?.location ?: "none"
-                        val icon = "http://195.35.32.179:8001/icons/04d.svg"
+                        val icon = data?.path ?: "none"
                         val desc = data?.description ?: "none"
                         setWeatherCardData(icon, temp, city, desc)
                     } else {
@@ -136,10 +149,17 @@ class BerandaFragment : Fragment() {
             })
     }
 
-    private fun setAction(lat: Double, long: Double) {
+    private fun setAction(){
         binding.btnFiturLms.setOnClickListener {
             Toast.makeText(requireContext(), "Fitur dalam pengembangan!", Toast.LENGTH_SHORT).show()
         }
+        binding.btnHalamanArtikel.setOnClickListener {
+            val intent = Intent(requireContext(), ArtikelActivity::class.java)
+            requireContext().startActivity(intent)
+        }
+    }
+
+    private fun setActionCard(lat: Double, long: Double) {
         binding.cardViewWeather.setOnClickListener {
             val intent = Intent(requireContext(), WeatherActivity::class.java)
             intent.putExtra("latitude", lat)
@@ -157,7 +177,7 @@ class BerandaFragment : Fragment() {
                     val lon = it.longitude
                     Log.d(TAG, "lat = $lat\nlon = $lon")
                     getCurrentWeather(lon, lat)
-                    setAction(lat, lon)
+                    setActionCard(lat, lon)
                 } ?: run {
                     Log.e(TAG, "Last location is null")
                 }
@@ -208,20 +228,20 @@ class BerandaFragment : Fragment() {
 
         artikelList.add(
             ArtikelBerandaItemData(
-                R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
-                        "dengan metode ini..."
+                R.drawable.gambar_contoh_petani, "Cara meningkatkan hasil pertanian\n" +
+                        "dengan metode ini...", "31 Oktober 2023"
             )
         )
         artikelList.add(
             ArtikelBerandaItemData(
-                R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
-                        "dengan metode ini..."
+                R.drawable.gambar_contoh_petani, "Cara meningkatkan hasil pertanian\n" +
+                        "dengan metode ini...", "31 Oktober 2023"
             )
         )
         artikelList.add(
             ArtikelBerandaItemData(
-                R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
-                        "dengan metode ini..."
+                R.drawable.gambar_contoh_petani, "Cara meningkatkan hasil pertanian\n" +
+                        "dengan metode ini...", "31 Oktober 2023"
             )
         )
     }

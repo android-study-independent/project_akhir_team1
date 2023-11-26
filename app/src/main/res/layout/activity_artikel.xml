@@ -6,4 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".ui.artikel.DetailArtikelActivity">
 
+    <ImageView
+        android:id="@+id/iv_logo_artikel"
+        android:layout_width="139dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/logo_tanpa_tulisan"/>
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_logo_artikel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_logo_artikel"
+        android:src="@drawable/icon_left__arrow_black"
+        android:layout_marginStart="30dp"/>
+
+    <ScrollView
+        android:id="@+id/sv_artikel"
+        android:layout_width="match_parent"
+        android:layout_height="641dp"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo_artikel">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_artikel_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"/>
+
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/sv_artikel"
+        app:layout_constraintStart_toStartOf="@+id/sv_artikel"
+        app:layout_constraintTop_toTopOf="@+id/sv_artikel" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

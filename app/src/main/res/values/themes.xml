@@ -3,6 +3,7 @@
     <style name="Base.Theme.Tanify" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@color/primary_green</item>
     </style>
 
     <style name="Theme.Tanify" parent="Base.Theme.Tanify" />
