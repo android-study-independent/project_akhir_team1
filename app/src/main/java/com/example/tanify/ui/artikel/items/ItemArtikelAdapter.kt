@@ -2,6 +2,7 @@ package com.example.tanify.ui.artikel.items
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -27,11 +28,12 @@ class ItemArtikelAdapter(
 
     override fun onBindViewHolder(holder: ArtikelViewHolder, position: Int) {
         val currentArtikel = artikelList[position]
+        val deskripsi = Html.fromHtml(currentArtikel.deskripsi)
 
         holder.binding.tvNamapembuatArtikel.text = currentArtikel.pembuat
         holder.binding.tvTanggalArtikel.text = currentArtikel.createdAt
         holder.binding.tvJudulArtikel.text = currentArtikel.title
-        holder.binding.deskripsiListArtikel.text = currentArtikel.deskripsi
+        holder.binding.deskripsiListArtikel.text = deskripsi
 
         Glide.with(context)
             .load("http://195.35.32.179:8001${currentArtikel.cover}")
