@@ -2,6 +2,8 @@ package com.example.tanify.data.api.service
 
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.data.RegisterData
+import com.example.tanify.data.response.Artikel
+import com.example.tanify.data.response.ArtikelResponse
 import com.example.tanify.data.response.CurrentWeatherResponse
 import com.example.tanify.data.response.WeeklyWeatherResponse
 import com.example.tanify.data.response.LoginResponse
@@ -35,4 +37,7 @@ interface ApiService {
         @Query("longitude") longitude: Double,
         @Query("latitude") latitude: Double
     ): Call<CurrentWeatherResponse>
+
+    @GET("artikel")
+    fun getArtikel(): Call<ArtikelResponse>
 }
