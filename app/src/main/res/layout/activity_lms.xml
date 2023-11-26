@@ -101,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_button_green_ennabled"
-                android:drawableEnd="sear"
+                android:drawableEnd="@drawable/icon_search"
                 android:hint="@string/mau_belajar_apa"
                 android:textColorHint="@color/white"
                 android:fontFamily="@font/poppins_semibold"
