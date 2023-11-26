@@ -29,6 +29,7 @@
                 />
 
             <ImageView
+                android:id="@+id/ivLogoLms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/logo_tanify"
@@ -57,6 +58,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvHalloNadhifa"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:text="@string/hallo_nadhifa"
@@ -64,6 +66,7 @@
                     android:textSize="20sp"
                     />
                 <TextView
+                    android:id="@+id/tvBelajaryuk"
                     android:layout_width="wrap_content"
                     android:layout_height="23dp"
                     android:text="@string/belajar_yuk"
@@ -71,6 +74,7 @@
                     android:textSize="16sp"/>
             </LinearLayout>
             <ImageView
+                android:id="@+id/ivUserlms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_userlms"
@@ -89,23 +93,28 @@
             android:padding="10dp"
             android:background="@drawable/bg_button_green_ennabled"
             android:gravity="center_vertical"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="15dp"
+            tools:ignore="ExtraText">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            <EditText
+                android:id="@+id/editTextSearch"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/mau_belajar_apa"
+                android:background="@drawable/bg_button_green_ennabled"
+                android:drawableEnd="@drawable/icon_search"
+                android:hint="@string/mau_belajar_apa"
+                android:textColorHint="@color/white"
                 android:fontFamily="@font/poppins_semibold"
-                android:textColor="@color/white"
+                android:imeOptions="actionSearch"
+                android:minHeight="48dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:singleLine="true"
                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_search"/>
 
         </LinearLayout>
         <TextView
+            android:id="@+id/tvRecomended"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/recomended_lessons"
@@ -144,6 +153,7 @@
             android:orientation="vertical"
             android:layout_marginTop="15dp">
             <TextView
+                android:id="@+id/tvYourLessons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/your_lessons"
