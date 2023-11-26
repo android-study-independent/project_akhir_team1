@@ -16,6 +16,7 @@ class ItemBerandaArtikelAdapter(private val artikelList: List<ArtikelBerandaItem
     class ItemBerandaArtikelAdapterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val poster: ImageView = itemView.findViewById(R.id.iv_poster_artikel_beranda)
         val title: TextView = itemView.findViewById(R.id.tv_title_poster_beranda)
+        val date: TextView = itemView.findViewById(R.id.tv_tanggal_artikel_home_page)
 
         fun bindView(){
             itemView.setOnClickListener {
@@ -38,6 +39,7 @@ class ItemBerandaArtikelAdapter(private val artikelList: List<ArtikelBerandaItem
     override fun onBindViewHolder(holder: ItemBerandaArtikelAdapterViewHolder, position: Int) {
         holder.poster.setImageResource(artikelList[position].poster)
         holder.title.text = artikelList[position].title
+        holder.date.text = artikelList[position].date
         holder.bindView()
     }
 }

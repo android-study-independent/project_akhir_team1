@@ -40,6 +40,7 @@ import com.squareup.picasso.Picasso
 import android.view.Window;
 import android.view.WindowInsets
 import android.view.WindowManager
+import com.example.tanify.ui.artikel.ArtikelActivity
 
 class BerandaFragment : Fragment() {
 
@@ -97,6 +98,7 @@ class BerandaFragment : Fragment() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         getMyLocation()
+        setAction()
 //        getCurrentWeather(112.7747167,-7.2751638)
 //        setStatusBar()
     }
@@ -105,18 +107,6 @@ class BerandaFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-//    private fun setStatusBar(){
-//        @Suppress("DEPRECATION")
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//            requireActivity().window.insetsController?.hide(WindowInsets.Type.statusBars())
-//        } else {
-//            requireActivity().window.setFlags(
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN
-//            )
-//        }
-//    }
 
     @SuppressLint("SetTextI18n")
     private fun setWeatherCardData(icon: String, temp: Double, city: String, description: String){
@@ -159,10 +149,17 @@ class BerandaFragment : Fragment() {
             })
     }
 
-    private fun setAction(lat: Double, long: Double) {
+    private fun setAction(){
         binding.btnFiturLms.setOnClickListener {
             Toast.makeText(requireContext(), "Fitur dalam pengembangan!", Toast.LENGTH_SHORT).show()
         }
+        binding.btnHalamanArtikel.setOnClickListener {
+            val intent = Intent(requireContext(), ArtikelActivity::class.java)
+            requireContext().startActivity(intent)
+        }
+    }
+
+    private fun setActionCard(lat: Double, long: Double) {
         binding.cardViewWeather.setOnClickListener {
             val intent = Intent(requireContext(), WeatherActivity::class.java)
             intent.putExtra("latitude", lat)
@@ -180,7 +177,7 @@ class BerandaFragment : Fragment() {
                     val lon = it.longitude
                     Log.d(TAG, "lat = $lat\nlon = $lon")
                     getCurrentWeather(lon, lat)
-                    setAction(lat, lon)
+                    setActionCard(lat, lon)
                 } ?: run {
                     Log.e(TAG, "Last location is null")
                 }
@@ -231,20 +228,20 @@ class BerandaFragment : Fragment() {
 
         artikelList.add(
             ArtikelBerandaItemData(
-                R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
-                        "dengan metode ini..."
+                R.drawable.gambar_contoh_petani, "Cara meningkatkan hasil pertanian\n" +
+                        "dengan metode ini...", "31 Oktober 2023"
             )
         )
         artikelList.add(
             ArtikelBerandaItemData(
-                R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
-                        "dengan metode ini..."
+                R.drawable.gambar_contoh_petani, "Cara meningkatkan hasil pertanian\n" +
+                        "dengan metode ini...", "31 Oktober 2023"
             )
         )
         artikelList.add(
             ArtikelBerandaItemData(
-                R.drawable.unsplash_poster, "Cara meningkatkan hasil pertanian\n" +
-                        "dengan metode ini..."
+                R.drawable.gambar_contoh_petani, "Cara meningkatkan hasil pertanian\n" +
+                        "dengan metode ini...", "31 Oktober 2023"
             )
         )
     }
