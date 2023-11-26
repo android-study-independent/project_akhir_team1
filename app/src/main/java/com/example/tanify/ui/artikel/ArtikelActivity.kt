@@ -2,11 +2,79 @@ package com.example.tanify.ui.artikel
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.tanify.R
+import android.view.View
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.tanify.data.api.tanify.ApiConfig
+import com.example.tanify.data.response.ArtikelResponse
+import com.example.tanify.databinding.ActivityArtikelBinding
+import com.example.tanify.ui.artikel.items.ItemArtikelAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ArtikelActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityArtikelBinding
+    private lateinit var artikelAdapter: ItemArtikelAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_artikel)
+        binding = ActivityArtikelBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        artikelAdapter = ItemArtikelAdapter(this, emptyList())
+        binding.rvArtikelActivity.layoutManager = LinearLayoutManager(this)
+        binding.rvArtikelActivity.adapter = artikelAdapter
+
+
+        getArtikelData()
+        setAction()
+    }
+
+    private fun setAction(){
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    private fun getArtikelData() {
+        showLoading(true)
+        ApiConfig.instanceRetrofit.getArtikel()
+            .enqueue(object : Callback<ArtikelResponse>{
+                override fun onResponse(
+                    call: Call<ArtikelResponse>,
+                    response: Response<ArtikelResponse>
+                ) {
+                    showLoading(false)
+                    if (response.isSuccessful) {
+                        val artikelResponse = response.body()
+
+                        // Update RecyclerView with the received data
+                        if (artikelResponse?.data != null) {
+                            artikelAdapter.updateData(artikelResponse.data)
+                        } else {
+                            // Handle jika data dari API kosong atau tidak valid
+                            Toast.makeText(this@ArtikelActivity, "Data tidak ditemukan", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        // Handle jika respon tidak berhasil (misalnya kode respon bukan 200 OK)
+                        Toast.makeText(this@ArtikelActivity, "Gagal mendapatkan data", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<ArtikelResponse>, t: Throwable) {
+                    Toast.makeText(this@ArtikelActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                    showLoading(false)
+                }
+            })
+    }
+
+    private fun showLoading(isLoading: Boolean){
+        if (isLoading) {
+            binding.progressCircular.visibility = View.VISIBLE
+        } else {
+            binding.progressCircular.visibility = View.GONE
+        }
     }
 }
