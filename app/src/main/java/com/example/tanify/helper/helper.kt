@@ -1,6 +1,7 @@
 package com.example.tanify.helper
 
 import android.util.Log
+import android.widget.TextView
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -62,4 +63,11 @@ fun getFirstName(fullName: String): String {
     val firstName = nameParts.firstOrNull()
 
     return firstName ?: ""
+}
+
+fun setWordLimit(textView: TextView, originalText: String, wordLimit: Int) {
+    val words = originalText.split(" ")
+    val truncatedText = words.take(wordLimit).joinToString(" ")
+
+    textView.text = "${truncatedText}..."
 }

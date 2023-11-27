@@ -16,8 +16,29 @@ class ItemArtikelAdapter(
     private val context: Context,
     private var artikelList: List<Artikel>
 ) : RecyclerView.Adapter<ItemArtikelAdapter.ArtikelViewHolder>() {
+
+    interface OnArtikelItemClickListener{
+        fun onArtikelItemClicked(artikel: Artikel)
+    }
+
+    private var onArtikelItemClickListener: OnArtikelItemClickListener? = null
+
+    fun setOnArtikelItemClickListener(listener: OnArtikelItemClickListener){
+        onArtikelItemClickListener = listener
+    }
+
     inner class ArtikelViewHolder(internal val binding: ItemListArtikelActivityBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root) {
+            init {
+                binding.root.setOnClickListener {
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val clickedArtikel = artikelList[position]
+                        onArtikelItemClickListener?.onArtikelItemClicked(clickedArtikel)
+                    }
+                }
+            }
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtikelViewHolder {
         val binding = ItemListArtikelActivityBinding.inflate(
@@ -44,7 +65,7 @@ class ItemArtikelAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateData(newArticleList: List<Artikel?>?){
-        artikelList = newArticleList as List<Artikel>
+        artikelList = newArticleList?.filterNotNull() ?: emptyList()
         notifyDataSetChanged()
     }
 }
