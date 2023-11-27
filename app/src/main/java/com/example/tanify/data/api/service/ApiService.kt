@@ -8,9 +8,11 @@ import com.example.tanify.data.response.CurrentWeatherResponse
 import com.example.tanify.data.response.WeeklyWeatherResponse
 import com.example.tanify.data.response.LoginResponse
 import com.example.tanify.data.response.RegisterRespons
+import com.example.tanify.data.response.UserProfilResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -40,4 +42,11 @@ interface ApiService {
 
     @GET("artikel")
     fun getArtikel(): Call<ArtikelResponse>
+
+    @GET("profile/user-profile")
+    fun getUserProfil(
+        @Header("Authorization") authorization: String
+    ): Call<UserProfilResponse>
+
+
 }
