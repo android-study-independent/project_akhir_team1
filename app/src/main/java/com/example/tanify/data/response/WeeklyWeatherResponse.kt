@@ -17,7 +17,7 @@ data class WeeklyWeatherResponseItem(
 	val path: String? = null,
 
 	@field:SerializedName("temperature")
-	val temperature: Any? = null,
+	val temperature: Double? = null,
 
 	@field:SerializedName("icon")
 	val icon: String? = null,

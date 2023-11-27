@@ -23,13 +23,15 @@ class ArtikelActivity : AppCompatActivity() {
         binding = ActivityArtikelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setRecyclerView()
+        getArtikelData()
+        setAction()
+    }
+
+    private fun setRecyclerView(){
         artikelAdapter = ItemArtikelAdapter(this, emptyList())
         binding.rvArtikelActivity.layoutManager = LinearLayoutManager(this)
         binding.rvArtikelActivity.adapter = artikelAdapter
-
-
-        getArtikelData()
-        setAction()
     }
 
     private fun setAction(){

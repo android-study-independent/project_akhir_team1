@@ -9,6 +9,7 @@ import com.example.tanify.data.response.WeeklyWeatherResponse
 import com.example.tanify.data.response.LoginResponse
 import com.example.tanify.data.response.RegisterRespons
 import com.example.tanify.data.response.UserProfilResponse
+import com.example.tanify.data.response.WeeklyWeatherResponseItem
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -32,7 +33,7 @@ interface ApiService {
     fun getWeeklyWeather(
         @Query("longitude") longitude: Double,
         @Query("latitude") latitude: Double
-    ): Call<WeeklyWeatherResponse>
+    ): Call<List<WeeklyWeatherResponseItem>>
 
     @GET("weather/current")
     fun getCurrentWeather(
@@ -47,6 +48,4 @@ interface ApiService {
     fun getUserProfil(
         @Header("Authorization") authorization: String
     ): Call<UserProfilResponse>
-
-
 }
