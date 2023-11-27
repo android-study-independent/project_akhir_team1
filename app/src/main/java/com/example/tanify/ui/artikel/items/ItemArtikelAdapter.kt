@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tanify.data.response.Artikel
 import com.example.tanify.databinding.ItemListArtikelActivityBinding
+import com.example.tanify.helper.formatDate
+import com.example.tanify.helper.getFirstName
 
 class ItemArtikelAdapter(
     private val context: Context,
@@ -30,8 +32,8 @@ class ItemArtikelAdapter(
         val currentArtikel = artikelList[position]
         val deskripsi = Html.fromHtml(currentArtikel.deskripsi)
 
-        holder.binding.tvNamapembuatArtikel.text = currentArtikel.pembuat
-        holder.binding.tvTanggalArtikel.text = currentArtikel.createdAt
+        holder.binding.tvNamapembuatArtikel.text = getFirstName(currentArtikel.pembuat!!)
+        holder.binding.tvTanggalArtikel.text = formatDate(currentArtikel.createdAt!!)
         holder.binding.tvJudulArtikel.text = currentArtikel.title
         holder.binding.deskripsiListArtikel.text = deskripsi
 

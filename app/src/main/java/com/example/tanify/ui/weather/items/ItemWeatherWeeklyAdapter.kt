@@ -1,51 +1,55 @@
 package com.example.tanify.ui.weather.items
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextClock
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tanify.data.response.WeeklyWeatherResponse
-import com.example.tanify.R
+import com.bumptech.glide.Glide
 import com.example.tanify.data.response.WeeklyWeatherResponseItem
+import com.example.tanify.databinding.ItemWeatherWeeklyBinding
 import com.example.tanify.helper.formatDate
 import com.example.tanify.helper.getDayFromDate
 import com.squareup.picasso.Picasso
 
-class ItemWeatherWeeklyAdapter(private val listWeather: List<WeeklyWeatherResponseItem>) :
-    RecyclerView.Adapter<ItemWeatherWeeklyAdapter.ItemWeatherWeeklyHolder>() {
-    inner class ItemWeatherWeeklyHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        @SuppressLint("SetTextI18n")
-        fun bindView(weather: WeeklyWeatherResponseItem) {
-            val tvTemp = view.findViewById<TextView>(R.id.tv_temp_weekly)
-            val tvDesc = view.findViewById<TextView>(R.id.tv_desc_weekly)
-            val tvDay = view.findViewById<TextView>(R.id.tv_hari_weekly)
-            val tvDate = view.findViewById<TextView>(R.id.tv_tanggal_weekly)
-            val ivIcon = view.findViewById<ImageView>(R.id.iv_icon_weather_weekly)
-            val formattedTemp = weather.temperature?.let { String.format("%.1f", it) } ?: ""
-            val path = buildIconPath(weather.path)
+class ItemWeatherWeeklyAdapter(
+    private val context: Context,
+    private var listWeather: List<WeeklyWeatherResponseItem>
+) : RecyclerView.Adapter<ItemWeatherWeeklyAdapter.ItemWeatherWeeklyHolder>() {
+    inner class ItemWeatherWeeklyHolder(internal val binding: ItemWeatherWeeklyBinding) : RecyclerView.ViewHolder(binding.root)
 
-            tvTemp.text = "$formattedTemp°C"
-            tvDesc.text = weather.description
-            tvDay.text = getDayFromDate(weather.date.toString())
-            tvDate.text = formatDate(weather.date.toString())
-            Picasso.get().load(path).into(ivIcon)
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemWeatherWeeklyHolder =
-        ItemWeatherWeeklyHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_weather_weekly, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemWeatherWeeklyHolder {
+        val binding = ItemWeatherWeeklyBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
         )
+        return ItemWeatherWeeklyHolder(binding)
+    }
 
     override fun getItemCount(): Int = listWeather.size
 
-    override fun onBindViewHolder(holder: ItemWeatherWeeklyHolder, position: Int) = holder.bindView(listWeather[position])
+    override fun onBindViewHolder(holder: ItemWeatherWeeklyHolder, position: Int) {
+        val dayWeather = listWeather[position]
+        val posterPath = buildIconPath(dayWeather.path)
+        val temp = "${dayWeather.temperature?.toInt().toString()}°C"
+
+        holder.binding.tvTempWeekly.text = temp
+        holder.binding.tvDescWeekly.text = dayWeather.description
+        holder.binding.tvHariWeekly.text = getDayFromDate(dayWeather.date!!)
+        holder.binding.tvTanggalWeekly.text = formatDate(dayWeather.date)
+
+
+        Glide.with(context)
+            .load(posterPath)
+            .into(holder.binding.ivIconWeatherWeekly)
+    }
 
     private fun buildIconPath(iconPath: String?): String {
         return "http://195.35.32.179:8001${iconPath}"
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateWeaklyData(newWeatherList: List<WeeklyWeatherResponseItem?>?){
+        listWeather = newWeatherList as List<WeeklyWeatherResponseItem>
+        notifyDataSetChanged()
     }
 }

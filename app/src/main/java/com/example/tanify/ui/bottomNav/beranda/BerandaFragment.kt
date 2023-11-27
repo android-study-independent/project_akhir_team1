@@ -50,7 +50,6 @@ class BerandaFragment : Fragment() {
     private val artikelList = ArrayList<ArtikelBerandaItemData>()
 
 
-
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -102,6 +101,7 @@ class BerandaFragment : Fragment() {
 //        getCurrentWeather(112.7747167,-7.2751638)
 //        setStatusBar()
     }
+
     //On destroy
     override fun onDestroyView() {
         super.onDestroyView()
@@ -109,7 +109,7 @@ class BerandaFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setWeatherCardData(icon: String, temp: Double, city: String, description: String){
+    private fun setWeatherCardData(icon: String, temp: Double, city: String, description: String) {
         Log.d(TAG, weatherFormattedNumber(temp))
         binding.tvTemprature.text = "${weatherFormattedNumber(temp)}°"
         binding.tvDaerah.text = city
@@ -120,7 +120,7 @@ class BerandaFragment : Fragment() {
         Picasso.get().load(iconPath).into(binding.icWeather)
     }
 
-    private fun buildIconPath(iconPath: String): String{
+    private fun buildIconPath(iconPath: String): String {
         return "http://195.35.32.179:8001${iconPath}"
     }
 
@@ -131,13 +131,26 @@ class BerandaFragment : Fragment() {
                     call: Call<CurrentWeatherResponse>,
                     response: Response<CurrentWeatherResponse>
                 ) {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         val data = response.body()?.currentWeather
                         val temp = data?.temperature ?: 0.0
                         val city = data?.location ?: "none"
                         val icon = data?.path ?: "none"
                         val desc = data?.description ?: "none"
+                        val humidity = data?.humidity
+                        val windSpeed = data?.windSpeed
                         setWeatherCardData(icon, temp, city, desc)
+                        setActionCard(
+                            long,
+                            lat,
+                            city,
+                            "26 Agustus 2022",
+                            "${weatherFormattedNumber(temp)}°C",
+                            desc,
+                            buildIconPath(icon),
+                            humidity!!.toInt(),
+                            windSpeed!!.toInt()
+                        )
                     } else {
                         Log.e(TAG, "onFailur: ${response.message()}")
                     }
@@ -149,7 +162,7 @@ class BerandaFragment : Fragment() {
             })
     }
 
-    private fun setAction(){
+    private fun setAction() {
         binding.btnFiturLms.setOnClickListener {
             Toast.makeText(requireContext(), "Fitur dalam pengembangan!", Toast.LENGTH_SHORT).show()
         }
@@ -159,11 +172,28 @@ class BerandaFragment : Fragment() {
         }
     }
 
-    private fun setActionCard(lat: Double, long: Double) {
+    private fun setActionCard(
+        lat: Double,
+        long: Double,
+        location: String,
+        date: String,
+        temp: String,
+        desc: String,
+        iconPath: String,
+        humidity: Int,
+        windSpeed: Int
+    ) {
         binding.cardViewWeather.setOnClickListener {
             val intent = Intent(requireContext(), WeatherActivity::class.java)
             intent.putExtra("latitude", lat)
             intent.putExtra("longitude", long)
+            intent.putExtra("location", location)
+            intent.putExtra("date", date)
+            intent.putExtra("temp", temp)
+            intent.putExtra("desc", desc)
+            intent.putExtra("icon_path", iconPath)
+            intent.putExtra("humidity", humidity)
+            intent.putExtra("wind_speed", windSpeed)
             startActivity(intent)
         }
     }
@@ -177,7 +207,6 @@ class BerandaFragment : Fragment() {
                     val lon = it.longitude
                     Log.d(TAG, "lat = $lat\nlon = $lon")
                     getCurrentWeather(lon, lat)
-                    setActionCard(lat, lon)
                 } ?: run {
                     Log.e(TAG, "Last location is null")
                 }
