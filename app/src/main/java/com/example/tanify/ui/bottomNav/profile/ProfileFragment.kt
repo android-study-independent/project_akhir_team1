@@ -10,10 +10,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.example.tanify.R
+import com.example.tanify.data.api.tanify.ApiConfig
+import com.example.tanify.data.response.UserProfilResponse
 import com.example.tanify.databinding.FragmentProfileBinding
 import com.example.tanify.ui.bottomNav.profile.editProfile.ChangePasswordActivity
 import com.example.tanify.ui.bottomNav.profile.editProfile.ChangeProfileActivity
 import com.example.tanify.ui.login.LoginActivity
+import com.google.gson.Gson
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileFragment : Fragment() {
 
@@ -34,35 +42,90 @@ class ProfileFragment : Fragment() {
     ): View {
         val profileViewModel =
             ViewModelProvider(this).get(ProfileViewModel::class.java)
-
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        sharedPreferences = requireContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
+        // sharedPreferences data
+        sharedPreferences = requireContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         //ambil data login
         TOKEN = sharedPreferences.getString("token", "").toString()
         Log.d("token", TOKEN)
 
+        // ambil data profil
+        val profilDataString  = sharedPreferences.getString("profil", null)
+        if (profilDataString  == null) {
+            getProfil()
+        } else {
+            val gson = Gson()
+            val profilData = gson.fromJson(profilDataString , UserProfilResponse::class.java)
+            processDataProfil(profilData)
+        }
 
         return root
+    }
+
+    private fun processDataProfil(profilData: UserProfilResponse) {
+        Log.d(TAG,"set data profil ke ui" )
+        binding.profilName.text = profilData.nama
+        binding.profilEmail.text = profilData.email
+
+        val foto = profilData.photo?.removePrefix("../")
+        Glide.with(this)
+            .load("http://195.35.32.179:8001/"+foto)
+            .placeholder(R.drawable.icon_user)
+            .error(R.drawable.icon_user)
+            .into(binding.profilImg)
+    }
+
+        private fun getProfil() {
+            showLoading(true)
+            ApiConfig.instanceRetrofit.getUserProfil(
+                "Bearer " + TOKEN
+            ).enqueue(object : Callback<UserProfilResponse>{
+                    override fun onResponse(
+                        call: Call<UserProfilResponse>,
+                        response: Response<UserProfilResponse>,
+                    ) {
+                        showLoading(false)
+                       if(response.isSuccessful){
+                           val dataprofil = response.body()
+                           Log.d("name - profil", dataprofil?.nama.toString())
+                           if (dataprofil != null) {
+                               processDataProfil(dataprofil)
+                               saveProfilToSharedPreferences(dataprofil)
+                           }
+                       }else{
+                           Log.e(TAG, "onFailure: ${response.message()}")
+                       }
+                    }
+                    override fun onFailure(call: Call<UserProfilResponse>, t: Throwable) {
+                        showLoading(false)
+                        Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
+                    }
+
+                })
+        }
+    private fun saveProfilToSharedPreferences(profilData: UserProfilResponse) {
+        val gson = Gson()
+        val profilDataString = gson.toJson(profilData)
+
+        with(sharedPreferences.edit()) {
+            putString("profilData", profilDataString)
+            apply()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         binding.btnLogout.setOnClickListener {
             val tokenBefore = sharedPreferences.getString(TOKEN, "")
             Log.d(TAG, "token sebelum : $tokenBefore")
-
             with(sharedPreferences.edit()) {
-                remove(TOKEN)
+                remove("token")
+                remove("profil")
                 apply()
-
-                val tokenAfter = sharedPreferences.getString(TOKEN, "")
-                Log.d(TAG, "token setelah : $tokenAfter")
             }
 
             // Navigasi ke halaman login
@@ -79,6 +142,15 @@ class ProfileFragment : Fragment() {
         binding.btnUbahPw.setOnClickListener{
             val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
             startActivity(intent)
+        }
+    }
+    private fun showLoading(isLoading: Boolean){
+        if (isLoading) {
+            Log.d("loading", "==== true ========================================================")
+            binding.progressCircular.visibility = View.VISIBLE
+        } else {
+            Log.d("loading", "==== false ========================================================")
+            binding.progressCircular.visibility = View.GONE
         }
     }
 
