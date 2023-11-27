@@ -184,6 +184,7 @@ class BerandaFragment : Fragment() {
         windSpeed: Int
     ) {
         binding.cardViewWeather.setOnClickListener {
+            //membawa perubahan langsung dari card beranda
             val intent = Intent(requireContext(), WeatherActivity::class.java)
             intent.putExtra("latitude", lat)
             intent.putExtra("longitude", long)
