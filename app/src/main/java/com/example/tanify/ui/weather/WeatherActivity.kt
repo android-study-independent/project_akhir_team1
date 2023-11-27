@@ -104,6 +104,7 @@ class WeatherActivity : AppCompatActivity() {
             })
     }
 
+    //Loading circular
     private fun showLoading(isLoading: Boolean){
         if (isLoading) {
             binding.progressCircular.visibility = View.VISIBLE
