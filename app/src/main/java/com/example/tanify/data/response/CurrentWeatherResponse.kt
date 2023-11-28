@@ -10,6 +10,9 @@ data class CurrentWeatherResponse(
 
 data class CurrentWeather(
 
+	@field:SerializedName("date")
+	val date: String? = null,
+
 	@field:SerializedName("path")
 	val path: String? = null,
 

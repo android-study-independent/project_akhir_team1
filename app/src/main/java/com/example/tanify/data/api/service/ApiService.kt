@@ -38,7 +38,7 @@ interface ApiService {
     fun getWeeklyWeather(
         @Query("longitude") longitude: Double,
         @Query("latitude") latitude: Double
-    ): Call<WeeklyWeatherResponse>
+    ): Call<List<WeeklyWeatherResponseItem>>
 
     @GET("weather/current")
     fun getCurrentWeather(
@@ -53,7 +53,8 @@ interface ApiService {
     fun getUserProfil(
         @Header("Authorization") authorization: String
     ): Call<UserProfilResponse>
-    @Multipart
+
+  @Multipart
     @PUT("profile/edit-profile")
     fun editUserProfil(
         @Header("Authorization") authorization: String,
@@ -66,6 +67,5 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Body data: EditPassword
     ): Call<EditPasswordResponse>
-
 
 }

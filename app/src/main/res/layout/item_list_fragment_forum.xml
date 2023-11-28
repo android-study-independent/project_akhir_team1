@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="434dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/vGaris_item_forum"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="@color/grey" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_profile_forum"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:src="@drawable/foto_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vGaris_item_forum"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="12dp"/>
+
+    <TextView
+        android:id="@+id/tv_name_creator_forum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:fontFamily="@font/poppins_regular"
+        android:lineHeight="18sp"
+        android:text="Ronald RIcheees"
+        android:textFontWeight="400"
+        android:textSize="12dp"
+        app:layout_constraintLeft_toRightOf="@+id/iv_profile_forum"
+        app:layout_constraintTop_toTopOf="@+id/iv_profile_forum"
+        tools:ignore="TextSizeCheck" />
+
+    <TextView
+        android:id="@+id/tv_tanggal_forum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="17 Nov 2023"
+
+        app:layout_constraintStart_toStartOf="@+id/tv_name_creator_forum"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name_creator_forum"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="10sp"
+        android:textStyle="normal"
+        android:textFontWeight="400"
+        android:lineHeight="18sp"/>
+
+    <TextView
+        android:id="@+id/tv_judul_forum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kisaran harga padi di pulau jawa"
+        app:layout_constraintTop_toBottomOf="@+id/iv_profile_forum"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_profile_forum"
+        android:layout_marginTop="29dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:textSize="16sp"
+        android:textFontWeight="600"
+        android:lineHeight="16sp" />
+
+    <TextView
+        android:id="@+id/tv_isi_konten_forum"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:text="Saya ingin membandingkan harga di pulau jawa dan juga di luar pulau jawa"
+        app:layout_constraintTop_toBottomOf="@+id/tv_judul_forum"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_judul_forum"
+        android:layout_marginTop="18dp"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="12sp"
+        android:textFontWeight="400"
+        android:lineHeight="18sp"/>
+
+    <ImageView
+        android:id="@+id/iv_item_forum"
+        android:layout_width="match_parent"
+        android:layout_height="195dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/unsplash_poster2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_isi_konten_forum" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:src="@drawable/rectangle_button_forum"
+        app:layout_constraintTop_toBottomOf="@+id/iv_item_forum" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/iv_item_forum">
+
+        <ImageView
+            android:id="@+id/heart_forum_button"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:layout_marginLeft="32dp"
+            android:src="@drawable/button_forum_heart" />
+
+        <TextView
+            android:id="@+id/tv_heart_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:fontFamily="@font/poppins_bold"
+            android:lineHeight="12sp"
+            android:text="Suka"
+            android:textFontWeight="700"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:layout_marginLeft="32dp"
+            android:src="@drawable/button_forum_chat" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:fontFamily="@font/poppins_bold"
+            android:lineHeight="12sp"
+            android:text="Komentar"
+            android:textFontWeight="700"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:layout_marginLeft="32dp"
+            android:src="@drawable/button_forum_share" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:fontFamily="@font/poppins_bold"
+            android:lineHeight="12sp"
+            android:text="Bagikan"
+            android:textFontWeight="700"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
