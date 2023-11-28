@@ -92,6 +92,72 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_isi_konten_forum" />
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:src="@drawable/rectangle_button_forum"
+        app:layout_constraintTop_toBottomOf="@+id/iv_item_forum" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/iv_item_forum">
+
+        <ImageView
+            android:id="@+id/heart_forum_button"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:layout_marginLeft="32dp"
+            android:src="@drawable/button_forum_heart" />
+
+        <TextView
+            android:id="@+id/tv_heart_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:fontFamily="@font/poppins_bold"
+            android:lineHeight="12sp"
+            android:text="Suka"
+            android:textFontWeight="700"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:layout_marginLeft="32dp"
+            android:src="@drawable/button_forum_chat" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:fontFamily="@font/poppins_bold"
+            android:lineHeight="12sp"
+            android:text="Komentar"
+            android:textFontWeight="700"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:layout_marginLeft="32dp"
+            android:src="@drawable/button_forum_share" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:fontFamily="@font/poppins_bold"
+            android:lineHeight="12sp"
+            android:text="Bagikan"
+            android:textFontWeight="700"
+            android:textSize="12sp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
