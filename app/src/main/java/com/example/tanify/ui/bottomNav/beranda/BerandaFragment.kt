@@ -110,7 +110,7 @@ class BerandaFragment : Fragment(), ItemBerandaArtikelAdapter.OnArtikelBerandaIt
     @SuppressLint("SetTextI18n")
     private fun setWeatherCardData(icon: String, temp: Double, city: String, description: String) {
         Log.d(TAG, weatherFormattedNumber(temp))
-        binding.tvTemprature.text = "${weatherFormattedNumber(temp)}°"
+        binding.tvTemprature.text = "${weatherFormattedNumber(temp)}°C"
         binding.tvDaerah.text = city
         binding.tvDeskripsi.text = description
         val iconPath = buildIconPath(icon)
