@@ -27,24 +27,24 @@ interface ApiService {
 
     @POST("register")
     fun postRegister(
-        @Body data: RegisterData
+        @Body data: RegisterData,
     ): Call<RegisterRespons>
 
     @POST("login")
     fun postLogin(
-        @Body data: LoginData
+        @Body data: LoginData,
     ): Call<LoginResponse>
 
     @GET("weather/weekly")
     fun getWeeklyWeather(
         @Query("longitude") longitude: Double,
-        @Query("latitude") latitude: Double
+        @Query("latitude") latitude: Double,
     ): Call<List<WeeklyWeatherResponseItem>>
 
     @GET("weather/current")
     fun getCurrentWeather(
         @Query("longitude") longitude: Double,
-        @Query("latitude") latitude: Double
+        @Query("latitude") latitude: Double,
     ): Call<CurrentWeatherResponse>
 
     @GET("artikel")
@@ -52,30 +52,21 @@ interface ApiService {
 
     @GET("profile/user-profile")
     fun getUserProfil(
-        @Header("Authorization") authorization: String
+        @Header("Authorization") authorization: String,
     ): Call<UserProfilResponse>
 
-<<<<<<< HEAD
     @Multipart
-=======
-  @Multipart
->>>>>>> 8b77951b4c86fb884175e23f15ca73aeba3d723d
     @PUT("profile/edit-profile")
     fun editUserProfil(
         @Header("Authorization") authorization: String,
         @Part("nama") nama: String,
-        @Part photo: MultipartBody.Part
+        @Part photo: MultipartBody.Part,
     ): Call<EditProfilResponse>
 
     @PUT("profile/edit-pass")
     fun EditPassword(
         @Header("Authorization") authorization: String,
-        @Body data: EditPassword
+        @Body data: EditPassword,
     ): Call<EditPasswordResponse>
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 8b77951b4c86fb884175e23f15ca73aeba3d723d
 }
