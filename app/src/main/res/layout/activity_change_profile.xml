@@ -72,6 +72,7 @@
                     app:cardCornerRadius="60dp">
 
                     <ImageView
+                        android:id="@+id/imgprofil"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
@@ -80,6 +81,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/iptimg"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 app:cardCornerRadius="14dp"
@@ -164,6 +166,7 @@
                 android:height="50dp"
                 android:textSize="12sp"
                 android:fontFamily="@font/poppins_regular"
+                android:inputType="none"
                 android:hint="@string/hint_register_email"/>
         </com.google.android.material.textfield.TextInputLayout>
 
