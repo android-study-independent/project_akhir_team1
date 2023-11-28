@@ -1,11 +1,14 @@
 package com.example.tanify.ui.artikel
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tanify.data.api.tanify.ApiConfig
+import com.example.tanify.data.response.Artikel
 import com.example.tanify.data.response.ArtikelResponse
 import com.example.tanify.databinding.ActivityArtikelBinding
 import com.example.tanify.ui.artikel.items.ItemArtikelAdapter
@@ -13,23 +16,30 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ArtikelActivity : AppCompatActivity() {
+class ArtikelActivity : AppCompatActivity(), ItemArtikelAdapter.OnArtikelItemClickListener {
 
     private lateinit var binding: ActivityArtikelBinding
     private lateinit var artikelAdapter: ItemArtikelAdapter
+
+    companion object {
+        private const val TAG = "ArtikelActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityArtikelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        artikelAdapter = ItemArtikelAdapter(this, emptyList())
-        binding.rvArtikelActivity.layoutManager = LinearLayoutManager(this)
-        binding.rvArtikelActivity.adapter = artikelAdapter
-
-
+        setRecyclerView()
         getArtikelData()
         setAction()
+    }
+
+    private fun setRecyclerView(){
+        artikelAdapter = ItemArtikelAdapter(this, emptyList())
+        artikelAdapter.setOnArtikelItemClickListener(this)
+        binding.rvArtikelActivity.layoutManager = LinearLayoutManager(this)
+        binding.rvArtikelActivity.adapter = artikelAdapter
     }
 
     private fun setAction(){
@@ -76,5 +86,13 @@ class ArtikelActivity : AppCompatActivity() {
         } else {
             binding.progressCircular.visibility = View.GONE
         }
+    }
+
+    override fun onArtikelItemClicked(artikel: Artikel) {
+        val id = artikel.id
+        Log.d(TAG, "id artikel yang dipilih = $id")
+        val intent = Intent(this, DetailArtikelActivity::class.java)
+        intent.putExtra("ARTIKEL_ID", artikel.id)
+        startActivity(intent)
     }
 }

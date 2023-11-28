@@ -12,6 +12,7 @@ import com.example.tanify.data.response.LoginResponse
 import com.example.tanify.data.response.RegisterRespons
 import com.example.tanify.data.response.UserProfilResponse
 import okhttp3.MultipartBody
+import com.example.tanify.data.response.WeeklyWeatherResponseItem
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -38,7 +39,7 @@ interface ApiService {
     fun getWeeklyWeather(
         @Query("longitude") longitude: Double,
         @Query("latitude") latitude: Double
-    ): Call<WeeklyWeatherResponse>
+    ): Call<List<WeeklyWeatherResponseItem>>
 
     @GET("weather/current")
     fun getCurrentWeather(
@@ -53,6 +54,7 @@ interface ApiService {
     fun getUserProfil(
         @Header("Authorization") authorization: String
     ): Call<UserProfilResponse>
+
     @Multipart
     @PUT("profile/edit-profile")
     fun editUserProfil(
@@ -66,6 +68,7 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Body data: EditPassword
     ): Call<EditPasswordResponse>
+
 
 
 }

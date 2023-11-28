@@ -19,6 +19,18 @@
         tools:targetApi="31">
 
         <activity
+            android:name=".ui.lms.detailMateri.DetailMateriActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.lms.checklistMateri.CheckListMateriActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.bottomNav.forum.detailDiscuss.DetailDiscussActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.bottomNav.forum.addDiscuss.AddDiscussActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.lms.LmsActivity"
             android:exported="false" />
         <activity

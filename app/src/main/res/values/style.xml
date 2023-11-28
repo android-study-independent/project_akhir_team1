@@ -16,4 +16,7 @@
     <style name="Theme.RemoveSplashScreenTheme" parent="@style/Base.Theme.Tanify">
         <item name="android:windowIsTranslucent">true</item>
     </style>
+    <style name="WeatherCardProgressBarStyle" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateTint">@color/white</item>
+    </style>
 </resources>

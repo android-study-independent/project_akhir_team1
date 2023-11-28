@@ -9,13 +9,36 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tanify.data.response.Artikel
 import com.example.tanify.databinding.ItemListArtikelActivityBinding
+import com.example.tanify.helper.formatDate
+import com.example.tanify.helper.getFirstName
 
 class ItemArtikelAdapter(
     private val context: Context,
     private var artikelList: List<Artikel>
 ) : RecyclerView.Adapter<ItemArtikelAdapter.ArtikelViewHolder>() {
+
+    interface OnArtikelItemClickListener{
+        fun onArtikelItemClicked(artikel: Artikel)
+    }
+
+    private var onArtikelItemClickListener: OnArtikelItemClickListener? = null
+
+    fun setOnArtikelItemClickListener(listener: OnArtikelItemClickListener){
+        onArtikelItemClickListener = listener
+    }
+
     inner class ArtikelViewHolder(internal val binding: ItemListArtikelActivityBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root) {
+            init {
+                binding.root.setOnClickListener {
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val clickedArtikel = artikelList[position]
+                        onArtikelItemClickListener?.onArtikelItemClicked(clickedArtikel)
+                    }
+                }
+            }
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtikelViewHolder {
         val binding = ItemListArtikelActivityBinding.inflate(
@@ -30,8 +53,8 @@ class ItemArtikelAdapter(
         val currentArtikel = artikelList[position]
         val deskripsi = Html.fromHtml(currentArtikel.deskripsi)
 
-        holder.binding.tvNamapembuatArtikel.text = currentArtikel.pembuat
-        holder.binding.tvTanggalArtikel.text = currentArtikel.createdAt
+        holder.binding.tvNamapembuatArtikel.text = getFirstName(currentArtikel.pembuat!!)
+        holder.binding.tvTanggalArtikel.text = formatDate(currentArtikel.createdAt!!)
         holder.binding.tvJudulArtikel.text = currentArtikel.title
         holder.binding.deskripsiListArtikel.text = deskripsi
 
@@ -42,7 +65,7 @@ class ItemArtikelAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateData(newArticleList: List<Artikel?>?){
-        artikelList = newArticleList as List<Artikel>
+        artikelList = newArticleList?.filterNotNull() ?: emptyList()
         notifyDataSetChanged()
     }
 }

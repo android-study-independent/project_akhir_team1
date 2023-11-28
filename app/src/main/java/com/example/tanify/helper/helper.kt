@@ -1,17 +1,28 @@
 package com.example.tanify.helper
 
 import android.util.Log
+import android.widget.TextView
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 
 fun formatDate(inputDateString: String): String {
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-    val date = inputFormat.parse(inputDateString)
+    try {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = inputFormat.parse(inputDateString)
 
-    val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-    return outputFormat.format(date!!)
+        if (date != null) {
+            val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+            return outputFormat.format(date)
+        } else {
+            return "Invalid Date"
+        }
+    } catch (e: ParseException) {
+        e.printStackTrace()
+        return "Invalid Date"
+    }
 }
 
 fun getDayFromDate(dateString: String): String {
@@ -45,4 +56,18 @@ fun formattedNumber(number: Double): String{
 fun weatherFormattedNumber(number: Double): String {
     val formattedNumber = number.toInt().toString()
     return formattedNumber
+}
+
+fun getFirstName(fullName: String): String {
+    val nameParts = fullName.split(" ")
+    val firstName = nameParts.firstOrNull()
+
+    return firstName ?: ""
+}
+
+fun setWordLimit(textView: TextView, originalText: String, wordLimit: Int) {
+    val words = originalText.split(" ")
+    val truncatedText = words.take(wordLimit).joinToString(" ")
+
+    textView.text = "${truncatedText}..."
 }
