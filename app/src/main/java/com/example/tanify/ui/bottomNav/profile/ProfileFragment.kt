@@ -111,7 +111,7 @@ class ProfileFragment : Fragment() {
         val profilDataString = gson.toJson(profilData)
 
         with(sharedPreferences.edit()) {
-            putString("profilData", profilDataString)
+            putString("profil", profilDataString)
             apply()
         }
     }
