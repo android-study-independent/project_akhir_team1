@@ -1,19 +1,25 @@
 package com.example.tanify.data.api.service
 
+import com.example.tanify.data.data.EditPassword
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.data.RegisterData
-import com.example.tanify.data.response.Artikel
 import com.example.tanify.data.response.ArtikelResponse
 import com.example.tanify.data.response.CurrentWeatherResponse
+import com.example.tanify.data.response.EditPasswordResponse
+import com.example.tanify.data.response.EditProfilResponse
 import com.example.tanify.data.response.WeeklyWeatherResponse
 import com.example.tanify.data.response.LoginResponse
 import com.example.tanify.data.response.RegisterRespons
 import com.example.tanify.data.response.UserProfilResponse
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface ApiService {
@@ -47,6 +53,19 @@ interface ApiService {
     fun getUserProfil(
         @Header("Authorization") authorization: String
     ): Call<UserProfilResponse>
+    @Multipart
+    @PUT("profile/edit-profile")
+    fun editUserProfil(
+        @Header("Authorization") authorization: String,
+        @Part("nama") nama: String,
+        @Part photo: MultipartBody.Part
+    ): Call<EditProfilResponse>
+
+    @PUT("profile/edit-pass")
+    fun EditPassword(
+        @Header("Authorization") authorization: String,
+        @Body data: EditPassword
+    ): Call<EditPasswordResponse>
 
 
 }
