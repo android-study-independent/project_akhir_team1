@@ -55,7 +55,11 @@ interface ApiService {
         @Header("Authorization") authorization: String
     ): Call<UserProfilResponse>
 
+<<<<<<< HEAD
     @Multipart
+=======
+  @Multipart
+>>>>>>> 8b77951b4c86fb884175e23f15ca73aeba3d723d
     @PUT("profile/edit-profile")
     fun editUserProfil(
         @Header("Authorization") authorization: String,
@@ -69,6 +73,9 @@ interface ApiService {
         @Body data: EditPassword
     ): Call<EditPasswordResponse>
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 8b77951b4c86fb884175e23f15ca73aeba3d723d
 }
