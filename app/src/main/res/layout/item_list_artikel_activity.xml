@@ -29,6 +29,7 @@
         android:layout_marginStart="18dp"
         android:fontFamily="@font/poppins_regular"
         android:text="@string/nama"
+        android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintLeft_toRightOf="@+id/posterBackground"
         app:layout_constraintTop_toTopOf="@+id/posterBackground" />
@@ -67,6 +68,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/tv_judul_artikel"
         android:text="@string/optimalkan_pertumbuhan_padi_secara_efektif_dengan_beberapa_tips_yang_sudah_diberikan"
         android:textSize="10sp"
+        android:textColor="@color/black"
         android:fontFamily="@font/poppins_regular"
         android:layout_marginTop="3dp"
         android:ellipsize="end"
