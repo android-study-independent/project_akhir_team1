@@ -2,14 +2,12 @@ package com.example.tanify.data.api.service
 
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.data.RegisterData
-import com.example.tanify.data.response.Artikel
-import com.example.tanify.data.response.ArtikelResponse
-import com.example.tanify.data.response.CurrentWeatherResponse
-import com.example.tanify.data.response.WeeklyWeatherResponse
-import com.example.tanify.data.response.LoginResponse
-import com.example.tanify.data.response.RegisterRespons
-import com.example.tanify.data.response.UserProfilResponse
-import com.example.tanify.data.response.WeeklyWeatherResponseItem
+import com.example.tanify.data.response.artikel.ArtikelResponse
+import com.example.tanify.data.response.weather.CurrentWeatherResponse
+import com.example.tanify.data.response.login.LoginResponse
+import com.example.tanify.data.response.login.RegisterRespons
+import com.example.tanify.data.response.profile.UserProfilResponse
+import com.example.tanify.data.response.weather.WeeklyWeatherResponseItem
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

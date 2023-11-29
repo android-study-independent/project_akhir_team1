@@ -1,4 +1,4 @@
-package com.example.tanify.data.response
+package com.example.tanify.data.response.login
 
 import com.google.gson.annotations.SerializedName
 

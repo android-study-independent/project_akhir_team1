@@ -6,11 +6,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.tanify.data.response.WeeklyWeatherResponseItem
+import com.example.tanify.data.response.weather.WeeklyWeatherResponseItem
 import com.example.tanify.databinding.ItemWeatherWeeklyBinding
 import com.example.tanify.helper.formatDate
 import com.example.tanify.helper.getDayFromDate
-import com.squareup.picasso.Picasso
 
 class ItemWeatherWeeklyAdapter(
     private val context: Context,

@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
-import com.example.tanify.data.response.UserProfilResponse
+import com.example.tanify.data.response.profile.UserProfilResponse
 import com.example.tanify.databinding.FragmentProfileBinding
 import com.example.tanify.ui.bottomNav.profile.editProfile.ChangePasswordActivity
 import com.example.tanify.ui.bottomNav.profile.editProfile.ChangeProfileActivity

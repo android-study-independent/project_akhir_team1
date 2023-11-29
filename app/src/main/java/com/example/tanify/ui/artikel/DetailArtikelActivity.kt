@@ -1,19 +1,17 @@
 package com.example.tanify.ui.artikel
 
-import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
-import com.example.tanify.data.response.ArtikelResponse
+import com.example.tanify.data.response.artikel.ArtikelResponse
 import com.example.tanify.databinding.ActivityDetailArtikelBinding
 import com.example.tanify.helper.formatDate
 import retrofit2.Call

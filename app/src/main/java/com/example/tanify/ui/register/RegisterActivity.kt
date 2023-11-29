@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.View
 import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.data.RegisterData
-import com.example.tanify.data.response.RegisterRespons
+import com.example.tanify.data.response.login.RegisterRespons
 import com.example.tanify.databinding.ActivityRegisterBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson

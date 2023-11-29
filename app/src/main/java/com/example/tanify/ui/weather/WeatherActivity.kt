@@ -6,10 +6,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.example.tanify.data.api.tanify.ApiConfig
-import com.example.tanify.data.response.WeeklyWeatherResponse
-import com.example.tanify.data.response.WeeklyWeatherResponseItem
+import com.example.tanify.data.response.weather.WeeklyWeatherResponseItem
 import com.example.tanify.databinding.ActivityWeatherBinding
 import com.example.tanify.helper.formatDate
 import com.example.tanify.ui.weather.items.ItemWeatherWeeklyAdapter
