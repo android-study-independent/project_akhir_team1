@@ -8,8 +8,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tanify.data.api.tanify.ApiConfig
-import com.example.tanify.data.response.Artikel
-import com.example.tanify.data.response.ArtikelResponse
+import com.example.tanify.data.response.artikel.Artikel
+import com.example.tanify.data.response.artikel.ArtikelResponse
 import com.example.tanify.databinding.ActivityArtikelBinding
 import com.example.tanify.ui.artikel.items.ItemArtikelAdapter
 import retrofit2.Call

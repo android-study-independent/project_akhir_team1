@@ -1,22 +1,14 @@
 package com.example.tanify.ui.bottomNav.beranda.items
 
 import android.content.Context
-import android.content.Intent
-import android.text.Html
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.tanify.R
-import com.example.tanify.data.data.ArtikelBerandaItemData
-import com.example.tanify.data.response.Artikel
+import com.example.tanify.data.response.artikel.Artikel
 import com.example.tanify.databinding.ItemArtikelBerandaBinding
 import com.example.tanify.helper.formatDate
 import com.example.tanify.helper.setWordLimit
-import com.example.tanify.ui.artikel.DetailArtikelActivity
 
 class ItemBerandaArtikelAdapter(
     private val context: Context,

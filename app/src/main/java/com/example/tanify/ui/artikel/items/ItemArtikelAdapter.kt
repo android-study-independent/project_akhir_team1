@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.tanify.data.response.Artikel
+import com.example.tanify.data.response.artikel.Artikel
 import com.example.tanify.databinding.ItemListArtikelActivityBinding
 import com.example.tanify.helper.formatDate
 import com.example.tanify.helper.getFirstName

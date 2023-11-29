@@ -10,7 +10,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.data.LoginData
-import com.example.tanify.data.response.LoginResponse
+import com.example.tanify.data.response.login.LoginResponse
 import com.example.tanify.databinding.ActivityLoginBinding
 import com.example.tanify.ui.MainActivity
 import com.example.tanify.ui.register.RegisterActivity
