@@ -7,15 +7,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.data.EditPassword
-import com.example.tanify.data.response.EditPasswordResponse
+import com.example.tanify.data.response.profile.EditPasswordResponse
 import com.example.tanify.databinding.ActivityChangePasswordBinding
-import com.example.tanify.databinding.ActivityChangeProfileBinding
-import com.example.tanify.ui.bottomNav.profile.ProfileFragment
-import com.example.tanify.ui.register.RegisterActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import retrofit2.Call

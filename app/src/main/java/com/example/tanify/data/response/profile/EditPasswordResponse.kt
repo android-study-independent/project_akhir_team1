@@ -1,5 +1,6 @@
-package com.example.tanify.data.response
+package com.example.tanify.data.response.profile
 
+import com.example.tanify.data.response.login.errordata
 import com.google.gson.annotations.SerializedName
 
 data class EditPasswordResponse (

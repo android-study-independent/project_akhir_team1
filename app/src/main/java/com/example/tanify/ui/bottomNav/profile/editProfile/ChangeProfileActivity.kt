@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide
 import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.response.EditProfilResponse
-import com.example.tanify.data.response.UserProfilResponse
+import com.example.tanify.data.response.profile.UserProfilResponse
 import com.example.tanify.databinding.ActivityChangeProfileBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -38,7 +38,7 @@ class ChangeProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChangeProfileBinding
     private lateinit var sharedPreferences: SharedPreferences
     private var imgprofil : Uri?= null
-    private  var dataprofil: UserProfilResponse ?= null
+    private  var dataprofil: UserProfilResponse?= null
     companion object {
         private const val TAG = "ChangeProfil"
         private const val PREF_NAME = "MyAppPreferences"
