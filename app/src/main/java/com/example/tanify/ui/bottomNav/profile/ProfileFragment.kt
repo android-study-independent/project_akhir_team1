@@ -8,13 +8,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.response.UserProfilResponse
 import com.example.tanify.databinding.FragmentProfileBinding
+import com.example.tanify.ui.bottomNav.forum.ForumViewModel
 import com.example.tanify.ui.bottomNav.profile.editProfile.ChangePasswordActivity
 import com.example.tanify.ui.bottomNav.profile.editProfile.ChangeProfileActivity
 import com.example.tanify.ui.login.LoginActivity
@@ -23,11 +26,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private var _binding: FragmentProfileBinding? = null
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private val binding get() = _binding!!
+
     private lateinit var sharedPreferences: SharedPreferences
+    private  var dataprofil: UserProfilResponse ?= null
 
     companion object {
         private const val TAG = "ProfileFragment"
@@ -53,24 +59,23 @@ class ProfileFragment : Fragment() {
         Log.d("token", TOKEN)
 
         // ambil data profil
-        val profilDataString  = sharedPreferences.getString("profil", null)
-        if (profilDataString  == null) {
-            getProfil()
-        } else {
-            val gson = Gson()
-            val profilData = gson.fromJson(profilDataString , UserProfilResponse::class.java)
-            processDataProfil(profilData)
-        }
+        getProfil()
+
+        // Inisialisasi swipeRefreshLayout
+        swipeRefreshLayout = binding.swipeRefreshLayout
+
 
         return root
     }
 
-    private fun processDataProfil(profilData: UserProfilResponse) {
-        Log.d(TAG,"set data profil ke ui" )
-        binding.profilName.text = profilData.nama
-        binding.profilEmail.text = profilData.email
 
-        val foto = profilData.photo?.removePrefix("../")
+
+    private fun processDataProfil(profilData: UserProfilResponse?) {
+        Log.d(TAG,"set data profil ke ui" )
+        binding.profilName.text = profilData?.nama
+        binding.profilEmail.text = profilData?.email
+
+        val foto = profilData?.photo?.removePrefix("../")
         Glide.with(this)
             .load("http://195.35.32.179:8001/"+foto)
             .placeholder(R.drawable.icon_user)
@@ -89,7 +94,7 @@ class ProfileFragment : Fragment() {
                     ) {
                         showLoading(false)
                        if(response.isSuccessful){
-                           val dataprofil = response.body()
+                           dataprofil = response.body()
                            Log.d("name - profil", dataprofil?.nama.toString())
                            if (dataprofil != null) {
                                processDataProfil(dataprofil)
@@ -106,7 +111,7 @@ class ProfileFragment : Fragment() {
 
                 })
         }
-    private fun saveProfilToSharedPreferences(profilData: UserProfilResponse) {
+    private fun saveProfilToSharedPreferences(profilData: UserProfilResponse?) {
         val gson = Gson()
         val profilDataString = gson.toJson(profilData)
 
@@ -143,6 +148,7 @@ class ProfileFragment : Fragment() {
             val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
             startActivity(intent)
         }
+        binding.swipeRefreshLayout.setOnRefreshListener(this)
     }
     private fun showLoading(isLoading: Boolean){
         if (isLoading) {
@@ -157,5 +163,13 @@ class ProfileFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onRefresh() {
+        showLoading(true)
+        getProfil()
+        Toast.makeText(requireContext(), "Refresh", Toast.LENGTH_SHORT).show()
+        showLoading(false)
+        swipeRefreshLayout.isRefreshing = false
     }
 }

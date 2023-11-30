@@ -1,7 +1,10 @@
 package com.example.tanify.ui.bottomNav.profile.editProfile
 
+import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,8 +12,13 @@ import android.os.Handler
 import android.text.Editable
 import android.util.Log
 import android.view.View
-import androidx.activity.result.PickVisualMediaRequest
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.response.EditProfilResponse
 import com.example.tanify.data.response.UserProfilResponse
@@ -35,7 +43,7 @@ class ChangeProfileActivity : AppCompatActivity() {
         private const val TAG = "ChangeProfil"
         private const val PREF_NAME = "MyAppPreferences"
         private var TOKEN = "token"
-        private var PROFIL = "profil"
+        private const val REQUEST_CODE_PERMISSION = 123
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,21 +53,53 @@ class ChangeProfileActivity : AppCompatActivity() {
         // Ambil data login, profil, dan imgprofil dari SharedPreferences
         sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         TOKEN = sharedPreferences.getString("token", "").toString()
-        PROFIL = sharedPreferences.getString("profil", null).toString()
-
-        // Ambil URI gambar dari SharedPreferences
-        val imgUriString = sharedPreferences.getString("imageProfil", null)
-        imgprofil = if (imgUriString != null) Uri.parse(imgUriString) else null
 
         val gson = Gson()
-        dataprofil = gson.fromJson(PROFIL, UserProfilResponse::class.java)
+        val profil = sharedPreferences.getString("profil", null).toString()
+        dataprofil = gson.fromJson(profil, UserProfilResponse::class.java)
         Log.d("token", TOKEN)
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            // Jika izin sudah diberikan, lanjutkan dengan menginisialisasi tampilan dan memulai aktivitas
+            setdataprofil(dataprofil)
+            startActivity()
+        } else {
+            // Jika izin belum diberikan, minta izin kepada pengguna
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                REQUEST_CODE_PERMISSION
+            )
+        }
 
         setdataprofil(dataprofil)
         startActivity()
     }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Jika izin diberikan, lanjutkan dengan menginisialisasi tampilan dan memulai aktivitas
+                setdataprofil(dataprofil)
+                startActivity()
+            } else {
+                // Jika izin ditolak, berikan pesan atau tindakan yang sesuai
+                Log.d(TAG, "Permission denied")
+                // Tambahkan kode di sini untuk memberikan pesan kepada pengguna atau melakukan tindakan lainnya
+            }
+        }
+    }
+
     private val launcherGallery = registerForActivityResult(
-        ActivityResultContracts.PickVisualMedia()
+        ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         if (uri != null) {
             imgprofil = uri
@@ -68,19 +108,51 @@ class ChangeProfileActivity : AppCompatActivity() {
             Log.d("Photo Picker", "No media selected")
         }
     }
-    private fun startGallery() {
-        launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-    }
 
     private fun setdataprofil(dataprofil: UserProfilResponse?) {
         binding.iptNama.text = Editable.Factory.getInstance().newEditable(dataprofil?.nama)
         binding.iptEmail.text = Editable.Factory.getInstance().newEditable(dataprofil?.email)
-        imgprofil?.let { binding.imgprofil.setImageURI(it) }
+        val foto = dataprofil?.photo?.removePrefix("../")
+        Glide.with(this)
+            .load("http://195.35.32.179:8001/"+foto)
+            .placeholder(R.drawable.icon_user)
+            .error(R.drawable.icon_user)
+            .into(binding.imgprofil)
+    }
+    private fun startGallery() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            launcherGallery.launch("image/*")
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                REQUEST_CODE_PERMISSION
+            )
+        }
     }
 
-    private fun prepareImagePart(uri: Uri): MultipartBody.Part {
-        val file = File(uri.path ?: "")
-        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+    private fun prepareImagePart(uri: Uri?): MultipartBody.Part {
+        val contentResolver = contentResolver
+        val inputStream = uri?.let { contentResolver.openInputStream(it) }
+        val file = createTempFile()
+
+        inputStream?.use { input ->
+            file.outputStream().use { output ->
+                input.copyTo(output)
+            }
+        }
+
+        // Mendapatkan tipe media dari URI (contoh: image/jpeg, image/png)
+        val contentType = contentResolver.getType(uri!!)?.toMediaTypeOrNull()
+        Toast.makeText(applicationContext, "type gambar : $contentType", Toast.LENGTH_SHORT).show()
+
+
+        // Membuat bagian MultipartBody dengan tipe media yang sesuai
+        val requestFile = RequestBody.create(contentType, file)
         return MultipartBody.Part.createFormData("photo", file.name, requestFile)
     }
 
@@ -92,7 +164,7 @@ class ChangeProfileActivity : AppCompatActivity() {
             finish();
         }
         binding.iptimg.setOnClickListener{
-            Log.d("========= edit profil","================================= get img")
+            Log.d("========= edit profil","========1========================= get img")
             startGallery()
         }
         binding.btnSimpan.setOnClickListener{
@@ -100,6 +172,7 @@ class ChangeProfileActivity : AppCompatActivity() {
             // simpan ke api
             Log.d("berhasil", "nama -=================----------------================ $nama")
             val imgprofilPart = imgprofil?.let { prepareImagePart(it) }
+                ?: prepareImagePart(getDefaultImageUri())
             ApiConfig.instanceRetrofit.editUserProfil(
                 "Bearer " + TOKEN,
                 nama,
@@ -111,20 +184,18 @@ class ChangeProfileActivity : AppCompatActivity() {
                 ) {
                     Log.d("cek berhasil ", "================================ 0 ===========")
                     if (response.isSuccessful) {
-                        // jika regis berhasil, maka ada parameter msg
-                        Log.d("berasil ", "================================ 1")
-                        Log.d("berasil ", response.body().toString())
-                        Log.d("berasil ", "================================ 1")
-                        showSnackbar(response.body()?.msg.toString())
+                        Toast.makeText(applicationContext, "berhasil", Toast.LENGTH_SHORT).show()
+
                     } else {
                         Log.d("gagal regis ", "================================ 901")
                         Log.e(TAG, "onFailure: ${response.message()}")
+                        Toast.makeText(applicationContext, "gagal 1", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<EditProfilResponse>, t: Throwable) {
                     Log.d("gagal regis ", "================================ 902")
-                    Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
+                    Toast.makeText(applicationContext, "gagal total", Toast.LENGTH_SHORT).show()
                 }
 
             })
@@ -132,10 +203,14 @@ class ChangeProfileActivity : AppCompatActivity() {
 
         }
     }
-    private fun showSnackbar(message: String) {
-        val rootView: View = findViewById(android.R.id.content)
-        val snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT)
-        snackbar.show()
+
+    private fun getDefaultImageUri(): Uri? {
+        val drawableId = R.drawable.foto_profile
+        val drawableUri = Resources.getSystem().getResourceName(drawableId)
+        Toast.makeText(applicationContext, "gambar is null", Toast.LENGTH_SHORT).show()
+        return Uri.parse("android.resource://$packageName/$drawableUri")
     }
+
+
 
 }
