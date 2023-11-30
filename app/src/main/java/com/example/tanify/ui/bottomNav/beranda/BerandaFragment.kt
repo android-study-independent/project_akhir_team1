@@ -21,13 +21,10 @@ import com.google.android.gms.location.LocationServices
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
-import com.example.tanify.data.data.ArtikelBerandaItemData
-import com.example.tanify.data.data.FiturItemData
-import com.example.tanify.data.response.Artikel
-import com.example.tanify.data.response.ArtikelResponse
-import com.example.tanify.data.response.CurrentWeatherResponse
+import com.example.tanify.data.response.artikel.Artikel
+import com.example.tanify.data.response.artikel.ArtikelResponse
+import com.example.tanify.data.response.weather.CurrentWeatherResponse
 import com.example.tanify.helper.weatherFormattedNumber
 import com.example.tanify.ui.bottomNav.beranda.items.ItemBerandaArtikelAdapter
 import com.example.tanify.ui.weather.WeatherActivity

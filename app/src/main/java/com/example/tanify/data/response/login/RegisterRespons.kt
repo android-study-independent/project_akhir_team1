@@ -1,16 +1,16 @@
-package com.example.tanify.data.response
+package com.example.tanify.data.response.login
 
 import com.google.gson.annotations.SerializedName
 
 data class RegisterRespons(
-	@SerializedName("msg")
+    @SerializedName("msg")
 	val message: String? = null,
-	@SerializedName("data")
+    @SerializedName("data")
 	val data: data? = null,
-	@SerializedName("error")
+    @SerializedName("error")
 	val error: error? = null,
 
-)
+    )
 
 data class data(
 	@SerializedName("id")
@@ -23,18 +23,18 @@ data class data(
 )
 
 data class error(
-	@SerializedName("nama")
+    @SerializedName("nama")
 	val nama: errordata? = null,
-	@SerializedName("email")
+    @SerializedName("email")
 	val email: errordata? = null,
-	@SerializedName("password")
+    @SerializedName("password")
 	val password: errordata? = null,
-	@SerializedName("konfirmasiPassword")
+    @SerializedName("konfirmasiPassword")
 	val konfirmasiPassword: errordata? = null,
 	@SerializedName("foto")
 	val foto: errordata? = null,
 
-)
+    )
 
 data class errordata(
 	@SerializedName("type")
