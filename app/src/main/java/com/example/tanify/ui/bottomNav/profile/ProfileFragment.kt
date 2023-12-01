@@ -8,13 +8,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.response.profile.UserProfilResponse
 import com.example.tanify.databinding.FragmentProfileBinding
+import com.example.tanify.ui.bottomNav.forum.ForumViewModel
 import com.example.tanify.ui.bottomNav.profile.editProfile.ChangePasswordActivity
 import com.example.tanify.ui.bottomNav.profile.editProfile.ChangeProfileActivity
 import com.example.tanify.ui.login.LoginActivity
@@ -23,11 +27,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private var _binding: FragmentProfileBinding? = null
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private val binding get() = _binding!!
+
     private lateinit var sharedPreferences: SharedPreferences
+    private var dataprofil: UserProfilResponse? = null
 
     companion object {
         private const val TAG = "ProfileFragment"
@@ -38,7 +45,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val profileViewModel =
             ViewModelProvider(this).get(ProfileViewModel::class.java)
@@ -53,65 +60,67 @@ class ProfileFragment : Fragment() {
         Log.d("token", TOKEN)
 
         // ambil data profil
-        val profilDataString  = sharedPreferences.getString("profil", null)
-        if (profilDataString  == null) {
-            getProfil()
-        } else {
-            val gson = Gson()
-            val profilData = gson.fromJson(profilDataString , UserProfilResponse::class.java)
-            processDataProfil(profilData)
-        }
+        getProfil()
+
+        // Inisialisasi swipeRefreshLayout
+        swipeRefreshLayout = binding.swipeRefreshLayout
+
 
         return root
     }
 
-    private fun processDataProfil(profilData: UserProfilResponse) {
-        Log.d(TAG,"set data profil ke ui" )
-        binding.profilName.text = profilData.nama
-        binding.profilEmail.text = profilData.email
 
-        val foto = profilData.photo?.removePrefix("../")
+    private fun processDataProfil(profilData: UserProfilResponse?) {
+        Log.d(TAG, "set data profil ke ui")
+        binding.profilName.text = profilData?.nama
+        binding.profilEmail.text = profilData?.email
+
+        val foto = profilData?.photo?.removePrefix("../")
         Glide.with(this)
-            .load("http://195.35.32.179:8001/"+foto)
+            .load("http://195.35.32.179:8001/" + foto)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
             .placeholder(R.drawable.icon_user)
             .error(R.drawable.icon_user)
             .into(binding.profilImg)
     }
 
-        private fun getProfil() {
-            showLoading(true)
-            ApiConfig.instanceRetrofit.getUserProfil(
-                "Bearer " + TOKEN
-            ).enqueue(object : Callback<UserProfilResponse>{
-                    override fun onResponse(
-                        call: Call<UserProfilResponse>,
-                        response: Response<UserProfilResponse>,
-                    ) {
-                        showLoading(false)
-                       if(response.isSuccessful){
-                           val dataprofil = response.body()
-                           Log.d("name - profil", dataprofil?.nama.toString())
-                           if (dataprofil != null) {
-                               processDataProfil(dataprofil)
-                               saveProfilToSharedPreferences(dataprofil)
-                           }
-                       }else{
-                           Log.e(TAG, "onFailure: ${response.message()}")
-                       }
+    private fun getProfil() {
+        showLoading(true)
+        ApiConfig.instanceRetrofit.getUserProfil(
+            "Bearer " + TOKEN
+        ).enqueue(object : Callback<UserProfilResponse> {
+            override fun onResponse(
+                call: Call<UserProfilResponse>,
+                response: Response<UserProfilResponse>,
+            ) {
+                showLoading(false)
+                if (response.isSuccessful) {
+                    dataprofil = response.body()
+                    Log.d("name - profil", dataprofil?.nama.toString())
+                    dataprofil?.nama = dataprofil?.nama?.replace("[\\\"]".toRegex(), "")
+                    if (dataprofil != null) {
+                        processDataProfil(dataprofil)
+                        saveProfilToSharedPreferences(dataprofil)
                     }
-                    override fun onFailure(call: Call<UserProfilResponse>, t: Throwable) {
-                        showLoading(false)
-                        Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
-                    }
+                } else {
+                    Log.e(TAG, "onFailure: ${response.message()}")
+                }
+            }
 
-                })
-        }
-    private fun saveProfilToSharedPreferences(profilData: UserProfilResponse) {
+            override fun onFailure(call: Call<UserProfilResponse>, t: Throwable) {
+                showLoading(false)
+                Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
+            }
+
+        })
+    }
+
+    private fun saveProfilToSharedPreferences(profilData: UserProfilResponse?) {
         val gson = Gson()
         val profilDataString = gson.toJson(profilData)
 
         with(sharedPreferences.edit()) {
-            putString("profilData", profilDataString)
+            putString("profil", profilDataString)
             apply()
         }
     }
@@ -135,16 +144,18 @@ class ProfileFragment : Fragment() {
             requireActivity().finish()
         }
 
-        binding.btnUbahProfil.setOnClickListener{
+        binding.btnUbahProfil.setOnClickListener {
             val intent = Intent(requireContext(), ChangeProfileActivity::class.java)
             startActivity(intent)
         }
-        binding.btnUbahPw.setOnClickListener{
+        binding.btnUbahPw.setOnClickListener {
             val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
             startActivity(intent)
         }
+        binding.swipeRefreshLayout.setOnRefreshListener(this)
     }
-    private fun showLoading(isLoading: Boolean){
+
+    private fun showLoading(isLoading: Boolean) {
         if (isLoading) {
             Log.d("loading", "==== true ========================================================")
             binding.progressCircular.visibility = View.VISIBLE
@@ -157,5 +168,13 @@ class ProfileFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onRefresh() {
+        showLoading(true)
+        getProfil()
+        Toast.makeText(requireContext(), "Refresh", Toast.LENGTH_SHORT).show()
+        showLoading(false)
+        swipeRefreshLayout.isRefreshing = false
     }
 }

@@ -112,7 +112,6 @@
             android:id="@+id/heart_forum_button"
             android:layout_width="29dp"
             android:layout_height="29dp"
-            android:layout_marginLeft="32dp"
             android:src="@drawable/button_forum_heart" />
 
         <TextView
