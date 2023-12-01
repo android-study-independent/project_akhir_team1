@@ -72,6 +72,7 @@
                     app:cardCornerRadius="60dp">
 
                     <ImageView
+                        android:id="@+id/imgprofil"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
@@ -80,6 +81,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/iptimg"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 app:cardCornerRadius="14dp"
@@ -125,6 +127,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hintEnabled="false"
+            app:hintAnimationEnabled="false"
+            app:boxBackgroundMode="outline"
             app:boxStrokeWidth="0dp"
             android:background="@drawable/bg_edittext_slowgreen"
             style="@style/TextInputLayoutStyle">
@@ -153,8 +157,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hintEnabled="false"
-            app:boxStrokeWidth="0dp"
-            android:background="@drawable/bg_edittext_slowgreen"
+            app:boxStrokeWidth="2dp"
+            app:hintAnimationEnabled="false"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="@color/black"
             style="@style/TextInputLayoutStyle">
 
             <EditText
@@ -164,8 +174,12 @@
                 android:height="50dp"
                 android:textSize="12sp"
                 android:fontFamily="@font/poppins_regular"
-                android:hint="@string/hint_register_email"/>
+                android:hint="@string/hint_register_email"
+                android:inputType="none"
+                android:focusable="false"
+                android:clickable="false"/>
         </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.example.tanify.custom.CustomButtonFillGreen
             android:id="@+id/btn_simpan"
@@ -179,7 +193,7 @@
             android:fontFamily="@font/poppins_regular"
             android:textStyle="bold"/>
 
-        <com.example.tanify.custom.CustomButtonStrokeGreen
+        <com.example.tanify.custom.CustomButtonStrokeRed
             android:id="@+id/btn_batalkan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

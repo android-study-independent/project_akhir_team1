@@ -31,6 +31,8 @@ data class error(
 	val password: errordata? = null,
     @SerializedName("konfirmasiPassword")
 	val konfirmasiPassword: errordata? = null,
+	@SerializedName("foto")
+	val foto: errordata? = null,
 
     )
 
