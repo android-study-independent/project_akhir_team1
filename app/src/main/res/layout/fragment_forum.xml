@@ -37,24 +37,50 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/iv_fragmen_forum"
-        android:layout_marginRight="25dp"
+        android:layout_marginEnd="25dp"
         tools:layout_editor_absoluteY="13dp"/>
 
+<androidx.cardview.widget.CardView
+    android:id="@+id/fab_add"
+    android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:backgroundTint="@color/secondary_yellow"
+    app:cardCornerRadius="100dp"
+    android:layout_marginEnd="24dp"
+    android:elevation="8dp"
+    app:layout_constraintBottom_toBottomOf="@+id/iv_fragmen_forum"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/iv_fragmen_forum">
+
     <ImageView
-        android:id="@+id/iv_button_add_forum"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/icon_button_plus"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_fragmen_forum"
-        app:layout_constraintEnd_toEndOf="@+id/iv_button_search"
-        app:layout_constraintStart_toStartOf="@+id/iv_button_search"
-        app:layout_constraintTop_toBottomOf="@+id/iv_fragmen_forum" />
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_plus"
+        android:layout_gravity="center"/>
+</androidx.cardview.widget.CardView>
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/btn_floating_add"-->
+<!--        android:layout_width="48dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:layout_marginEnd="24dp"-->
+<!--        app:fabSize="mini"-->
+<!--        app:fabCustomSize="48dp"-->
+<!--        android:src="@drawable/ic_add"-->
+<!--        android:backgroundTint="@color/secondary_yellow"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/iv_fragmen_forum"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/iv_fragmen_forum"-->
+<!--        android:contentDescription="@string/menambahkan_forum_diskusi" />-->
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="559dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_fragmen_forum" />
+
+
 
 
 

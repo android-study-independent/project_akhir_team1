@@ -68,4 +68,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
+    //custom widget
+    implementation("com.robertlevonyan.view:CustomFloatingActionButton:2.1.0")
+
 }

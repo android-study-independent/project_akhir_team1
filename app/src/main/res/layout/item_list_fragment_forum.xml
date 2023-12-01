@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="434dp"
+    android:id="@+id/container_forum"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <View
@@ -47,7 +48,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="17 Nov 2023"
-
         app:layout_constraintStart_toStartOf="@+id/tv_name_creator_forum"
         app:layout_constraintTop_toBottomOf="@+id/tv_name_creator_forum"
         android:fontFamily="@font/poppins_regular"

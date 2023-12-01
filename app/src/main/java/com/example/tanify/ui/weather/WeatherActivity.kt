@@ -67,7 +67,13 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     private fun setRecyclerView(){
-        weatherAdapter = ItemWeatherWeeklyAdapter(this, emptyList())
+        weatherAdapter = ItemWeatherWeeklyAdapter(this, emptyList(),
+            { weather ->
+                Log.d("Kak Dhika", "ini weather")
+            },
+            {
+                Log.d("Kak Dhika", "ini contoh")
+            })
         binding.rvWeatherWeekly.layoutManager = LinearLayoutManager(this)
         binding.rvWeatherWeekly.adapter = weatherAdapter
     }

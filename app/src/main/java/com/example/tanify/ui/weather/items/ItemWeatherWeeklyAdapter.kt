@@ -2,6 +2,7 @@ package com.example.tanify.ui.weather.items
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,10 +11,13 @@ import com.example.tanify.data.response.weather.WeeklyWeatherResponseItem
 import com.example.tanify.databinding.ItemWeatherWeeklyBinding
 import com.example.tanify.helper.formatDate
 import com.example.tanify.helper.getDayFromDate
+import com.example.tanify.ui.weather.WeatherActivity
 
 class ItemWeatherWeeklyAdapter(
     private val context: Context,
-    private var listWeather: List<WeeklyWeatherResponseItem>
+    private var listWeather: List<WeeklyWeatherResponseItem>,
+    private var onClick: (weather: WeeklyWeatherResponseItem) -> Unit,
+    private val contoh: () -> Unit
 ) : RecyclerView.Adapter<ItemWeatherWeeklyAdapter.ItemWeatherWeeklyHolder>() {
     inner class ItemWeatherWeeklyHolder(internal val binding: ItemWeatherWeeklyBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -40,6 +44,14 @@ class ItemWeatherWeeklyAdapter(
         Glide.with(context)
             .load(posterPath)
             .into(holder.binding.ivIconWeatherWeekly)
+
+        holder.binding.containerWeather.setOnClickListener {
+            onClick(dayWeather)
+            Log.d("Kak Dhika", "coba click kak Dhika")
+        }
+        holder.binding.ivIconWeatherWeekly.setOnClickListener {
+            contoh()
+        }
     }
 
     private fun buildIconPath(iconPath: String?): String {
