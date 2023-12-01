@@ -4,35 +4,37 @@ import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.text.Editable
 import android.util.Log
-import android.view.View
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.response.EditProfilResponse
 import com.example.tanify.data.response.profile.UserProfilResponse
 import com.example.tanify.databinding.ActivityChangeProfileBinding
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 class ChangeProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChangeProfileBinding
@@ -59,44 +61,28 @@ class ChangeProfileActivity : AppCompatActivity() {
         dataprofil = gson.fromJson(profil, UserProfilResponse::class.java)
         Log.d("token", TOKEN)
 
-        if (ContextCompat.checkSelfPermission(
+        checkStoragePermission()
+
+        setdataprofil(dataprofil)
+        startActivity()
+    }
+    private fun checkStoragePermission(): Boolean {
+        return if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.READ_EXTERNAL_STORAGE
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            // Jika izin sudah diberikan, lanjutkan dengan menginisialisasi tampilan dan memulai aktivitas
-            setdataprofil(dataprofil)
-            startActivity()
+            return true
         } else {
-            // Jika izin belum diberikan, minta izin kepada pengguna
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 REQUEST_CODE_PERMISSION
             )
+            return false
         }
+    }
 
-        setdataprofil(dataprofil)
-        startActivity()
-    }
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_PERMISSION) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Jika izin diberikan, lanjutkan dengan menginisialisasi tampilan dan memulai aktivitas
-                setdataprofil(dataprofil)
-                startActivity()
-            } else {
-                // Jika izin ditolak, berikan pesan atau tindakan yang sesuai
-                Log.d(TAG, "Permission denied")
-                // Tambahkan kode di sini untuk memberikan pesan kepada pengguna atau melakukan tindakan lainnya
-            }
-        }
-    }
 
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.GetContent()
@@ -104,6 +90,7 @@ class ChangeProfileActivity : AppCompatActivity() {
         if (uri != null) {
             imgprofil = uri
             imgprofil?.let { binding.imgprofil.setImageURI(it)}
+            Log.d("Photo Picker", imgprofil.toString())
         } else {
             Log.d("Photo Picker", "No media selected")
         }
@@ -115,68 +102,52 @@ class ChangeProfileActivity : AppCompatActivity() {
         val foto = dataprofil?.photo?.removePrefix("../")
         Glide.with(this)
             .load("http://195.35.32.179:8001/"+foto)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
             .placeholder(R.drawable.icon_user)
             .error(R.drawable.icon_user)
             .into(binding.imgprofil)
     }
-    private fun startGallery() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            launcherGallery.launch("image/*")
-        } else {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                REQUEST_CODE_PERMISSION
-            )
-        }
-    }
-
-    private fun prepareImagePart(uri: Uri?): MultipartBody.Part {
-        val contentResolver = contentResolver
-        val inputStream = uri?.let { contentResolver.openInputStream(it) }
-        val file = createTempFile()
-
-        inputStream?.use { input ->
-            file.outputStream().use { output ->
-                input.copyTo(output)
-            }
-        }
-
-        // Mendapatkan tipe media dari URI (contoh: image/jpeg, image/png)
-        val contentType = contentResolver.getType(uri!!)?.toMediaTypeOrNull()
-        Toast.makeText(applicationContext, "type gambar : $contentType", Toast.LENGTH_SHORT).show()
-
-
-        // Membuat bagian MultipartBody dengan tipe media yang sesuai
-        val requestFile = RequestBody.create(contentType, file)
-        return MultipartBody.Part.createFormData("photo", file.name, requestFile)
-    }
+    
 
     private fun startActivity() {
         binding.btnBack.setOnClickListener{
-            finish();
+            finish()
         }
         binding.btnBatalkan.setOnClickListener{
-            finish();
+            finish()
         }
         binding.iptimg.setOnClickListener{
             Log.d("========= edit profil","========1========================= get img")
-            startGallery()
+            if(checkStoragePermission()){
+                launcherGallery.launch("image/*")
+            }
         }
         binding.btnSimpan.setOnClickListener{
-            val nama = binding.iptNama.text.toString()
+            val nama = binding.iptNama.text.toString().replace("\\", "")
             // simpan ke api
             Log.d("berhasil", "nama -=================----------------================ $nama")
-            val imgprofilPart = imgprofil?.let { prepareImagePart(it) }
-                ?: prepareImagePart(getDefaultImageUri())
+
+            var imgprofilPart: MultipartBody.Part? = null
+
+            imgprofil?.let{uri ->
+                val imageFile = uriToFile(uri, this)
+                Log.d("Image File", "showImage: ${imageFile.path}")
+
+                val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+                imgprofilPart = MultipartBody.Part.createFormData(
+                    "photo",
+                    imageFile.name,
+                    requestImageFile
+                )
+            }?:{
+                imgprofilPart = null
+            }
+
+
             ApiConfig.instanceRetrofit.editUserProfil(
                 "Bearer " + TOKEN,
                 nama,
-                imgprofilPart ?: MultipartBody.Part.createFormData("photo", "")
+                imgprofilPart
             ).enqueue(object : Callback<EditProfilResponse>{
                 override fun onResponse(
                     call: Call<EditProfilResponse>,
@@ -184,8 +155,11 @@ class ChangeProfileActivity : AppCompatActivity() {
                 ) {
                     Log.d("cek berhasil ", "================================ 0 ===========")
                     if (response.isSuccessful) {
+                        Log.d("berhasil regis ", "================================ 100")
                         Toast.makeText(applicationContext, "berhasil", Toast.LENGTH_SHORT).show()
-
+                        Handler().postDelayed({
+                            finish()
+                        }, 1000)
                     } else {
                         Log.d("gagal regis ", "================================ 901")
                         Log.e(TAG, "onFailure: ${response.message()}")
@@ -204,12 +178,28 @@ class ChangeProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun getDefaultImageUri(): Uri? {
-        val drawableId = R.drawable.foto_profile
-        val drawableUri = Resources.getSystem().getResourceName(drawableId)
-        Toast.makeText(applicationContext, "gambar is null", Toast.LENGTH_SHORT).show()
-        return Uri.parse("android.resource://$packageName/$drawableUri")
+    fun uriToFile(imageUri: Uri, context: Context): File {
+        val myFile = createCustomTempFile(context)
+        val inputStream = context.contentResolver.openInputStream(imageUri) as InputStream
+        val outputStream = FileOutputStream(myFile)
+        val buffer = ByteArray(1024)
+        var length: Int
+        while (inputStream.read(buffer).also { length = it } > 0) outputStream.write(buffer, 0, length)
+        outputStream.close()
+        inputStream.close()
+        return myFile
     }
+
+    fun createCustomTempFile(context: Context): File {
+        val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile("profil_user", ".jpg", storageDir)
+    }
+
+
+
+
+
+
 
 
 

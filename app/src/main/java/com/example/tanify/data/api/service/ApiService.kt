@@ -59,7 +59,7 @@ interface ApiService {
     fun editUserProfil(
         @Header("Authorization") authorization: String,
         @Part("nama") nama: String,
-        @Part photo: MultipartBody.Part,
+        @Part photo: MultipartBody.Part?,
     ): Call<EditProfilResponse>
 
     @PUT("profile/edit-pass")
