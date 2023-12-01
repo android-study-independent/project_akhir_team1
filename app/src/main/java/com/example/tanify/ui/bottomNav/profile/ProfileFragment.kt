@@ -1,5 +1,6 @@
 package com.example.tanify.ui.bottomNav.profile
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -35,6 +36,7 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var sharedPreferences: SharedPreferences
     private var dataprofil: UserProfilResponse? = null
+    val requestCode = 123
 
     companion object {
         private const val TAG = "ProfileFragment"
@@ -60,31 +62,33 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         Log.d("token", TOKEN)
 
         // ambil data profil
-        getProfil()
+        getProfil(false)
 
         // Inisialisasi swipeRefreshLayout
         swipeRefreshLayout = binding.swipeRefreshLayout
+
 
 
         return root
     }
 
 
-    private fun processDataProfil(profilData: UserProfilResponse?) {
+    private fun processDataProfil(profilData: UserProfilResponse?, isUpdate: Boolean = false) {
         Log.d(TAG, "set data profil ke ui")
-        binding.profilName.text = profilData?.nama
+        binding.profilName.text = profilData?.nama?.replace("[\\\"]".toRegex(), "")
         binding.profilEmail.text = profilData?.email
 
         val foto = profilData?.photo?.removePrefix("../")
         Glide.with(this)
             .load("http://195.35.32.179:8001/" + foto)
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(isUpdate)
+            //.diskCacheStrategy(DiskCacheStrategy.NONE)
             .placeholder(R.drawable.icon_user)
             .error(R.drawable.icon_user)
             .into(binding.profilImg)
     }
 
-    private fun getProfil() {
+    private fun getProfil(isUpdate:Boolean) {
         showLoading(true)
         ApiConfig.instanceRetrofit.getUserProfil(
             "Bearer " + TOKEN
@@ -97,9 +101,9 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 if (response.isSuccessful) {
                     dataprofil = response.body()
                     Log.d("name - profil", dataprofil?.nama.toString())
-                    dataprofil?.nama = dataprofil?.nama?.replace("[\\\"]".toRegex(), "")
+                    dataprofil?.nama = dataprofil?.nama
                     if (dataprofil != null) {
-                        processDataProfil(dataprofil)
+                        processDataProfil(dataprofil, isUpdate)
                         saveProfilToSharedPreferences(dataprofil)
                     }
                 } else {
@@ -146,7 +150,9 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         binding.btnUbahProfil.setOnClickListener {
             val intent = Intent(requireContext(), ChangeProfileActivity::class.java)
-            startActivity(intent)
+            //startActivity(intent)
+            startActivityForResult(intent, requestCode)
+
         }
         binding.btnUbahPw.setOnClickListener {
             val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
@@ -172,7 +178,7 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onRefresh() {
         showLoading(true)
-        getProfil()
+        getProfil(true)
         Toast.makeText(requireContext(), "Refresh", Toast.LENGTH_SHORT).show()
         showLoading(false)
         swipeRefreshLayout.isRefreshing = false
