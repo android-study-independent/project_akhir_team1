@@ -174,8 +174,12 @@
                 android:height="50dp"
                 android:textSize="12sp"
                 android:fontFamily="@font/poppins_regular"
-                android:hint="@string/hint_register_email"/>
+                android:hint="@string/hint_register_email"
+                android:inputType="none"
+                android:focusable="false"
+                android:clickable="false"/>
         </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.example.tanify.custom.CustomButtonFillGreen
             android:id="@+id/btn_simpan"
@@ -189,7 +193,7 @@
             android:fontFamily="@font/poppins_regular"
             android:textStyle="bold"/>
 
-        <com.example.tanify.custom.CustomButtonStrokeGreen
+        <com.example.tanify.custom.CustomButtonStrokeRed
             android:id="@+id/btn_batalkan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

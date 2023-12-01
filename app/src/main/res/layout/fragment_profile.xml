@@ -115,7 +115,7 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/btn_ubah_profil"
-            android:paddingVertical="5dp"
+            android:paddingVertical="8dp"
             android:layout_marginVertical="3dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/btn_tentang"
-            android:paddingVertical="5dp"
+            android:paddingVertical="8dp"
             android:layout_marginVertical="3dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -201,7 +201,7 @@
             android:background="@android:color/darker_gray"/>
         <LinearLayout
             android:id="@+id/btn_bantuan"
-            android:paddingVertical="5dp"
+            android:paddingVertical="8dp"
             android:layout_marginVertical="3dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -224,7 +224,7 @@
             android:background="@android:color/darker_gray"/>
         <LinearLayout
             android:id="@+id/btn_syarat_dan_ketentuan"
-            android:paddingVertical="5dp"
+            android:paddingVertical="8dp"
             android:layout_marginVertical="3dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -249,14 +249,14 @@
             android:textColor="@color/white"
             android:id="@+id/btn_logout"
             android:textSize="16sp"
-            android:fontFamily="@font/poppins_regular"
+            android:fontFamily="@font/poppins_bold"
             android:textAllCaps="false"
             android:paddingHorizontal="15dp"
             android:text="Keluar Akun"
             android:gravity="center_vertical"
             android:drawableEnd="@drawable/icon_signout"
-            android:background="@drawable/bg_button_green_ennabled"
-            android:backgroundTint="@color/primary_green"
+            android:background="@drawable/bg_button_red_ennabled"
+            android:backgroundTint="@color/red"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
