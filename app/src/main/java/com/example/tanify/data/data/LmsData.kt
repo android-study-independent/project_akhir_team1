@@ -1,4 +1,6 @@
 package com.example.tanify.data.data
 
-class LmsData {
-}
+
+data class searchdatalms(
+    val search:String,
+)
