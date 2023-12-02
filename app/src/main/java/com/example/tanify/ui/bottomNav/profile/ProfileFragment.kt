@@ -19,6 +19,8 @@ import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.response.profile.UserProfilResponse
 import com.example.tanify.databinding.FragmentProfileBinding
+import com.example.tanify.helper.GetUserProfilCallback
+import com.example.tanify.helper.getUserProfil
 import com.example.tanify.ui.bottomNav.forum.ForumViewModel
 import com.example.tanify.ui.bottomNav.profile.editProfile.ChangePasswordActivity
 import com.example.tanify.ui.bottomNav.profile.editProfile.ChangeProfileActivity
@@ -67,8 +69,6 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         // Inisialisasi swipeRefreshLayout
         swipeRefreshLayout = binding.swipeRefreshLayout
 
-
-
         return root
     }
 
@@ -88,36 +88,53 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             .into(binding.profilImg)
     }
 
-    private fun getProfil(isUpdate:Boolean) {
-        showLoading(true)
-        ApiConfig.instanceRetrofit.getUserProfil(
-            "Bearer " + TOKEN
-        ).enqueue(object : Callback<UserProfilResponse> {
-            override fun onResponse(
-                call: Call<UserProfilResponse>,
-                response: Response<UserProfilResponse>,
-            ) {
-                showLoading(false)
-                if (response.isSuccessful) {
-                    dataprofil = response.body()
-                    Log.d("name - profil", dataprofil?.nama.toString())
-                    dataprofil?.nama = dataprofil?.nama
-                    if (dataprofil != null) {
-                        processDataProfil(dataprofil, isUpdate)
-                        saveProfilToSharedPreferences(dataprofil)
-                    }
-                } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
-                }
+//    private fun getProfil(isUpdate:Boolean) {
+//        showLoading(true)
+//        ApiConfig.instanceRetrofit.getUserProfil(
+//            "Bearer " + TOKEN
+//        ).enqueue(object : Callback<UserProfilResponse> {
+//            override fun onResponse(
+//                call: Call<UserProfilResponse>,
+//                response: Response<UserProfilResponse>,
+//            ) {
+//                showLoading(false)
+//                if (response.isSuccessful) {
+//                    dataprofil = response.body()
+//                    Log.d("name - profil", dataprofil?.nama.toString())
+//                    dataprofil?.nama = dataprofil?.nama?.replace("[\\\"]".toRegex(), "")
+//                    if (dataprofil != null) {
+//                        processDataProfil(dataprofil, isUpdate)
+//                        saveProfilToSharedPreferences(dataprofil)
+//                    }
+//                } else {
+//                    Log.e(TAG, "onFailure: ${response.message()}")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<UserProfilResponse>, t: Throwable) {
+//                showLoading(false)
+//                Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
+//            }
+//
+//        })
+//    }
+
+    private fun getProfil(b: Boolean) {
+        getUserProfil(TOKEN, object : GetUserProfilCallback{
+            override fun onUserProfileReceived(userProfil: UserProfilResponse) {
+                dataprofil = userProfil
+                processDataProfil(dataprofil, b)
             }
 
-            override fun onFailure(call: Call<UserProfilResponse>, t: Throwable) {
-                showLoading(false)
-                Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
+            override fun onFailed(message: String) {
+                // token infalid
+                Log.e(TAG, "get Profile: ${message}")
             }
 
-        })
+        } )
     }
+
+
 
     private fun saveProfilToSharedPreferences(profilData: UserProfilResponse?) {
         val gson = Gson()
@@ -150,8 +167,8 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         binding.btnUbahProfil.setOnClickListener {
             val intent = Intent(requireContext(), ChangeProfileActivity::class.java)
-            //startActivity(intent)
             startActivityForResult(intent, requestCode)
+
 
         }
         binding.btnUbahPw.setOnClickListener {
@@ -183,4 +200,5 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         showLoading(false)
         swipeRefreshLayout.isRefreshing = false
     }
+
 }
