@@ -17,6 +17,7 @@ import com.example.tanify.data.response.profile.UserProfilResponse
 import com.example.tanify.data.response.weather.WeeklyWeatherResponseItem
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
@@ -57,6 +58,7 @@ interface ApiService {
         @Header("Authorization") authorization: String,
     ): Call<UserProfilResponse>
 
+//    @FormUrlEncoded
     @Multipart
     @PUT("profile/edit-profile")
     fun editUserProfil(
@@ -70,6 +72,7 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Body data: EditPassword,
     ): Call<EditPasswordResponse>
+    
 
     // LMS
     @GET("lms")
