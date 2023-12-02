@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="horizontal"
     android:layout_height="match_parent"
     tools:context=".ui.lms.LmsActivity">
 
@@ -31,7 +32,7 @@
             <ImageView
                 android:id="@+id/ivLogoLms"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:src="@drawable/logo_tanify"
                 android:layout_gravity="center"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -98,10 +99,10 @@
 
             <EditText
                 android:id="@+id/editTextSearch"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@drawable/bg_button_green_ennabled"
-                android:drawableEnd="@drawable/icon_search"
                 android:hint="@string/mau_belajar_apa"
                 android:textColorHint="@color/white"
                 android:fontFamily="@font/poppins_semibold"
@@ -111,6 +112,11 @@
                 android:paddingEnd="16dp"
                 android:singleLine="true"
                 />
+            <ImageView
+                android:id="@+id/btnsearchLesson"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_search"/>
 
         </LinearLayout>
         <TextView
