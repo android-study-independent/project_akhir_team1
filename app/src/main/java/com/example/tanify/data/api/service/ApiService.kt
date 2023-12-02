@@ -3,10 +3,13 @@ package com.example.tanify.data.api.service
 import com.example.tanify.data.data.EditPassword
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.data.RegisterData
+import com.example.tanify.data.data.searchdatalms
 import com.example.tanify.data.response.profile.EditPasswordResponse
 import com.example.tanify.data.response.EditProfilResponse
 import okhttp3.MultipartBody
 import com.example.tanify.data.response.artikel.ArtikelResponse
+import com.example.tanify.data.response.lms.lessonAllResponse
+import com.example.tanify.data.response.lms.searchResponse
 import com.example.tanify.data.response.weather.CurrentWeatherResponse
 import com.example.tanify.data.response.login.LoginResponse
 import com.example.tanify.data.response.login.RegisterRespons
@@ -67,5 +70,19 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Body data: EditPassword,
     ): Call<EditPasswordResponse>
+
+    // LMS
+    @GET("lms")
+    fun getAllLesson(
+        @Header("Authorization") authorization: String,
+    ): Call<lessonAllResponse>
+
+    @GET("lms/find")
+    fun searchLesson(
+        @Header("Authorization") authorization: String,
+        @Body data: searchdatalms,
+    ): Call<searchResponse>
+
+
 
 }
