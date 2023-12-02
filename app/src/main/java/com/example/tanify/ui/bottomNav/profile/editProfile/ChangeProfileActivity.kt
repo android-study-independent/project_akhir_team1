@@ -63,6 +63,7 @@ class ChangeProfileActivity : AppCompatActivity() {
 
         checkStoragePermission()
 
+
         setdataprofil(dataprofil)
         startActivity()
     }
@@ -97,15 +98,15 @@ class ChangeProfileActivity : AppCompatActivity() {
     }
 
     private fun setdataprofil(dataprofil: UserProfilResponse?) {
-        binding.iptNama.text = Editable.Factory.getInstance().newEditable(dataprofil?.nama)
+        binding.iptNama.text = Editable.Factory.getInstance().newEditable(dataprofil?.nama?.replace("[\\\"]".toRegex(), ""))
         binding.iptEmail.text = Editable.Factory.getInstance().newEditable(dataprofil?.email)
         val foto = dataprofil?.photo?.removePrefix("../")
-        Glide.with(this)
-            .load("http://195.35.32.179:8001/"+foto)
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .placeholder(R.drawable.icon_user)
-            .error(R.drawable.icon_user)
-            .into(binding.imgprofil)
+//        Glide.with(this)
+//            .load("http://195.35.32.179:8001/"+foto)
+//            .diskCacheStrategy(DiskCacheStrategy.NONE)
+//            .placeholder(R.drawable.icon_user)
+//            .error(R.drawable.icon_user)
+//            .into(binding.imgprofil)
     }
     
 
@@ -123,7 +124,7 @@ class ChangeProfileActivity : AppCompatActivity() {
             }
         }
         binding.btnSimpan.setOnClickListener{
-            val nama = binding.iptNama.text.toString().replace("\\", "")
+            val nama = binding.iptNama.text.toString().trim()
             // simpan ke api
             Log.d("berhasil", "nama -=================----------------================ $nama")
 
@@ -142,7 +143,6 @@ class ChangeProfileActivity : AppCompatActivity() {
             }?:{
                 imgprofilPart = null
             }
-
 
             ApiConfig.instanceRetrofit.editUserProfil(
                 "Bearer " + TOKEN,
