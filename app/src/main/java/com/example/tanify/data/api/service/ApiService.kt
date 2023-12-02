@@ -69,5 +69,6 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Body data: EditPassword,
     ): Call<EditPasswordResponse>
+    
 
 }
