@@ -339,8 +339,10 @@ class BerandaFragment : Fragment(), ItemBerandaArtikelAdapter.OnArtikelBerandaIt
     private fun showLoading(isLoading: Boolean){
         if (isLoading) {
             binding.viewLoad.visibility = View.VISIBLE
+            binding.viewLoad2.visibility = View.VISIBLE
         } else {
             binding.viewLoad.visibility = View.GONE
+            binding.viewLoad2.visibility = View.GONE
         }
     }
 
