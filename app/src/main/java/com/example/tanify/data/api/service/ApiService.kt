@@ -4,6 +4,7 @@ import com.example.tanify.data.data.CommentData
 import com.example.tanify.data.data.EditPassword
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.data.RegisterData
+import com.example.tanify.data.data.searchdatalms
 import com.example.tanify.data.response.profile.EditPasswordResponse
 import com.example.tanify.data.response.EditProfilResponse
 import okhttp3.MultipartBody
@@ -11,6 +12,8 @@ import com.example.tanify.data.response.artikel.ArtikelResponse
 import com.example.tanify.data.response.forum.CommentResponse
 import com.example.tanify.data.response.forum.ForumByIdResponse
 import com.example.tanify.data.response.forum.ForumItemsResponse
+import com.example.tanify.data.response.lms.lessonAllResponse
+import com.example.tanify.data.response.lms.searchResponse
 import com.example.tanify.data.response.weather.CurrentWeatherResponse
 import com.example.tanify.data.response.login.LoginResponse
 import com.example.tanify.data.response.login.RegisterRespons
@@ -77,6 +80,17 @@ interface ApiService {
     fun getForum(
         @Header("Authorization") authorization: String
     ): Call<ForumItemsResponse>
+
+    @GET("lms")
+    fun getAllLesson(
+        @Header("Authorization") authorization: String,
+    ): Call<lessonAllResponse>
+
+    @GET("lms/find")
+    fun searchLesson(
+        @Header("Authorization") authorization: String,
+        @Body data: searchdatalms,
+    ): Call<searchResponse>
 
     @GET("forum/{id}")
     fun getDetailForum(
