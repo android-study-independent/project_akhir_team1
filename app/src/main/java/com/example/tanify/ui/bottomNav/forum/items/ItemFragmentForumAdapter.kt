@@ -1,5 +1,6 @@
 package com.example.tanify.ui.bottomNav.forum.items
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,7 +15,8 @@ class ItemFragmentForumAdapter(
     private val context: Context,
     private var listForum: List<DataItem>,
     private var onClick: (forum: DataItem) -> Unit,
-    private var onClickLike: () -> Unit
+    private var onClickLike: () -> Unit,
+    private var onClickComment: (forum: DataItem) -> Unit
 ) : RecyclerView.Adapter<ItemFragmentForumAdapter.ItemFragmentForumHolder>(){
 
 //    interface OnItemFragmentForumClickListener{
@@ -38,16 +40,26 @@ class ItemFragmentForumAdapter(
 
     override fun onBindViewHolder(holder: ItemFragmentForumHolder, position: Int) {
         val currentForum = listForum[position]
+        val baseUrl = "http://195.35.32.179:8001"
         val tanggal = formatDate(currentForum.createdAt!!)
-        val poster = "http://195.35.32.179:8001${currentForum.cover}"
+        val posterPathFix = currentForum.cover?.removePrefix("..")
+        val poster = baseUrl + posterPathFix
+        val profilePathFix = currentForum.createdBy?.photo?.removePrefix("..")
+        val profile = baseUrl + profilePathFix
 
         holder.binding.tvTanggalForum.text = tanggal
         holder.binding.tvJudulForum.text = currentForum.title
         holder.binding.tvIsiKontenForum.text = currentForum.content
+        holder.binding.tvNameCreatorForum.text = currentForum.createdBy?.nama
+
+        Glide.with(context)
+            .load(profile)
+            .placeholder(R.drawable.bg_load_profile)
+            .into(holder.binding.ivProfileForum)
 
         Glide.with(context)
             .load(poster)
-            .placeholder(R.drawable.bg_view_holder_image_item_forum)
+            .placeholder(R.drawable.bg_load_poster_forum)
             .into(holder.binding.ivItemForum)
 
         holder.binding.heartForumButton.setOnClickListener {
@@ -57,5 +69,15 @@ class ItemFragmentForumAdapter(
         holder.binding.containerForum.setOnClickListener {
             onClick(currentForum)
         }
+
+        holder.binding.btnComment.setOnClickListener {
+            onClickComment(currentForum)
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateDataForumBeranda(newForumList: List<DataItem>?){
+        listForum = newForumList?.filterNotNull() ?: emptyList()
+        notifyDataSetChanged()
     }
 }

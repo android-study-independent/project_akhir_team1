@@ -19,6 +19,9 @@ data class DataItem(
 	@field:SerializedName("createdAt")
 	val createdAt: String? = null,
 
+	@field:SerializedName("created_by")
+	val createdBy: User? = null,
+
 	@field:SerializedName("id")
 	val id: Int? = null,
 
@@ -40,3 +43,4 @@ data class LikesItem(
 	@field:SerializedName("id_user")
 	val idUser: Int? = null
 )
+

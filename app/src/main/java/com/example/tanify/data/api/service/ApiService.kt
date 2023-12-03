@@ -1,5 +1,6 @@
 package com.example.tanify.data.api.service
 
+import com.example.tanify.data.data.CommentData
 import com.example.tanify.data.data.EditPassword
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.data.RegisterData
@@ -7,6 +8,9 @@ import com.example.tanify.data.response.profile.EditPasswordResponse
 import com.example.tanify.data.response.EditProfilResponse
 import okhttp3.MultipartBody
 import com.example.tanify.data.response.artikel.ArtikelResponse
+import com.example.tanify.data.response.forum.CommentResponse
+import com.example.tanify.data.response.forum.ForumByIdResponse
+import com.example.tanify.data.response.forum.ForumItemsResponse
 import com.example.tanify.data.response.weather.CurrentWeatherResponse
 import com.example.tanify.data.response.login.LoginResponse
 import com.example.tanify.data.response.login.RegisterRespons
@@ -20,6 +24,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -67,5 +72,23 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Body data: EditPassword,
     ): Call<EditPasswordResponse>
+
+    @GET("forum")
+    fun getForum(
+        @Header("Authorization") authorization: String
+    ): Call<ForumItemsResponse>
+
+    @GET("forum/{id}")
+    fun getDetailForum(
+        @Path("id") forumId: Int,
+        @Header("Authorization") authorization: String
+    ): Call<ForumByIdResponse>
+
+    @POST("forum/{id}/comment")
+    fun postComment(
+        @Path("id") forumId: Int,
+        @Header("Authorization") authorization: String,
+        @Body data: CommentData
+    ): Call<CommentResponse>
 
 }

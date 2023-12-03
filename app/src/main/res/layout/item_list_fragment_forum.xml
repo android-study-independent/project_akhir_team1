@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="434dp"
+    android:layout_marginTop="30dp"
     android:id="@+id/container_forum"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -23,7 +24,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:src="@drawable/foto_profile"
+        android:background="@drawable/bg_load_profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vGaris_item_forum"
         android:layout_marginTop="13dp"
@@ -60,20 +61,18 @@
         android:id="@+id/tv_judul_forum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kisaran harga padi di pulau jawa"
+        android:text="@string/kisaran_harga_padi_di_pulau_jawa"
         app:layout_constraintTop_toBottomOf="@+id/iv_profile_forum"
         app:layout_constraintLeft_toLeftOf="@+id/iv_profile_forum"
         android:layout_marginTop="29dp"
         android:fontFamily="@font/poppins_semibold"
-        android:textSize="16sp"
-        android:textFontWeight="600"
-        android:lineHeight="16sp" />
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/tv_isi_konten_forum"
         android:layout_width="370dp"
         android:layout_height="wrap_content"
-        android:text="Saya ingin membandingkan harga di pulau jawa dan juga di luar pulau jawa"
+        android:text="@string/saya_ingin_membandingkan_harga_di_pulau_jawa_dan_juga_di_luar_pulau_jawa"
         app:layout_constraintTop_toBottomOf="@+id/tv_judul_forum"
         app:layout_constraintLeft_toLeftOf="@+id/tv_judul_forum"
         android:layout_marginTop="18dp"
@@ -125,21 +124,27 @@
             android:textFontWeight="700"
             android:textSize="12sp" />
 
-        <ImageView
-            android:layout_width="29dp"
-            android:layout_height="29dp"
-            android:layout_marginLeft="32dp"
-            android:src="@drawable/button_forum_chat" />
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/btn_comment"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="11dp"
-            android:fontFamily="@font/poppins_bold"
-            android:lineHeight="12sp"
-            android:text="Komentar"
-            android:textFontWeight="700"
-            android:textSize="12sp" />
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_marginLeft="32dp"
+                android:src="@drawable/button_forum_chat" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_gravity="center"
+                android:lineHeight="12sp"
+                android:text="Komentar"
+                android:textFontWeight="700"
+                android:textSize="12sp" />
+        </LinearLayout>
 
         <ImageView
             android:layout_width="29dp"

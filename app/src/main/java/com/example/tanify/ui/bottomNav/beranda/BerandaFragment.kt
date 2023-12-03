@@ -68,22 +68,6 @@ class BerandaFragment : Fragment(), ItemBerandaArtikelAdapter.OnArtikelBerandaIt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        binding.rvFiturUtama.setHasFixedSize(true)
-//        binding.rvFiturUtama.layoutManager =
-//            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-//        binding.rvArtikelBeranda.setHasFixedSize(true)
-//        binding.rvArtikelBeranda.layoutManager =
-//            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-//
-//
-//        addDataToList()
-////        val adapterRvFitur = ItemFiturAdapter(fiturList)
-////        binding.rvFiturUtama.adapter = adapterRvFitur
-//
-//        val adapterRvArtikel = ItemBerandaArtikelAdapter(artikelList)
-//        binding.rvArtikelBeranda.adapter = adapterRvArtikel
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         getMyLocation()
         setAction()
@@ -287,8 +271,10 @@ class BerandaFragment : Fragment(), ItemBerandaArtikelAdapter.OnArtikelBerandaIt
     private fun showLoading(isLoading: Boolean){
         if (isLoading) {
             binding.viewLoad.visibility = View.VISIBLE
+            binding.viewLoad2.visibility = View.VISIBLE
         } else {
             binding.viewLoad.visibility = View.GONE
+            binding.viewLoad2.visibility = View.GONE
         }
     }
 
