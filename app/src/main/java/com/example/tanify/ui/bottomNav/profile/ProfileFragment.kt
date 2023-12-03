@@ -75,7 +75,7 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun processDataProfil(profilData: UserProfilResponse?, isUpdate: Boolean = false) {
         Log.d(TAG, "set data profil ke ui")
-        binding.profilName.text = profilData?.nama?.replace("[\\\"]".toRegex(), "")
+        binding.profilName.text = profilData?.nama
         binding.profilEmail.text = profilData?.email
 
         val foto = profilData?.photo?.removePrefix("../")
@@ -88,36 +88,6 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             .into(binding.profilImg)
     }
 
-//    private fun getProfil(isUpdate:Boolean) {
-//        showLoading(true)
-//        ApiConfig.instanceRetrofit.getUserProfil(
-//            "Bearer " + TOKEN
-//        ).enqueue(object : Callback<UserProfilResponse> {
-//            override fun onResponse(
-//                call: Call<UserProfilResponse>,
-//                response: Response<UserProfilResponse>,
-//            ) {
-//                showLoading(false)
-//                if (response.isSuccessful) {
-//                    dataprofil = response.body()
-//                    Log.d("name - profil", dataprofil?.nama.toString())
-//                    dataprofil?.nama = dataprofil?.nama?.replace("[\\\"]".toRegex(), "")
-//                    if (dataprofil != null) {
-//                        processDataProfil(dataprofil, isUpdate)
-//                        saveProfilToSharedPreferences(dataprofil)
-//                    }
-//                } else {
-//                    Log.e(TAG, "onFailure: ${response.message()}")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<UserProfilResponse>, t: Throwable) {
-//                showLoading(false)
-//                Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
-//            }
-//
-//        })
-//    }
 
     private fun getProfil(b: Boolean) {
         getUserProfil(TOKEN, object : GetUserProfilCallback{

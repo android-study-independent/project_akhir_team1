@@ -1,8 +1,10 @@
 package com.example.tanify.helper
 
+import android.content.Context
 import android.util.Log
 import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.response.profile.UserProfilResponse
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,9 +18,10 @@ fun getUserProfil(token: String, callback: GetUserProfilCallback) {
                 response: Response<UserProfilResponse>,
             ) {
                 if (response.isSuccessful) {
-                    val dataprofil = response.body()
+                    var dataprofil = response.body()
                     Log.d("User Profile, Name : ", dataprofil?.nama.toString())
                     if (dataprofil != null) {
+                        dataprofil.nama = dataprofil.nama?.replace("[\\\"]".toRegex(), "")
                         callback.onUserProfileReceived(dataprofil)
                     }
                 } else {
@@ -38,3 +41,4 @@ interface GetUserProfilCallback {
     fun onUserProfileReceived(userProfil: UserProfilResponse)
     fun onFailed(message: String)
 }
+
