@@ -2,7 +2,9 @@ package com.example.tanify.ui.bottomNav.beranda
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +17,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.example.tanify.R
 import com.example.tanify.databinding.FragmentHomeBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -24,27 +28,36 @@ import retrofit2.Response
 import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.response.artikel.Artikel
 import com.example.tanify.data.response.artikel.ArtikelResponse
+import com.example.tanify.data.response.profile.UserProfilResponse
 import com.example.tanify.data.response.weather.CurrentWeatherResponse
+import com.example.tanify.helper.GetUserProfilCallback
+import com.example.tanify.helper.getUserProfil
 import com.example.tanify.helper.weatherFormattedNumber
 import com.example.tanify.ui.bottomNav.beranda.items.ItemBerandaArtikelAdapter
 import com.example.tanify.ui.weather.WeatherActivity
 import com.squareup.picasso.Picasso
 import com.example.tanify.ui.artikel.ArtikelActivity
 import com.example.tanify.ui.artikel.DetailArtikelActivity
+import com.example.tanify.ui.bottomNav.profile.ProfileFragment
+import com.example.tanify.ui.lms.LmsActivity
+import com.google.gson.Gson
 
 class BerandaFragment : Fragment(), ItemBerandaArtikelAdapter.OnArtikelBerandaItemClickListener {
 
     private var _binding: FragmentHomeBinding? = null
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var artikelBerandaAdapter: ItemBerandaArtikelAdapter
+    private lateinit var sharedPreferences: SharedPreferences
     //private val fiturList = ArrayList<FiturItemData>()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private var dataprofil: UserProfilResponse? = null
 
     companion object {
         private const val TAG = "BerandaFragment"
+        private var TOKEN = "token"
     }
 
     override fun onCreateView(
@@ -84,11 +97,48 @@ class BerandaFragment : Fragment(), ItemBerandaArtikelAdapter.OnArtikelBerandaIt
 //        val adapterRvArtikel = ItemBerandaArtikelAdapter(artikelList)
 //        binding.rvArtikelBeranda.adapter = adapterRvArtikel
 
+        sharedPreferences = requireContext().getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
+        TOKEN = sharedPreferences.getString("token", "").toString()
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        getProfil()
         getMyLocation()
         setAction()
         setRecyclerView()
         getArtikelData()
+    }
+
+    private fun getProfil() {
+        getUserProfil(TOKEN, object :GetUserProfilCallback{
+            override fun onUserProfileReceived(userProfil: UserProfilResponse) {
+                dataprofil = userProfil
+                // set profil
+                saveProfilToSharedPreferences(dataprofil)
+                val foto = dataprofil?.photo?.removePrefix("../")
+                Glide.with(requireContext())
+                    .load("http://195.35.32.179:8001/" + foto)
+                    .skipMemoryCache(false)
+                    .placeholder(R.drawable.icon_user)
+                    .error(R.drawable.icon_user)
+                    .into(binding.ivProfile)
+                binding.textView3.text = dataprofil?.nama
+
+            }
+
+            override fun onFailed(message: String) {
+                Log.e(TAG, "get Profile: ${message}")
+            }
+
+        })
+    }
+    private fun saveProfilToSharedPreferences(profilData: UserProfilResponse?) {
+        val gson = Gson()
+        val profilDataString = gson.toJson(profilData)
+
+        with(sharedPreferences.edit()) {
+            putString("profil", profilDataString)
+            apply()
+        }
     }
 
     //On destroy
@@ -165,6 +215,8 @@ class BerandaFragment : Fragment(), ItemBerandaArtikelAdapter.OnArtikelBerandaIt
     private fun setAction() {
         binding.btnFiturLms.setOnClickListener {
             Toast.makeText(requireContext(), "Fitur dalam pengembangan!", Toast.LENGTH_SHORT).show()
+            // val intent = Intent(requireContext(), LmsActivity::class.java)
+            // requireContext().startActivity(intent)
         }
         binding.btnHalamanArtikel.setOnClickListener {
             val intent = Intent(requireContext(), ArtikelActivity::class.java)
