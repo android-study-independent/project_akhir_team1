@@ -26,35 +26,16 @@ data class searchResponse(
 
 )
 
+data class lessonByIdResponse(
+    @field:SerializedName("msg")
+    val msg: String,
 
+    @field:SerializedName("lesson")
+    val lesson: ModulItem,
 
-data class ModulItem(
+        @field:SerializedName("section")
+    val section: List<SectionItem>,
 
-    @field:SerializedName("cover")
-    val cover: String,
+    )
 
-    @field:SerializedName("createdAt")
-    val createdAt: String,
-
-    @field:SerializedName("view")
-    val view: Int,
-
-    @field:SerializedName("section")
-    val section: Int,
-
-    @field:SerializedName("id")
-    val id: Int,
-
-    @field:SerializedName("title")
-    val title: String
-)
-
-data class UserLms(
-
-    @field:SerializedName("nama")
-    val nama: String,
-
-    @field:SerializedName("photo")
-    val photo: String
-)
 
