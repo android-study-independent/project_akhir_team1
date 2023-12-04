@@ -110,4 +110,11 @@ Berikan pemupukan yang sesuai dengan kebutuhan padi. Analisis tanah dapat memban
     <string name="_1_jam_yang_lalu">1 jam yang lalu</string>
     <string name="sepertinya_12_000_kak">Sepertinya 12.000 kak</string>
     <string name="btn_mengirim_komentar">btn mengirim komentar</string>
+    <string name="buat_diskusi">Buat Diskusi</string>
+    <string name="publik">Publik</string>
+    <string name="post">Post</string>
+    <string name="tambah_judul">Tambah Judul</string>
+    <string name="tambahkan_judul_anda">Tambahkan judul anda</string>
+    <string name="tambahkan_informasi_anda">Tambahkan informasi anda</string>
+    <string name="tambah_informasi">Tambah Informasi</string>
 </resources>

@@ -3,12 +3,14 @@ package com.example.tanify.data.api.service
 import com.example.tanify.data.data.CommentData
 import com.example.tanify.data.data.EditPassword
 import com.example.tanify.data.data.LoginData
+import com.example.tanify.data.data.NewForumData
 import com.example.tanify.data.data.RegisterData
 import com.example.tanify.data.data.searchdatalms
 import com.example.tanify.data.response.profile.EditPasswordResponse
-import com.example.tanify.data.response.EditProfilResponse
+import com.example.tanify.data.response.profile.EditProfilResponse
 import okhttp3.MultipartBody
 import com.example.tanify.data.response.artikel.ArtikelResponse
+import com.example.tanify.data.response.forum.AddDiscussResponse
 import com.example.tanify.data.response.forum.CommentResponse
 import com.example.tanify.data.response.forum.ForumByIdResponse
 import com.example.tanify.data.response.forum.ForumItemsResponse
@@ -105,6 +107,10 @@ interface ApiService {
         @Body data: CommentData
     ): Call<CommentResponse>
 
-    
+    @POST("forum/new-post")
+    fun postNewForum(
+        @Body postForum: NewForumData,
+        @Header("Authorization") authorization: String,
+    ): Call<AddDiscussResponse>
 
 }

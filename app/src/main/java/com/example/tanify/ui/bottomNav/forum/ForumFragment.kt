@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.response.forum.ForumItemsResponse
 import com.example.tanify.databinding.FragmentForumBinding
+import com.example.tanify.ui.bottomNav.forum.addDiscuss.AddDiscussActivity
 import com.example.tanify.ui.bottomNav.forum.detailDiscuss.DetailDiscussActivity
 import com.example.tanify.ui.bottomNav.forum.items.ItemFragmentForumAdapter
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -26,9 +27,9 @@ import retrofit2.Response
 class ForumFragment : Fragment() {
 
     private var _binding: FragmentForumBinding? = null
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var forumAdapter: ItemFragmentForumAdapter
     private lateinit var sharedPreferences: SharedPreferences
+    private var isUpdate: Boolean = false
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -60,8 +61,16 @@ class ForumFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setAction()
         setRecyclerView()
         getForum()
+    }
+
+    private fun setAction() {
+        binding.fabAdd.setOnClickListener {
+            val intent = Intent(requireContext(), AddDiscussActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setRecyclerView(){

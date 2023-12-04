@@ -11,23 +11,20 @@
         android:id="@+id/tv_add_discus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BUAT DISKUSI"
+        android:text="@string/buat_diskusi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/poppins_semibold"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:textFontWeight="600"
-        android:lineHeight="16dp"
         android:textColor="#005644"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleImageView"
         android:layout_width="30dp"
         android:layout_height="30dp"
-
         android:layout_marginTop="26dp"
         android:src="@drawable/foto_profil_add_discus"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -38,7 +35,7 @@
         android:layout_width="56dp"
         android:layout_height="22dp"
         app:cardCornerRadius="11dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
         app:layout_constraintStart_toEndOf="@+id/circleImageView"
         app:layout_constraintTop_toTopOf="@+id/circleImageView" >
@@ -51,20 +48,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Publik"
+            android:text="@string/publik"
             android:layout_gravity="center"
             android:fontFamily="@font/poppins_semibold"
-            android:textSize="12sp"
-            android:textFontWeight="500"
-            android:lineHeight="18sp"/>
+            android:textSize="12sp"/>
         
     </androidx.cardview.widget.CardView>
 
     <com.example.tanify.custom.CustomButtonFillGreen
+        android:id="@+id/btn_post"
         android:layout_width="62dp"
-        android:layout_height="48dp"
+        android:layout_height="25dp"
         android:fontFamily="@font/poppins_semibold"
-        android:text="Post"
+        android:text="@string/post"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/cv_name_profile_add_discus"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,10 +72,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_semibold"
-        android:lineHeight="14sp"
-        android:text="Tambah Judul"
+        android:text="@string/tambah_judul"
         android:textColor="@color/green"
-        android:textFontWeight="500"
         android:textSize="14sp"
         android:layout_marginTop="41dp"
         app:layout_constraintStart_toStartOf="@+id/circleImageView"
@@ -103,12 +97,12 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_tambah_jdul_add_discus">
 
         <EditText
-            android:id="@+id/ed_email"
+            android:id="@+id/ed_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:height="50dp"
             android:fontFamily="@font/poppins_regular"
-            android:hint="Tambahkan judul anda"
+            android:hint="@string/tambahkan_judul_anda"
             android:textSize="12sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -117,10 +111,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_semibold"
-        android:lineHeight="14sp"
-        android:text="Tambah Judul"
+        android:text="@string/tambah_informasi"
         android:textColor="@color/green"
-        android:textFontWeight="500"
         android:textSize="14sp"
         android:layout_marginTop="14dp"
         app:layout_constraintStart_toStartOf="@+id/circleImageView"
@@ -144,18 +136,18 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_tambah_informasi_add_discus">
 
         <EditText
-            android:id="@+id/add_informasi"
+            android:id="@+id/ed_content"
             android:layout_width="match_parent"
             android:layout_height="92dp"
             android:height="50dp"
             android:fontFamily="@font/poppins_regular"
             android:gravity="top"
-            android:hint="Tambahkan informasi anda"
+            android:hint="@string/tambahkan_informasi_anda"
             android:textSize="12sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cv_add_file_discus"
+        android:id="@+id/btn_add_img"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:backgroundTint="@color/secondary_yellow"
@@ -172,6 +164,46 @@
             android:layout_gravity="center"/>
 
     </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.circularreveal.cardview.CircularRevealCardView
+        android:id="@+id/parent_preview"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_add_img">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+            <ImageView
+                android:id="@+id/iv_preview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"/>
+            
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cancel_button"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                app:cardCornerRadius="100dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/white">
+                
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_cancel"/>
+            </androidx.cardview.widget.CardView>
+        </FrameLayout>
+
+    </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
 
 
 

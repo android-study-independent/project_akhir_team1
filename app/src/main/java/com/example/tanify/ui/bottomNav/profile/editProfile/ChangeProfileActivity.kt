@@ -11,24 +11,18 @@ import android.os.Environment
 import android.os.Handler
 import android.text.Editable
 import android.util.Log
-import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
-import com.example.tanify.data.response.EditProfilResponse
+import com.example.tanify.data.response.profile.EditProfilResponse
 import com.example.tanify.data.response.profile.UserProfilResponse
 import com.example.tanify.databinding.ActivityChangeProfileBinding
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -178,7 +172,7 @@ class ChangeProfileActivity : AppCompatActivity() {
         }
     }
 
-    fun uriToFile(imageUri: Uri, context: Context): File {
+    private fun uriToFile(imageUri: Uri, context: Context): File {
         val myFile = createCustomTempFile(context)
         val inputStream = context.contentResolver.openInputStream(imageUri) as InputStream
         val outputStream = FileOutputStream(myFile)
@@ -190,7 +184,7 @@ class ChangeProfileActivity : AppCompatActivity() {
         return myFile
     }
 
-    fun createCustomTempFile(context: Context): File {
+    private fun createCustomTempFile(context: Context): File {
         val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile("profil_user", ".jpg", storageDir)
     }
