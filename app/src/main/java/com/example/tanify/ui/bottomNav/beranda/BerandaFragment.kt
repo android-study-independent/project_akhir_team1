@@ -214,9 +214,9 @@ class BerandaFragment : Fragment(), ItemBerandaArtikelAdapter.OnArtikelBerandaIt
 
     private fun setAction() {
         binding.btnFiturLms.setOnClickListener {
-            Toast.makeText(requireContext(), "Fitur dalam pengembangan!", Toast.LENGTH_SHORT).show()
-            // val intent = Intent(requireContext(), LmsActivity::class.java)
-            // requireContext().startActivity(intent)
+//            Toast.makeText(requireContext(), "Fitur dalam pengembangan!", Toast.LENGTH_SHORT).show()
+             val intent = Intent(requireContext(), LmsActivity::class.java)
+             requireContext().startActivity(intent)
         }
         binding.btnHalamanArtikel.setOnClickListener {
             val intent = Intent(requireContext(), ArtikelActivity::class.java)
