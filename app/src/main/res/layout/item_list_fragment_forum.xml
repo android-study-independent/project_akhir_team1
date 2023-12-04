@@ -87,6 +87,7 @@
         android:layout_height="195dp"
         android:layout_marginTop="5dp"
         android:src="@drawable/unsplash_poster2"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_isi_konten_forum" />
