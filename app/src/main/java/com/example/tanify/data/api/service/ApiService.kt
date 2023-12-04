@@ -3,12 +3,12 @@ package com.example.tanify.data.api.service
 import com.example.tanify.data.data.EditPassword
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.data.RegisterData
-import com.example.tanify.data.data.searchdatalms
 import com.example.tanify.data.response.profile.EditPasswordResponse
 import com.example.tanify.data.response.EditProfilResponse
 import okhttp3.MultipartBody
 import com.example.tanify.data.response.artikel.ArtikelResponse
 import com.example.tanify.data.response.lms.lessonAllResponse
+import com.example.tanify.data.response.lms.lessonByIdResponse
 import com.example.tanify.data.response.lms.searchResponse
 import com.example.tanify.data.response.weather.CurrentWeatherResponse
 import com.example.tanify.data.response.login.LoginResponse
@@ -17,13 +17,13 @@ import com.example.tanify.data.response.profile.UserProfilResponse
 import com.example.tanify.data.response.weather.WeeklyWeatherResponseItem
 import retrofit2.Call
 import retrofit2.http.Body
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -83,8 +83,14 @@ interface ApiService {
     @GET("lms/find")
     fun searchLesson(
         @Header("Authorization") authorization: String,
-        @Body data: searchdatalms,
+        @Query("search") search: String
     ): Call<searchResponse>
+
+    @GET("lms/lesson/{id}")
+    fun getLessonById(
+        @Header("Authorization") authorization: String,
+        @Path("id") id: String
+    ): Call<lessonByIdResponse>
 
 
 
