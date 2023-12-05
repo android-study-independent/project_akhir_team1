@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tanify.R
@@ -12,6 +13,7 @@ import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.response.lms.SectionItem
 import com.example.tanify.data.response.lms.lessonByIdResponse
 import com.example.tanify.databinding.ActivityCheckListMateriBinding
+import com.example.tanify.ui.lms.adapterLessson.modulAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,6 +23,7 @@ class CheckListMateriActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var recyclerviewSection: RecyclerView
+    private lateinit var adapterSection: modulAdapter
     private lateinit var ModulLesson: lessonByIdResponse
 
     companion object {
@@ -87,6 +90,7 @@ class CheckListMateriActivity : AppCompatActivity() {
 
     private fun setdata() {
         binding.tvTitleChecklist.text = ModulLesson.lesson.title
+        binding.tvSectionChecklist.text = ModulLesson.section.size.toString()+" Section oi"
 
         val foto = ModulLesson.lesson.cover.removePrefix("../")
         Glide.with(this)
@@ -94,9 +98,15 @@ class CheckListMateriActivity : AppCompatActivity() {
             .placeholder(R.drawable.icon_user)
             .error(R.drawable.icon_user)
             .into(binding.ivCoverChecklist)
+
+        setListSection(ModulLesson.section)
+
     }
 
     private fun setListSection(section: List<SectionItem>) {
-        TODO("Not yet implemented")
+        adapterSection = modulAdapter(section)
+        recyclerviewSection.adapter = adapterSection
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerviewSection.layoutManager = layoutManager
     }
 }
