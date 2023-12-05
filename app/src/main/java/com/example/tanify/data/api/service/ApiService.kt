@@ -1,5 +1,6 @@
 package com.example.tanify.data.api.service
 
+import com.example.tanify.data.data.CommentData
 import com.example.tanify.data.data.EditPassword
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.data.RegisterData
@@ -7,6 +8,9 @@ import com.example.tanify.data.response.profile.EditPasswordResponse
 import com.example.tanify.data.response.EditProfilResponse
 import okhttp3.MultipartBody
 import com.example.tanify.data.response.artikel.ArtikelResponse
+import com.example.tanify.data.response.forum.CommentResponse
+import com.example.tanify.data.response.forum.ForumByIdResponse
+import com.example.tanify.data.response.forum.ForumItemsResponse
 import com.example.tanify.data.response.lms.lessonAllResponse
 import com.example.tanify.data.response.lms.lessonByIdResponse
 import com.example.tanify.data.response.lms.searchResponse
@@ -58,7 +62,6 @@ interface ApiService {
         @Header("Authorization") authorization: String,
     ): Call<UserProfilResponse>
 
-//    @FormUrlEncoded
     @Multipart
     @PUT("profile/edit-profile")
     fun editUserProfil(
@@ -72,9 +75,12 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Body data: EditPassword,
     ): Call<EditPasswordResponse>
-    
 
-    // LMS
+    @GET("forum")
+    fun getForum(
+        @Header("Authorization") authorization: String
+    ): Call<ForumItemsResponse>
+
     @GET("lms")
     fun getAllLesson(
         @Header("Authorization") authorization: String,
@@ -93,5 +99,18 @@ interface ApiService {
     ): Call<lessonByIdResponse>
 
 
+    @GET("forum/{id}")
+    fun getDetailForum(
+        @Path("id") forumId: Int,
+        @Header("Authorization") authorization: String
+    ): Call<ForumByIdResponse>
+
+
+    @POST("forum/{id}/comment")
+    fun postComment(
+        @Path("id") forumId: Int,
+        @Header("Authorization") authorization: String,
+        @Body data: CommentData
+    ): Call<CommentResponse>
 
 }

@@ -1,5 +1,6 @@
 package com.example.tanify.ui.bottomNav.beranda.items
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -67,8 +68,9 @@ class ItemBerandaArtikelAdapter(
             .into(holder.binding.ivPosterArtikelBeranda)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateDataArtikelBeranda(newArtikelList: List<Artikel?>?){
-        artikelList = newArtikelList as List<Artikel>
+        artikelList = newArtikelList?.filterNotNull() ?: emptyList()
         notifyDataSetChanged()
     }
 }

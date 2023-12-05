@@ -5,7 +5,9 @@ import android.widget.TextView
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 
 fun formatDate(inputDateString: String): String {
@@ -70,4 +72,28 @@ fun setWordLimit(textView: TextView, originalText: String, wordLimit: Int) {
     val truncatedText = words.take(wordLimit).joinToString(" ")
 
     textView.text = "${truncatedText}..."
+}
+
+fun getTimeAgo(createdAt: String): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    try {
+        val date: Date = sdf.parse(createdAt)
+        val timeInMillis: Long = date.time
+
+        val now = System.currentTimeMillis()
+        val diff = now - timeInMillis
+
+        val seconds = TimeUnit.MILLISECONDS.toSeconds(diff)
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(diff)
+        val hours = TimeUnit.MILLISECONDS.toHours(diff)
+
+        return when {
+            seconds < 60 -> "$seconds detik yang lalu"
+            minutes < 60 -> "$minutes menit yang lalu"
+            else -> "$hours jam yang lalu"
+        }
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+    return ""
 }
