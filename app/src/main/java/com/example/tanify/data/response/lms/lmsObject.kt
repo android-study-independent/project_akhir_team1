@@ -38,7 +38,7 @@ data class SectionItem(
     val id_section: String,
 
     @field:SerializedName("section")
-    val title: String,
+    val section: String,
 
     @field:SerializedName("progres")
     val progres: Boolean
