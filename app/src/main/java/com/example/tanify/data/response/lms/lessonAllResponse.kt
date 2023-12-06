@@ -24,7 +24,7 @@ data class searchResponse(
     @field:SerializedName("data")
     val data: List<ModulItem>,
 
-)
+    )
 
 data class lessonByIdResponse(
     @field:SerializedName("msg")
@@ -33,9 +33,29 @@ data class lessonByIdResponse(
     @field:SerializedName("lesson")
     val lesson: ModulItem,
 
-        @field:SerializedName("section")
+    @field:SerializedName("section")
     val section: List<SectionItem>,
 
+)
+
+data class SectionyIdResponse(
+    @field:SerializedName("msg")
+    val msg: String,
+
+    @field:SerializedName("data")
+    val data: SectionItem,
+
     )
+
+data class ProgresResponse(
+    @field:SerializedName("msg")
+    val msg: String,
+
+    @field:SerializedName("progres")
+    val progres: List<ModulItem>,
+
+    )
+
+
 
 

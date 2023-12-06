@@ -76,7 +76,6 @@ class lessonAdapter(private val dataset: List<ModulItem>, private val tipe :Int)
 
                 viewHolder.item.setOnClickListener{
                     val context = viewHolder.itemView.context
-
                     startActivityModul(context, dataset[position].id)
                 }
             }
@@ -96,7 +95,6 @@ class lessonAdapter(private val dataset: List<ModulItem>, private val tipe :Int)
 
                 viewHolder.item.setOnClickListener{
                     val context = viewHolder.itemView.context
-
                     startActivityModul(context, dataset[position].id)
                 }
             }
@@ -104,7 +102,10 @@ class lessonAdapter(private val dataset: List<ModulItem>, private val tipe :Int)
             TYPE_ITEM_3 -> {
                 val viewHolder = holder as ItemViewHolder2
                 viewHolder.title.text = dataset[position].title
-                viewHolder.section.text = dataset[position].section.toString() + " Section"
+                viewHolder.section.text = dataset[position].totalsection.toString() + " Section"
+                viewHolder.textprosesbar.text = dataset[position].progres.toString()+"% Complated"
+                viewHolder.lineprosesbar.progress = dataset[position].progres!!
+
                 val foto = dataset[position].cover
                 Glide.with(viewHolder.itemView.context)
                     .load("http://195.35.32.179:8001/$foto")
@@ -115,7 +116,6 @@ class lessonAdapter(private val dataset: List<ModulItem>, private val tipe :Int)
 
                 viewHolder.item.setOnClickListener{
                     val context = viewHolder.itemView.context
-
                     startActivityModul(context, dataset[position].id)
                 }
             }
@@ -123,7 +123,7 @@ class lessonAdapter(private val dataset: List<ModulItem>, private val tipe :Int)
         }
     }
 
-    private fun startActivityModul(context: Context, id: Int) {
+    private fun startActivityModul(context: Context, id: Int?) {
         val intent = Intent(context, CheckListMateriActivity::class.java)
         intent.putExtra("idModul", id)
         context.startActivity(intent)
