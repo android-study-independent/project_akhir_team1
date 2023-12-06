@@ -4,15 +4,17 @@ import com.example.tanify.data.data.CommentData
 import com.example.tanify.data.data.EditPassword
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.data.RegisterData
-import com.example.tanify.data.data.searchdatalms
 import com.example.tanify.data.response.profile.EditPasswordResponse
 import com.example.tanify.data.response.profile.EditProfilResponse
 import okhttp3.MultipartBody
 import com.example.tanify.data.response.artikel.ArtikelResponse
+import com.example.tanify.data.response.lms.ProgresResponse
+import com.example.tanify.data.response.lms.SectionyIdResponse
 import com.example.tanify.data.response.forum.CommentResponse
 import com.example.tanify.data.response.forum.ForumByIdResponse
 import com.example.tanify.data.response.forum.ForumItemsResponse
 import com.example.tanify.data.response.lms.lessonAllResponse
+import com.example.tanify.data.response.lms.lessonByIdResponse
 import com.example.tanify.data.response.lms.searchResponse
 import com.example.tanify.data.response.weather.CurrentWeatherResponse
 import com.example.tanify.data.response.login.LoginResponse
@@ -89,14 +91,34 @@ interface ApiService {
     @GET("lms/find")
     fun searchLesson(
         @Header("Authorization") authorization: String,
-        @Body data: searchdatalms,
+        @Query("search") search: String
     ): Call<searchResponse>
+
+    @GET("lms/lesson/{id}")
+    fun getLessonById(
+        @Header("Authorization") authorization: String,
+        @Path("id") id: String
+    ): Call<lessonByIdResponse>
+
+    @GET("lms/lesson/{id_lesson}/section/{id_section}")
+    fun getSectionById(
+        @Header("Authorization") authorization: String,
+        @Path("id_lesson") id_lesson: String,
+        @Path("id_section") id_section: String
+    ): Call<SectionyIdResponse>
+
+    @GET("lms/progres")
+    fun getProgres(
+        @Header("Authorization") authorization: String,
+    ): Call<ProgresResponse>
+
 
     @GET("forum/{id}")
     fun getDetailForum(
         @Path("id") forumId: Int,
         @Header("Authorization") authorization: String
     ): Call<ForumByIdResponse>
+
 
     @POST("forum/{id}/comment")
     fun postComment(

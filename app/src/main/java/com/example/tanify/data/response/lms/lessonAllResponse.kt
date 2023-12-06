@@ -24,37 +24,38 @@ data class searchResponse(
     @field:SerializedName("data")
     val data: List<ModulItem>,
 
-)
+    )
 
+data class lessonByIdResponse(
+    @field:SerializedName("msg")
+    val msg: String,
 
-
-data class ModulItem(
-
-    @field:SerializedName("cover")
-    val cover: String,
-
-    @field:SerializedName("createdAt")
-    val createdAt: String,
-
-    @field:SerializedName("view")
-    val view: Int,
+    @field:SerializedName("lesson")
+    val lesson: ModulItem,
 
     @field:SerializedName("section")
-    val section: Int,
+    val section: List<SectionItem>,
 
-    @field:SerializedName("id")
-    val id: Int,
-
-    @field:SerializedName("title")
-    val title: String
 )
 
-data class UserLms(
+data class SectionyIdResponse(
+    @field:SerializedName("msg")
+    val msg: String,
 
-    @field:SerializedName("nama")
-    val nama: String,
+    @field:SerializedName("data")
+    val data: SectionItem,
 
-    @field:SerializedName("photo")
-    val photo: String
-)
+    )
+
+data class ProgresResponse(
+    @field:SerializedName("msg")
+    val msg: String,
+
+    @field:SerializedName("progres")
+    val progres: List<ModulItem>,
+
+    )
+
+
+
 
