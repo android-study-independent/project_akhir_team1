@@ -7,6 +7,8 @@ import com.example.tanify.data.response.profile.EditPasswordResponse
 import com.example.tanify.data.response.EditProfilResponse
 import okhttp3.MultipartBody
 import com.example.tanify.data.response.artikel.ArtikelResponse
+import com.example.tanify.data.response.lms.ProgresResponse
+import com.example.tanify.data.response.lms.SectionyIdResponse
 import com.example.tanify.data.response.lms.lessonAllResponse
 import com.example.tanify.data.response.lms.lessonByIdResponse
 import com.example.tanify.data.response.lms.searchResponse
@@ -91,6 +93,18 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Path("id") id: String
     ): Call<lessonByIdResponse>
+
+    @GET("lms/lesson/{id_lesson}/section/{id_section}")
+    fun getSectionById(
+        @Header("Authorization") authorization: String,
+        @Path("id_lesson") id_lesson: String,
+        @Path("id_section") id_section: String
+    ): Call<SectionyIdResponse>
+
+    @GET("lms/progres")
+    fun getProgres(
+        @Header("Authorization") authorization: String,
+    ): Call<ProgresResponse>
 
 
 
