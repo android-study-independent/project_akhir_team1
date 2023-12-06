@@ -67,7 +67,7 @@
         android:id="@+id/rv_forum"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="45dp"
+        android:paddingBottom="60dp"
         android:paddingTop="168dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

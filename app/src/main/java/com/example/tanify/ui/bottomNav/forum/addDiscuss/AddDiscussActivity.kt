@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.data.NewForumData
+import com.example.tanify.data.response.forum.AddDiscussErrorResponse
 import com.example.tanify.data.response.forum.AddDiscussResponse
 import com.example.tanify.databinding.ActivityAddDiscussBinding
 import com.example.tanify.ui.bottomNav.forum.detailDiscuss.DetailDiscussActivity
@@ -32,8 +33,8 @@ import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
+import kotlin.math.log
 
-@Suppress("UNREACHABLE_CODE")
 class AddDiscussActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddDiscussBinding
@@ -59,9 +60,28 @@ class AddDiscussActivity : AppCompatActivity() {
         setAction()
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startGalery()
+            } else {
+                showSnackbar("Izin ditolak")
+            }
+        }
+    }
+
     private fun setAction(){
         binding.btnAddImg.setOnClickListener {
-            startGalery()
+            if (checkStoragePermission()) {
+                startGalery()
+            } else {
+                showSnackbar("Izin akses penyimpanan dibutuhkan")
+            }
         }
         binding.btnPost.setOnClickListener {
             val title = binding.edTitle.text.toString()
@@ -81,6 +101,7 @@ class AddDiscussActivity : AppCompatActivity() {
                 } ?: {
                     imgPosterPart = null
                 }
+                Log.d("photo", imgPosterPart.toString())
                 postNewDiscuss(title, content, imgPosterPart!!)
                 finish()
 
@@ -95,21 +116,23 @@ class AddDiscussActivity : AppCompatActivity() {
         ApiConfig.instanceRetrofit.postNewForum(
             dataForum,
             "Bearer " + TOKEN
-        ).enqueue(object : Callback<AddDiscussResponse>{
+        ).enqueue(object : Callback<AddDiscussErrorResponse>{
             override fun onResponse(
-                call: Call<AddDiscussResponse>,
-                response: Response<AddDiscussResponse>
+                call: Call<AddDiscussErrorResponse>,
+                response: Response<AddDiscussErrorResponse>
             ) {
                 if (response.isSuccessful) {
                     val newPostResponse = response.body()
                     if (newPostResponse != null) {
-                        Log.d(TAG, "onSuccess: ${newPostResponse.msg}")
+                        Log.d(TAG, "onSuccess: ${newPostResponse}")
+                        showSnackbar("{$newPostResponse.msg}")
+                    } else {
                         showSnackbar("{$newPostResponse.msg}")
                     }
                 }
             }
 
-            override fun onFailure(call: Call<AddDiscussResponse>, t: Throwable) {
+            override fun onFailure(call: Call<AddDiscussErrorResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message}")
             }
         })
@@ -158,14 +181,14 @@ class AddDiscussActivity : AppCompatActivity() {
                 Manifest.permission.READ_EXTERNAL_STORAGE
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            return true
+            true
         } else {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 REQUEST_CODE_PERMISSION
             )
-            return false
+            false
         }
     }
 

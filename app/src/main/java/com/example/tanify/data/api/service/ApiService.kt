@@ -10,6 +10,7 @@ import com.example.tanify.data.response.profile.EditPasswordResponse
 import com.example.tanify.data.response.profile.EditProfilResponse
 import okhttp3.MultipartBody
 import com.example.tanify.data.response.artikel.ArtikelResponse
+import com.example.tanify.data.response.forum.AddDiscussErrorResponse
 import com.example.tanify.data.response.forum.AddDiscussResponse
 import com.example.tanify.data.response.forum.CommentResponse
 import com.example.tanify.data.response.forum.ForumByIdResponse
@@ -111,6 +112,6 @@ interface ApiService {
     fun postNewForum(
         @Body postForum: NewForumData,
         @Header("Authorization") authorization: String,
-    ): Call<AddDiscussResponse>
+    ): Call<AddDiscussErrorResponse>
 
 }
