@@ -64,4 +64,15 @@ data class SectionItem(
     @field:SerializedName("cover")
     val cover: String ? = null,
     )
-
+data class dataPutProgres(
+    @field:SerializedName("id")
+    val id: String? = null,
+    @field:SerializedName("id_user")
+    val id_user: String? = null,
+    @field:SerializedName("id_lms")
+    val id_lms: String? = null,
+    @field:SerializedName("id_section")
+    val id_section: String? = null,
+    @field:SerializedName("progres")
+    val progres: String? = null,
+)
