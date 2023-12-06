@@ -3,41 +3,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="5dp"
-    android:paddingVertical="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/item"
         android:layout_width="match_parent"
         android:layout_height="54dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="5dp"
         android:elevation="10dp"
         android:outlineSpotShadowColor="@color/black"
         app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="10dp"
-            android:layout_gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/title_section"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_weight="1"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="@string/_1_pengenalan_siklus_hidup_tanaman_padi"
                 android:textSize="12sp"
                 tools:ignore="TextSizeCheck" />
+
             <ImageView
                 android:id="@+id/progres_section"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/icon_check_false"/>
+                android:src="@drawable/icon_check_false" />
 
         </LinearLayout>
 
