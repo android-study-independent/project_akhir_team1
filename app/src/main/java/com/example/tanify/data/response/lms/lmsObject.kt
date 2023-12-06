@@ -64,7 +64,6 @@ data class SectionItem(
     @field:SerializedName("cover")
     val cover: String ? = null,
     )
-
 data class dataPutProgres(
     @field:SerializedName("id")
     val id: String? = null,
