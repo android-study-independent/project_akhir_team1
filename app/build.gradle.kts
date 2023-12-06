@@ -69,4 +69,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
+    // youtube player
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+
+
 }
