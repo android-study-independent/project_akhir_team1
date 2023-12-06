@@ -75,7 +75,6 @@ class CheckListMateriActivity : AppCompatActivity() {
                     Log.d(tag, ModulLesson.msg)
 
                     setdata()
-                    //setListSection(ModulLesson.section)
                 }
                 Log.d(tag+" error : ", "================================================== error API")
             }
@@ -90,9 +89,9 @@ class CheckListMateriActivity : AppCompatActivity() {
 
     private fun setdata() {
         binding.tvTitleChecklist.text = ModulLesson.lesson.title
-        binding.tvSectionChecklist.text = ModulLesson.section.size.toString()+" Section oi"
+        binding.tvSectionChecklist.text = ModulLesson.section.size.toString()+" Section"
 
-        val foto = ModulLesson.lesson.cover.removePrefix("../")
+        val foto = ModulLesson.lesson.cover?.removePrefix("../")
         Glide.with(this)
             .load("http://195.35.32.179:8001/" + foto)
             .placeholder(R.drawable.icon_user)
@@ -100,11 +99,12 @@ class CheckListMateriActivity : AppCompatActivity() {
             .into(binding.ivCoverChecklist)
 
         setListSection(ModulLesson.section)
+        Log.d("data ==== ", ModulLesson.section.toString())
 
     }
 
     private fun setListSection(section: List<SectionItem>) {
-        adapterSection = modulAdapter(section)
+        adapterSection = modulAdapter(section, IDModul )
         recyclerviewSection.adapter = adapterSection
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerviewSection.layoutManager = layoutManager
