@@ -49,9 +49,13 @@ class CheckListMateriActivity : AppCompatActivity() {
         IDModul = intent.getIntExtra("idModul", 0)
         Log.d(TAG, "id Modul : " + IDModul)
 
-        getdata()
         startAction()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getdata()
     }
 
     private fun startAction() {

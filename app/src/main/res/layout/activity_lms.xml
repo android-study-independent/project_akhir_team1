@@ -108,16 +108,18 @@
                 android:id="@+id/editTextSearch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_button_green_ennabled"
                 android:fontFamily="@font/poppins_semibold"
                 android:hint="@string/mau_belajar_apa"
                 android:imeOptions="actionSearch"
-                android:minHeight="35dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
+                android:minHeight="15dp"
                 android:singleLine="true"
-                android:textColorHint="@color/white" />
+                android:textColor="@color/white"
+                android:textColorHint="@color/grey1"
+                android:textSize="14sp"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <ImageView
                 android:id="@+id/btnsearchLesson"
@@ -179,13 +181,30 @@
             android:layout_marginTop="15dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvYourLessons"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_bold"
-                android:text="Daftar Modul" />
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvYourLessons"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Daftar Modul" />
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_lihat_semua"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="@drawable/bg_button_yellow_ennabled"
+                    android:fontFamily="@font/poppins_bold"
+                    android:paddingHorizontal="10dp"
+                    android:text="Lihat Semua"
+                    android:textAllCaps="false"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvYourlessons"

@@ -80,7 +80,8 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         val foto = profilData?.photo?.removePrefix("../")
         Glide.with(this)
-            .load("http://195.35.32.179:8001/" + foto)
+//            .load("http://195.35.32.179:8001/" + foto)
+            .load(profilData?.photo)
             .skipMemoryCache(isUpdate)
             //.diskCacheStrategy(DiskCacheStrategy.NONE)
             .placeholder(R.drawable.icon_user)

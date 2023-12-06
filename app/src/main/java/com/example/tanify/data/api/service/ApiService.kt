@@ -4,6 +4,7 @@ import com.example.tanify.data.data.CommentData
 import com.example.tanify.data.data.EditPassword
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.data.RegisterData
+import com.example.tanify.data.data.putProgres
 import com.example.tanify.data.response.profile.EditPasswordResponse
 import com.example.tanify.data.response.EditProfilResponse
 import okhttp3.MultipartBody
@@ -13,8 +14,10 @@ import com.example.tanify.data.response.lms.SectionyIdResponse
 import com.example.tanify.data.response.forum.CommentResponse
 import com.example.tanify.data.response.forum.ForumByIdResponse
 import com.example.tanify.data.response.forum.ForumItemsResponse
+import com.example.tanify.data.response.lms.dataPutProgres
 import com.example.tanify.data.response.lms.lessonAllResponse
 import com.example.tanify.data.response.lms.lessonByIdResponse
+import com.example.tanify.data.response.lms.putProgresResponse
 import com.example.tanify.data.response.lms.searchResponse
 import com.example.tanify.data.response.weather.CurrentWeatherResponse
 import com.example.tanify.data.response.login.LoginResponse
@@ -126,5 +129,13 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Body data: CommentData
     ): Call<CommentResponse>
+
+    @PUT("lms/lesson/{id_lesson}/section/{id_section}")
+    fun putProgres(
+        @Header("Authorization") authorization: String,
+        @Path("id_lesson") id_lesson: String,
+        @Path("id_section") id_section: String,
+        @Body data: putProgres
+    ): Call<putProgresResponse>
 
 }

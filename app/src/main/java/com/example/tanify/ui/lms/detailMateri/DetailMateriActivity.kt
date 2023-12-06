@@ -7,11 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
+import com.example.tanify.data.data.putProgres
 import com.example.tanify.data.response.lms.SectionItem
 import com.example.tanify.data.response.lms.SectionyIdResponse
+import com.example.tanify.data.response.lms.dataPutProgres
+import com.example.tanify.data.response.lms.putProgresResponse
 import com.example.tanify.databinding.ActivityCheckListMateriBinding
 import com.example.tanify.databinding.ActivityDetailMateriBinding
 import com.example.tanify.ui.lms.LmsActivity
@@ -26,7 +30,8 @@ class DetailMateriActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailMateriBinding
     private lateinit var sharedPreferences: SharedPreferences
 
-    private lateinit var dataSection : SectionyIdResponse
+    private lateinit var dataSection: SectionyIdResponse
+
     companion object {
         private const val TAG = "DetailMateri"
         private var TOKEN = "token"
@@ -34,6 +39,7 @@ class DetailMateriActivity : AppCompatActivity() {
         private var IDSection = 0
 
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailMateriBinding.inflate(layoutInflater)
@@ -47,7 +53,7 @@ class DetailMateriActivity : AppCompatActivity() {
         IDModul = intent.getIntExtra("idModul", 0)
         IDSection = intent.getIntExtra("idSection", 0)
 
-        Log.d("dapat data :", IDModul.toString()+" : "+ IDSection)
+        Log.d("dapat data :", IDModul.toString() + " : " + IDSection)
 
         // mulai apk
         getdata()
@@ -58,7 +64,47 @@ class DetailMateriActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
-        binding.btnselesai
+        binding.btnselesai.setOnClickListener {
+            // kirim put
+            Log.d("tess", "================================== 1")
+            ApiConfig.instanceRetrofit.putProgres(
+                "Bearer ${TOKEN}",
+                IDModul.toString(),
+                IDSection.toString(),
+                putProgres(true)
+            ).enqueue(object : Callback<putProgresResponse> {
+                override fun onResponse(
+                    call: Call<putProgresResponse>,
+                    response: Response<putProgresResponse>
+                ) {
+                    Log.d("tess", "================================== 1")
+                    if (response.isSuccessful) {
+                        Toast.makeText(applicationContext, response.body()?.msg, Toast.LENGTH_SHORT)
+                            .show()
+                        finish()
+                    } else {
+                        when (response.code()) {
+                            404 -> {
+                                Toast.makeText(
+                                    applicationContext,
+                                    response.body()?.msg,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
+                            else -> {
+                                Log.e("Error", "Unexpected response code: ${response.code()}")
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<putProgresResponse>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
     }
 
     private fun getdata() {
@@ -67,7 +113,7 @@ class DetailMateriActivity : AppCompatActivity() {
             "Bearer ${TOKEN}",
             IDModul.toString(),
             IDSection.toString()
-        ).enqueue(object : Callback<SectionyIdResponse>{
+        ).enqueue(object : Callback<SectionyIdResponse> {
             override fun onResponse(
                 call: Call<SectionyIdResponse>,
                 response: Response<SectionyIdResponse>
@@ -79,6 +125,7 @@ class DetailMateriActivity : AppCompatActivity() {
                     setdata(dataSection.data)
                 }
             }
+
             override fun onFailure(call: Call<SectionyIdResponse>, t: Throwable) {
                 Log.e(tag, "onFailure: ${t.message.toString()}")
             }
@@ -97,7 +144,8 @@ class DetailMateriActivity : AppCompatActivity() {
         Log.d("link Youtube", videoId)
 
         // Mengatur video YouTube
-        binding.youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+        binding.youtubePlayerView.addYouTubePlayerListener(object :
+            AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 youTubePlayer.cueVideo(videoId, 0f) // Perbaikan nilai dari Of menjadi 0f
             }
