@@ -7,11 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
+import com.example.tanify.data.data.putProgres
 import com.example.tanify.data.response.lms.SectionItem
 import com.example.tanify.data.response.lms.SectionyIdResponse
+import com.example.tanify.data.response.lms.putProgresResponse
 import com.example.tanify.databinding.ActivityCheckListMateriBinding
 import com.example.tanify.databinding.ActivityDetailMateriBinding
 import com.example.tanify.ui.lms.LmsActivity
@@ -58,7 +61,47 @@ class DetailMateriActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
-        binding.btnselesai
+        binding.btnselesai.setOnClickListener {
+            // kirim put
+            Log.d("tess", "================================== 1")
+            ApiConfig.instanceRetrofit.putProgres(
+                "Bearer ${TOKEN}",
+                IDModul.toString(),
+                IDSection.toString(),
+                putProgres(true)
+            ).enqueue(object : Callback<putProgresResponse> {
+                override fun onResponse(
+                    call: Call<putProgresResponse>,
+                    response: Response<putProgresResponse>
+                ) {
+                    Log.d("tess", "================================== 1")
+                    if (response.isSuccessful) {
+                        Toast.makeText(applicationContext, response.body()?.msg, Toast.LENGTH_SHORT)
+                            .show()
+                        finish()
+                    } else {
+                        when (response.code()) {
+                            404 -> {
+                                Toast.makeText(
+                                    applicationContext,
+                                    response.body()?.msg,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
+                            else -> {
+                                Log.e("Error", "Unexpected response code: ${response.code()}")
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<putProgresResponse>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
     }
 
     private fun getdata() {
