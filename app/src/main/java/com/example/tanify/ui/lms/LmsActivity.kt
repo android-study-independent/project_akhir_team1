@@ -1,11 +1,13 @@
 package com.example.tanify.ui.lms
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -18,6 +20,8 @@ import com.example.tanify.data.response.profile.UserProfilResponse
 import com.example.tanify.databinding.ActivityLmsBinding
 import com.example.tanify.helper.GetUserProfilCallback
 import com.example.tanify.helper.getUserProfil
+import com.example.tanify.ui.bottomNav.profile.editProfile.ChangePasswordActivity
+import com.example.tanify.ui.lms.ListSearchLesson.ListSearchActivity
 import com.example.tanify.ui.lms.adapterLessson.lessonAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -58,12 +62,16 @@ class LmsActivity : AppCompatActivity() {
 
         startAction()
         setProfil()
-        getprogres()
         getDataAllModul()
 
     }
 
-    private fun getprogres() {
+    override fun onResume() {
+        super.onResume()
+        getProgres()
+    }
+
+    private fun getProgres() {
         val tag = "Get All Progres :"
         ApiConfig.instanceRetrofit.getProgres("Bearer $TOKEN")
             .enqueue(object : Callback<ProgresResponse> {
@@ -189,10 +197,15 @@ class LmsActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
-
-        binding.btnsearchLesson.setOnClickListener {
-            val textSearch = binding.editTextSearch.text.toString()
-            //intent laman baru search
+        binding.btnLihatSemua.setOnClickListener{
+            val intent = Intent(this, ListSearchActivity::class.java)
+            intent.putExtra("search", false)
+            startActivity(intent)
+        }
+        binding.linearSearchlms.setOnClickListener{
+            val intent = Intent(this, ListSearchActivity::class.java)
+            intent.putExtra("search", true)
+            startActivity(intent)
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.tanify.ui.lms.adapterLessson
 
 import android.content.Context
 import android.content.Intent
+import android.print.PrintAttributes.Margins
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginRight
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tanify.R
@@ -40,6 +43,7 @@ class lessonAdapter(private val dataset: List<ModulItem>, private val tipe :Int)
         val lineprosesbar : ProgressBar = itemview.findViewById(R.id.simpleProgressBar)
         val textprosesbar :TextView = itemView.findViewById(R.id.textprosesbar)
         val item: LinearLayout= itemview.findViewById(R.id.item)
+        val parent :CardView = itemView.findViewById(R.id.parentcard)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -105,6 +109,7 @@ class lessonAdapter(private val dataset: List<ModulItem>, private val tipe :Int)
                 viewHolder.section.text = dataset[position].totalsection.toString() + " Section"
                 viewHolder.textprosesbar.text = dataset[position].progres.toString()+"% Complated"
                 viewHolder.lineprosesbar.progress = dataset[position].progres!!
+                viewHolder.parent.layoutParams.width = (250*viewHolder.itemView.context.resources.displayMetrics.density).toInt()
 
                 val foto = dataset[position].cover
                 Glide.with(viewHolder.itemView.context)

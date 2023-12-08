@@ -56,6 +56,14 @@ data class ProgresResponse(
 
     )
 
+data class  putProgresResponse(
+    @field:SerializedName("msg")
+    val msg: String,
+
+    @field:SerializedName("data")
+    val data: dataPutProgres
+)
+
 
 
 
