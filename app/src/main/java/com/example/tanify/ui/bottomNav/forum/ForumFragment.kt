@@ -95,7 +95,6 @@ class ForumFragment : Fragment() {
         })
         binding.btnSearch.setOnClickListener {
             binding.linearSearchlms.visibility = View.VISIBLE
-            showSnackbar("Bisa")
         }
     }
 
@@ -121,6 +120,7 @@ class ForumFragment : Fragment() {
     }
 
     private fun getForum(){
+        showLoading(true)
         ApiConfig.instanceRetrofit.getForum(
             "Bearer " + TOKEN
         ).enqueue(object : Callback<ForumItemsResponse>{
@@ -129,6 +129,7 @@ class ForumFragment : Fragment() {
                 response: Response<ForumItemsResponse>
             ) {
                 if (response.isSuccessful) {
+                    showLoading(false)
                     val currentForum = response.body()
                     if (currentForum?.data != null) {
                         forumAdapter.updateDataForumBeranda(currentForum.data)
@@ -138,16 +139,19 @@ class ForumFragment : Fragment() {
 
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
+                    showLoading(false)
                 }
             }
 
             override fun onFailure(call: Call<ForumItemsResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
+                showLoading(false)
             }
         })
     }
 
     private fun getSearchForum(query: String){
+        showLoading(true)
         ApiConfig.instanceRetrofit.getSearchForum(
             "Bearer " + TOKEN,
             query
@@ -158,6 +162,7 @@ class ForumFragment : Fragment() {
             ) {
                 val findForum = response.body()
                 if (response.isSuccessful) {
+                    showLoading(false)
                     if (findForum != null) {
                         forumAdapter.updateDataForumBeranda(findForum?.data)
                     } else {
@@ -165,11 +170,13 @@ class ForumFragment : Fragment() {
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
+                    showLoading(false)
                 }
             }
 
             override fun onFailure(call: Call<ForumItemsResponse>, t: Throwable) {
                 Log.e(TAG, "OnFailure: ${t.message}")
+                showLoading(false)
             }
         })
     }
@@ -180,6 +187,13 @@ class ForumFragment : Fragment() {
         snackbar.show()
     }
 
+    private fun showLoading(isLoading: Boolean){
+        if (isLoading) {
+            binding.progressCircular.visibility = View.VISIBLE
+        } else {
+            binding.progressCircular.visibility = View.GONE
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
