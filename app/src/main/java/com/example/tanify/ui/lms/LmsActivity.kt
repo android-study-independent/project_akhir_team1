@@ -68,10 +68,10 @@ class LmsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        getprogres()
+        getProgres()
     }
 
-    private fun getprogres() {
+    private fun getProgres() {
         val tag = "Get All Progres :"
         ApiConfig.instanceRetrofit.getProgres("Bearer $TOKEN")
             .enqueue(object : Callback<ProgresResponse> {
@@ -197,13 +197,14 @@ class LmsActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
-
-        binding.btnsearchLesson.setOnClickListener {
-            val textSearch = binding.editTextSearch.text.toString()
-            //intent laman baru search
-        }
         binding.btnLihatSemua.setOnClickListener{
             val intent = Intent(this, ListSearchActivity::class.java)
+            intent.putExtra("search", false)
+            startActivity(intent)
+        }
+        binding.linearSearchlms.setOnClickListener{
+            val intent = Intent(this, ListSearchActivity::class.java)
+            intent.putExtra("search", true)
             startActivity(intent)
         }
     }
