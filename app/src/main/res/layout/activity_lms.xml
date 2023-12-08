@@ -104,7 +104,7 @@
             android:padding="10dp"
             tools:ignore="ExtraText">
 
-            <EditText
+            <TextView
                 android:id="@+id/editTextSearch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
                 android:minHeight="15dp"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                android:textColorHint="@color/grey1"
+                android:textColorHint="@color/white"
                 android:textSize="14sp"
                 tools:ignore="TouchTargetSizeCheck" />
 
