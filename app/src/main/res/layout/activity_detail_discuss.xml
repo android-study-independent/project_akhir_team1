@@ -187,7 +187,7 @@
                         android:layout_width="29dp"
                         android:layout_height="29dp"
                         android:layout_marginStart="32dp"
-                        android:src="@drawable/button_forum_share" />
+                        android:src="@drawable/ic_share_spg" />
 
                     <TextView
                         android:layout_width="wrap_content"

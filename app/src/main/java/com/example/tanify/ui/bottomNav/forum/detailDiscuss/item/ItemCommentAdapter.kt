@@ -34,12 +34,12 @@ class ItemCommentAdapter(
         val profilePathFix = pathProfile?.removePrefix("..")
         val profileImg = "http://195.35.32.179:8001${profilePathFix}"
 
-        holder.binding.tvName.text = currentComment.user?.nama
+        holder.binding.tvName.text = currentComment.user?.nama?.replace("\"", "")
         holder.binding.tvWaktu.text = getTimeAgo(currentComment.createdAt.toString())
         holder.binding.tvCommentMessage.text = currentComment.text
 
         Glide.with(context)
-            .load(profileImg)
+            .load(currentComment.user?.photo)
             .placeholder(R.color.grey)
             .into(holder.binding.ivProfile)
 
