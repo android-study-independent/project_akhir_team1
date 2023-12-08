@@ -64,24 +64,18 @@ class DetailDiscussActivity : AppCompatActivity() {
     }
 
     private fun setForumData(nama: String, tanggal: String, judul: String, kontenForum: String, pathProfile: String, pathPoster: String) {
-        val baseUrl = "http://195.35.32.179:8001"
-        val pathProfileFix = pathProfile.removePrefix("..")
-        val pathPosterFix = pathPoster.removePrefix("..")
-        val profilImgPath = baseUrl + pathProfileFix
-        val posterImgPath = baseUrl + pathPosterFix
-
         binding.tvNameCreatorForum.text = nama
         binding.tvTanggalForum.text = tanggal
         binding.tvJudulForum.text = judul
         binding.tvIsiKontenForum.text = kontenForum
 
         Glide.with(this)
-            .load(profilImgPath)
+            .load(pathProfile)
             .placeholder(R.drawable.bg_load_profile)
             .into(binding.ivProfileForum)
 
         Glide.with(this)
-            .load(posterImgPath)
+            .load(pathPoster)
             .placeholder(R.drawable.bg_load_poster_forum)
             .into(binding.ivPosterForum)
     }

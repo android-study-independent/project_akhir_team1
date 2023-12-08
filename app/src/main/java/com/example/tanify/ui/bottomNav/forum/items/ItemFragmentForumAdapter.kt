@@ -40,25 +40,20 @@ class ItemFragmentForumAdapter(
 
     override fun onBindViewHolder(holder: ItemFragmentForumHolder, position: Int) {
         val currentForum = listForum[position]
-        val baseUrl = "http://195.35.32.179:8001"
         val tanggal = formatDate(currentForum.createdAt!!)
-        val posterPathFix = currentForum.cover?.removePrefix("..")
-        val poster = baseUrl + posterPathFix
-        val profilePathFix = currentForum.createdBy?.photo?.removePrefix("..")
-        val profile = baseUrl + profilePathFix
 
         holder.binding.tvTanggalForum.text = tanggal
         holder.binding.tvJudulForum.text = currentForum.title
         holder.binding.tvIsiKontenForum.text = currentForum.content
-        holder.binding.tvNameCreatorForum.text = currentForum.createdBy?.nama
+        holder.binding.tvNameCreatorForum.text = currentForum.createdBy?.nama?.replace("\"","")
 
         Glide.with(context)
-            .load(profile)
+            .load(currentForum.createdBy?.photo)
             .placeholder(R.drawable.bg_load_profile)
             .into(holder.binding.ivProfileForum)
 
         Glide.with(context)
-            .load(poster)
+            .load(currentForum.cover)
             .placeholder(R.drawable.bg_load_poster_forum)
             .into(holder.binding.ivItemForum)
 

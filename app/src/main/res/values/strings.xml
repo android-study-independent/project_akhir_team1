@@ -118,4 +118,6 @@ Berikan pemupukan yang sesuai dengan kebutuhan padi. Analisis tanah dapat memban
     <string name="tambahkan_judul_anda">Tambahkan judul anda</string>
     <string name="tambahkan_informasi_anda">Tambahkan informasi anda</string>
     <string name="tambah_informasi">Tambah Informasi</string>
+    <string name="cari_diskusi">Cari diskusi</string>
+    <string name="btn_search">button search</string>
 </resources>

@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +21,8 @@ import com.example.tanify.databinding.FragmentForumBinding
 import com.example.tanify.ui.bottomNav.forum.addDiscuss.AddDiscussActivity
 import com.example.tanify.ui.bottomNav.forum.detailDiscuss.DetailDiscussActivity
 import com.example.tanify.ui.bottomNav.forum.items.ItemFragmentForumAdapter
-import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.material.snackbar.Snackbar
+import com.example.tanify.R
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -71,6 +74,35 @@ class ForumFragment : Fragment() {
             val intent = Intent(requireContext(), AddDiscussActivity::class.java)
             startActivity(intent)
         }
+        binding.edSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                //kosong
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                //kosong
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                val searchForum = p0.toString()
+                if (searchForum.isNotEmpty()) {
+                    getSearchForum(searchForum)
+                } else {
+                    Log.e(TAG, "KOSONG")
+                }
+            }
+
+        })
+        binding.btnSearch.setOnClickListener {
+            binding.linearSearchlms.visibility = View.VISIBLE
+            showSnackbar("Bisa")
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getForum()
+        binding.linearSearchlms.visibility = View.GONE
     }
 
     private fun setRecyclerView(){
@@ -113,6 +145,39 @@ class ForumFragment : Fragment() {
                 Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
             }
         })
+    }
+
+    private fun getSearchForum(query: String){
+        ApiConfig.instanceRetrofit.getSearchForum(
+            "Bearer " + TOKEN,
+            query
+        ).enqueue(object : Callback<ForumItemsResponse>{
+            override fun onResponse(
+                call: Call<ForumItemsResponse>,
+                response: Response<ForumItemsResponse>
+            ) {
+                val findForum = response.body()
+                if (response.isSuccessful) {
+                    if (findForum != null) {
+                        forumAdapter.updateDataForumBeranda(findForum?.data)
+                    } else {
+                        showSnackbar("Forum tidak ditemukan")
+                    }
+                } else {
+                    Log.e(TAG, "onFailure: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<ForumItemsResponse>, t: Throwable) {
+                Log.e(TAG, "OnFailure: ${t.message}")
+            }
+        })
+    }
+
+    private fun showSnackbar(message: String) {
+        val rootView: View = requireActivity().findViewById(android.R.id.content)
+        val snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT)
+        snackbar.show()
     }
 
     override fun onDestroyView() {

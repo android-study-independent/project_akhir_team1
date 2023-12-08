@@ -150,17 +150,15 @@
         <ImageView
             android:layout_width="29dp"
             android:layout_height="29dp"
-            android:layout_marginLeft="32dp"
-            android:src="@drawable/button_forum_share" />
+            android:layout_marginStart="32dp"
+            android:src="@drawable/ic_share_spg" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="11dp"
+            android:layout_marginStart="11dp"
             android:fontFamily="@font/poppins_bold"
-            android:lineHeight="12sp"
-            android:text="Bagikan"
-            android:textFontWeight="700"
+            android:text="@string/bagikan"
             android:textSize="12sp" />
 
     </LinearLayout>

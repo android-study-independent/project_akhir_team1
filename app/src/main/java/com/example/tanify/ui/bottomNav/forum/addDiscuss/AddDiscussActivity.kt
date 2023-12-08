@@ -15,6 +15,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.data.NewForumData
@@ -24,8 +25,11 @@ import com.example.tanify.databinding.ActivityAddDiscussBinding
 import com.example.tanify.ui.bottomNav.forum.detailDiscuss.DetailDiscussActivity
 import com.example.tanify.ui.bottomNav.profile.editProfile.ChangeProfileActivity
 import com.google.android.material.snackbar.Snackbar
+import okhttp3.MediaType.Companion.parse
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -90,11 +94,12 @@ class AddDiscussActivity : AppCompatActivity() {
                 var imgPosterPart: MultipartBody.Part? = null
                 currentImgPoster?.let { uri ->
                     val imageFile = uriToFile(uri, this)
+                    showImageFile(imageFile)
                     Log.d("Image File", "showImage: ${imageFile.path}")
 
                     val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
                     imgPosterPart = MultipartBody.Part.createFormData(
-                        "photo",
+                        "cover",
                         imageFile.name,
                         requestImageFile
                     )
@@ -103,8 +108,6 @@ class AddDiscussActivity : AppCompatActivity() {
                 }
                 Log.d("photo", imgPosterPart.toString())
                 postNewDiscuss(title, content, imgPosterPart!!)
-                finish()
-
             } else {
                 showSnackbar("Harap masukkan gambar")
             }
@@ -112,28 +115,37 @@ class AddDiscussActivity : AppCompatActivity() {
     }
 
     private fun postNewDiscuss(title: String, content: String, cover: MultipartBody.Part){
-        val dataForum = NewForumData(title, content, cover)
+        showLoading(true)
+//        val dataForum = NewForumData(title, content, cover)
         ApiConfig.instanceRetrofit.postNewForum(
-            dataForum,
-            "Bearer " + TOKEN
+            "Bearer " + TOKEN,
+            RequestBody.create("text/plain".toMediaTypeOrNull(), title),
+            RequestBody.create("text/plain".toMediaTypeOrNull(), content),
+            cover
         ).enqueue(object : Callback<AddDiscussErrorResponse>{
             override fun onResponse(
                 call: Call<AddDiscussErrorResponse>,
                 response: Response<AddDiscussErrorResponse>
             ) {
+                showLoading(false)
                 if (response.isSuccessful) {
                     val newPostResponse = response.body()
                     if (newPostResponse != null) {
                         Log.d(TAG, "onSuccess: ${newPostResponse}")
-                        showSnackbar("{$newPostResponse.msg}")
+                        finish()
+                        showSnackbar("Upload Berhasil")
                     } else {
                         showSnackbar("{$newPostResponse.msg}")
                     }
+                } else {
+                    showLoading(false)
+                    Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<AddDiscussErrorResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message}")
+                showLoading(false)
             }
         })
     }
@@ -175,6 +187,12 @@ class AddDiscussActivity : AppCompatActivity() {
         }
     }
 
+    private fun showImageFile(file: File) {
+        Glide.with(this)
+            .load(file)
+            .into(binding.ivPreview)
+    }
+
     private fun checkStoragePermission(): Boolean {
         return if (ContextCompat.checkSelfPermission(
                 this,
@@ -213,5 +231,13 @@ class AddDiscussActivity : AppCompatActivity() {
     private fun createCustomTempFile(context: Context): File {
         val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile("profil_user", ".jpg", storageDir)
+    }
+
+    private fun showLoading(isLoading: Boolean){
+        if (isLoading) {
+            binding.progressCircular.visibility = View.VISIBLE
+        } else {
+            binding.progressCircular.visibility = View.GONE
+        }
     }
 }

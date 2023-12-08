@@ -3,11 +3,13 @@ package com.example.tanify.data.api.service
 import com.example.tanify.data.data.CommentData
 import com.example.tanify.data.data.EditPassword
 import com.example.tanify.data.data.LoginData
+import com.example.tanify.data.data.NewForumData
 import com.example.tanify.data.data.RegisterData
 import com.example.tanify.data.response.profile.EditPasswordResponse
 import com.example.tanify.data.response.profile.EditProfilResponse
 import okhttp3.MultipartBody
 import com.example.tanify.data.response.artikel.ArtikelResponse
+import com.example.tanify.data.response.forum.AddDiscussErrorResponse
 import com.example.tanify.data.response.lms.ProgresResponse
 import com.example.tanify.data.response.lms.SectionyIdResponse
 import com.example.tanify.data.response.forum.CommentResponse
@@ -21,6 +23,7 @@ import com.example.tanify.data.response.login.LoginResponse
 import com.example.tanify.data.response.login.RegisterRespons
 import com.example.tanify.data.response.profile.UserProfilResponse
 import com.example.tanify.data.response.weather.WeeklyWeatherResponseItem
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -126,5 +129,20 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Body data: CommentData
     ): Call<CommentResponse>
+
+    @POST("forum/new-post")
+    @Multipart
+    fun postNewForum(
+        @Header("Authorization") authorization: String,
+        @Part("title") title: RequestBody,
+        @Part("content") content: RequestBody,
+        @Part cover: MultipartBody.Part?
+    ): Call<AddDiscussErrorResponse>
+
+    @GET("forum/posts/find")
+    fun getSearchForum(
+        @Header("Authorization") authorization: String,
+        @Query("search") search: String
+    ): Call<ForumItemsResponse>
 
 }
