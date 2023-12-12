@@ -83,6 +83,7 @@ class LoginActivity : AppCompatActivity() {
                     showSnackbar(message.toString())
                     handledLogginSuccess(accessToken.toString())
                 } else {
+                    showSnackbar("Login gagal")
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
@@ -90,6 +91,7 @@ class LoginActivity : AppCompatActivity() {
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
                 showLoading(false)
+                showSnackbar("Gagal memuat data")
             }
         })
     }

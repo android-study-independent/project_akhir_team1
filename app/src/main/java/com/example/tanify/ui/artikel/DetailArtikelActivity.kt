@@ -8,6 +8,8 @@ import android.text.Spanned
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
@@ -95,6 +97,7 @@ class DetailArtikelActivity : AppCompatActivity() {
     }
 
     private fun getArtikelData() {
+        showLoading(true)
         ApiConfig.instanceRetrofit.getArtikel()
             .enqueue(object : Callback<ArtikelResponse> {
                 override fun onResponse(
@@ -102,6 +105,7 @@ class DetailArtikelActivity : AppCompatActivity() {
                     response: Response<ArtikelResponse>
                 ) {
                     if (response.isSuccessful) {
+                        showLoading(false)
                         val artikelResponse = response.body()
 
                         if (artikelResponse?.data != null) {
@@ -119,24 +123,16 @@ class DetailArtikelActivity : AppCompatActivity() {
                     } else {
                         // Handle jika respon tidak berhasil (misalnya kode respon bukan 200 OK)
                         Toast.makeText(this@DetailArtikelActivity, "Gagal mendapatkan data", Toast.LENGTH_SHORT).show()
+                        showLoading(false)
                     }
                 }
 
                 override fun onFailure(call: Call<ArtikelResponse>, t: Throwable) {
                     Toast.makeText(this@DetailArtikelActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                    showLoading(false)
                 }
             })
     }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when(item.itemId) {
-//            android.R.id.home -> {
-//                onBackPressed()
-//                return true
-//            }
-//            else -> return super.onOptionsItemSelected(item)
-//        }
-//    }
 
     private fun changeTextSize(){
         val desc = binding.tvDescription
@@ -147,6 +143,22 @@ class DetailArtikelActivity : AppCompatActivity() {
             desc.textSize = 14f
         } else {
             desc.textSize = 12f
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean){
+        if (isLoading) {
+            binding.scrollView.isGone = true
+            binding.viewPoster.isGone = true
+            binding.tvTitleColapse.isGone = true
+            binding.toolbar.isGone = true
+            binding.shimmerView.isVisible  = true
+        } else {
+            binding.shimmerView.isGone = true
+            binding.scrollView.isVisible = true
+            binding.viewPoster.isVisible = true
+            binding.tvTitleColapse.isVisible = true
+            binding.toolbar.isVisible = true
         }
     }
 }

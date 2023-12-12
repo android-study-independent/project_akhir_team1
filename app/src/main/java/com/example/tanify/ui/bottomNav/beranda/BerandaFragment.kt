@@ -81,22 +81,6 @@ class BerandaFragment : Fragment(), ItemBerandaArtikelAdapter.OnArtikelBerandaIt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        binding.rvFiturUtama.setHasFixedSize(true)
-//        binding.rvFiturUtama.layoutManager =
-//            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-//        binding.rvArtikelBeranda.setHasFixedSize(true)
-//        binding.rvArtikelBeranda.layoutManager =
-//            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-//
-//
-//        addDataToList()
-////        val adapterRvFitur = ItemFiturAdapter(fiturList)
-////        binding.rvFiturUtama.adapter = adapterRvFitur
-//
-//        val adapterRvArtikel = ItemBerandaArtikelAdapter(artikelList)
-//        binding.rvArtikelBeranda.adapter = adapterRvArtikel
-
         sharedPreferences = requireContext().getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
         TOKEN = sharedPreferences.getString("token", "").toString()
 
@@ -114,12 +98,12 @@ class BerandaFragment : Fragment(), ItemBerandaArtikelAdapter.OnArtikelBerandaIt
                 dataprofil = userProfil
                 // set profil
                 saveProfilToSharedPreferences(dataprofil)
-                val foto = dataprofil?.photo?.removePrefix("../")
+                val foto = dataprofil?.photo
                 Glide.with(requireContext())
-                    .load("http://195.35.32.179:8001/" + foto)
+                    .load(foto)
                     .skipMemoryCache(false)
-                    .placeholder(R.drawable.icon_user)
-                    .error(R.drawable.icon_user)
+                    .placeholder(R.drawable.ic_profile_blank)
+                    .error(R.drawable.ic_profile_blank)
                     .into(binding.ivProfile)
                 binding.textView3.text = dataprofil?.nama
 
@@ -157,7 +141,7 @@ class BerandaFragment : Fragment(), ItemBerandaArtikelAdapter.OnArtikelBerandaIt
     @SuppressLint("SetTextI18n")
     private fun setWeatherCardData(icon: String, temp: Double, city: String, description: String) {
         Log.d(TAG, weatherFormattedNumber(temp))
-        binding.tvTemprature.text = "${weatherFormattedNumber(temp)}°"
+        binding.tvTemprature.text = "${weatherFormattedNumber(temp)}°C"
         binding.tvDaerah.text = city
         binding.tvDeskripsi.text = description
         val iconPath = buildIconPath(icon)
@@ -338,11 +322,11 @@ class BerandaFragment : Fragment(), ItemBerandaArtikelAdapter.OnArtikelBerandaIt
 
     private fun showLoading(isLoading: Boolean){
         if (isLoading) {
-            binding.viewLoad.visibility = View.VISIBLE
-            binding.viewLoad2.visibility = View.VISIBLE
+            binding.rvArtikelBeranda.visibility = View.GONE
+            binding.shimmerView.visibility = View.VISIBLE
         } else {
-            binding.viewLoad.visibility = View.GONE
-            binding.viewLoad2.visibility = View.GONE
+            binding.rvArtikelBeranda.visibility = View.VISIBLE
+            binding.shimmerView.visibility = View.GONE
         }
     }
 

@@ -82,9 +82,11 @@ class ArtikelActivity : AppCompatActivity(), ItemArtikelAdapter.OnArtikelItemCli
 
     private fun showLoading(isLoading: Boolean){
         if (isLoading) {
-            binding.progressCircular.visibility = View.VISIBLE
+            binding.constrainMainLayout.visibility = View.GONE
+            binding.shimmerView.visibility = View.VISIBLE
         } else {
-            binding.progressCircular.visibility = View.GONE
+            binding.constrainMainLayout.visibility = View.VISIBLE
+            binding.shimmerView.visibility = View.GONE
         }
     }
 

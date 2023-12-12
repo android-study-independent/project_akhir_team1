@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vGaris_item_forum"
         android:layout_marginTop="13dp"
-        android:layout_marginLeft="12dp"/>
+        android:layout_marginStart="12dp"/>
 
     <TextView
         android:id="@+id/tv_name_creator_forum"

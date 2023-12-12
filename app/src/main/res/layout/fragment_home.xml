@@ -27,7 +27,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:src="@drawable/foto_profile"
+                android:src="@drawable/ic_profile_blank"
                 tools:ignore="MissingClass" />
 
         </androidx.cardview.widget.CardView>
@@ -258,32 +258,48 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_artikel_beranda"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="24dp"
-                    android:nestedScrollingEnabled="false"
-                    android:layout_marginTop="39dp"
-                    android:layout_marginBottom="40dp"
-                    android:orientation="horizontal"/>
+                    android:layout_height="wrap_content">
 
-                <View
-                    android:id="@+id/viewLoad"
-                    android:layout_width="match_parent"
-                    android:layout_height="218dp"
-                    android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="-40dp"
-                    android:background="@drawable/bg_view_load_test"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_artikel_beranda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_marginTop="39dp"
+                        android:layout_marginBottom="40dp"
+                        android:orientation="horizontal"/>
 
-                <View
-                    android:id="@+id/viewLoad2"
-                    android:layout_width="match_parent"
-                    android:layout_height="218dp"
-                    android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="40dp"
-                    android:background="@drawable/bg_view_load_test"/>
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+
+                        <include layout="@layout/item_artikel_beranda_place_holder"/>
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                </FrameLayout>
+
+<!--                <View-->
+<!--                    android:id="@+id/viewLoad"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="218dp"-->
+<!--                    android:layout_marginHorizontal="24dp"-->
+<!--                    android:layout_marginTop="-40dp"-->
+<!--                    android:background="@drawable/bg_view_load_test"/>-->
+
+<!--                <View-->
+<!--                    android:id="@+id/viewLoad2"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="218dp"-->
+<!--                    android:layout_marginHorizontal="24dp"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:layout_marginBottom="40dp"-->
+<!--                    android:background="@drawable/bg_view_load_test"/>-->
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
