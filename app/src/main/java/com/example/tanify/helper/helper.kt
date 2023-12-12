@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 import java.util.concurrent.TimeUnit
 
 
@@ -75,7 +76,9 @@ fun setWordLimit(textView: TextView, originalText: String, wordLimit: Int) {
 }
 
 fun getTimeAgo(createdAt: String): String {
-    val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    sdf.timeZone = TimeZone.getTimeZone("UTC")
+
     try {
         val date: Date = sdf.parse(createdAt)
         val timeInMillis: Long = date.time
@@ -97,3 +100,5 @@ fun getTimeAgo(createdAt: String): String {
     }
     return ""
 }
+
+
