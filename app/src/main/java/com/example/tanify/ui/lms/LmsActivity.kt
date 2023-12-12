@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
+import com.example.tanify.data.response.lms.LmsDto
 import com.example.tanify.data.response.lms.ModulItem
 import com.example.tanify.data.response.lms.ProgresResponse
 import com.example.tanify.data.response.lms.lessonAllResponse
@@ -198,6 +199,10 @@ class LmsActivity : AppCompatActivity() {
             finish()
         }
         binding.btnLihatSemua.setOnClickListener{
+            val lmsDto = LmsDto()
+            val listModul = ModulLesson.modul.toMutableList().mapNotNull {
+                lmsDto.cover = it.cover
+            }
             val intent = Intent(this, ListSearchActivity::class.java)
             intent.putExtra("search", false)
             startActivity(intent)

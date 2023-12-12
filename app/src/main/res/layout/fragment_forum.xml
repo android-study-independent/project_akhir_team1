@@ -46,7 +46,7 @@
             <LinearLayout
                 android:id="@+id/linearSearchlms"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="24dp"
                 android:background="@drawable/bg_search_forum"
@@ -63,18 +63,20 @@
                 <EditText
                     android:id="@+id/ed_Search"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_search_forum"
                     android:fontFamily="@font/poppins_semibold"
                     android:hint="@string/cari_diskusi"
+                    android:textSize="16sp"
+                    android:layout_marginStart="-10dp"
                     android:imeOptions="actionSearch"
                     android:minHeight="35dp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
+                    android:textColor="@color/gray_hint"
+                    android:textColorHint="@color/gray_hint" />
 
                 <ImageView
                     android:id="@+id/btnsearchLesson"
@@ -87,15 +89,15 @@
 
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/progress_circular"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/rv_forum"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+<!--    <ProgressBar-->
+<!--        android:id="@+id/progress_circular"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/rv_forum"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/toolbar" />-->
 
     <androidx.cardview.widget.CardView
         android:id="@+id/fab_add"
@@ -115,6 +117,19 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_plus" />
     </androidx.cardview.widget.CardView>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="visible">
+
+        <include layout="@layout/item_forum_place_holder"/>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_forum"
