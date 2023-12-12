@@ -164,7 +164,7 @@ class ForumFragment : Fragment() {
                 if (response.isSuccessful) {
                     showLoading(false)
                     if (findForum != null) {
-                        forumAdapter.updateDataForumBeranda(findForum?.data)
+                        forumAdapter.updateDataForumBeranda(findForum.data)
                     } else {
                         showSnackbar("Forum tidak ditemukan")
                     }
@@ -189,9 +189,11 @@ class ForumFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean){
         if (isLoading) {
-            binding.progressCircular.visibility = View.VISIBLE
+            binding.rvForum.visibility = View.GONE
+            binding.shimmerView.visibility = View.VISIBLE
         } else {
-            binding.progressCircular.visibility = View.GONE
+            binding.rvForum.visibility = View.VISIBLE
+            binding.shimmerView.visibility = View.GONE
         }
     }
     override fun onDestroyView() {

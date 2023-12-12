@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -72,5 +73,6 @@ dependencies {
     // youtube player
     implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
 
-
+    //shimmer loading
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 }

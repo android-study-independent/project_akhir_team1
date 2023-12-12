@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.artikel.DetailArtikelActivity">
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
+
+        <include layout="@layout/item_layout_artikel_list_place_holder"/>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <ImageView
         android:id="@+id/iv_logo_artikel"
         android:layout_width="139dp"
@@ -26,31 +40,41 @@
         android:src="@drawable/icon_left__arrow_black"
         android:layout_marginStart="30dp"/>
 
-    <ScrollView
-        android:id="@+id/sv_artikel"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constrain_main_layout"
         android:layout_width="match_parent"
-        android:layout_height="641dp"
-        android:layout_margin="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_logo_artikel">
 
+        <ScrollView
+            android:id="@+id/sv_artikel"
+            android:layout_width="match_parent"
+            android:layout_height="641dp"
+            android:layout_margin="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_artikel_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"/>
 
-    </ScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_artikel_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp" />
 
-    <ProgressBar
-        android:id="@+id/progress_circular"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/sv_artikel"
-        app:layout_constraintStart_toStartOf="@+id/sv_artikel"
-        app:layout_constraintTop_toTopOf="@+id/sv_artikel" />
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <ProgressBar-->
+<!--        android:id="@+id/progress_circular"-->
+<!--        android:layout_width="35dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/sv_artikel"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/sv_artikel"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/sv_artikel" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

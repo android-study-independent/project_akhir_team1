@@ -109,11 +109,21 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     //Loading circular
+//    private fun showLoading(isLoading: Boolean){
+//        if (isLoading) {
+//            binding.progressCircular.visibility = View.VISIBLE
+//        } else {
+//            binding.progressCircular.visibility = View.GONE
+//        }
+//    }
+
     private fun showLoading(isLoading: Boolean){
         if (isLoading) {
-            binding.progressCircular.visibility = View.VISIBLE
+            binding.linearLayout.visibility = View.GONE
+            binding.shimmerView.visibility = View.VISIBLE
         } else {
-            binding.progressCircular.visibility = View.GONE
+            binding.linearLayout.visibility = View.VISIBLE
+            binding.shimmerView.visibility = View.GONE
         }
     }
 }
