@@ -68,6 +68,8 @@ class BerandaFragment : Fragment(), ItemBerandaArtikelAdapter.OnArtikelBerandaIt
         val brandaViewModel =
             ViewModelProvider(this).get(BrandaViewModel::class.java)
 
+        Log.d("Beranda:", "Panggil beranda onCreateView")
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

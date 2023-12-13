@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -65,6 +67,7 @@ class CheckListMateriActivity : AppCompatActivity() {
     }
 
     private fun getdata() {
+        showLoading(true)
         val tag = TAG+" API :"
         ApiConfig.instanceRetrofit.getLessonById(
             "Bearer $TOKEN",
@@ -75,16 +78,20 @@ class CheckListMateriActivity : AppCompatActivity() {
                 response: Response<lessonByIdResponse>
             ) {
                 if (response.isSuccessful) {
+                    showLoading(false)
                     ModulLesson = response.body()!!
                     Log.d(tag, ModulLesson.msg)
 
                     setdata()
+                } else {
+                    Log.d(tag+" error : ", "================================================== error API")
+                    showLoading(true)
                 }
-                Log.d(tag+" error : ", "================================================== error API")
             }
 
             override fun onFailure(call: Call<lessonByIdResponse>, t: Throwable) {
                 Log.e(tag, "onFailure: ${t.message.toString()}")
+                showLoading(true)
             }
         })
 
@@ -112,5 +119,15 @@ class CheckListMateriActivity : AppCompatActivity() {
         recyclerviewSection.adapter = adapterSection
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerviewSection.layoutManager = layoutManager
+    }
+
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.bodyLine.isGone = true
+            binding.shimmerView.isVisible = true
+        } else {
+            binding.bodyLine.isVisible = true
+            binding.shimmerView.isGone = true
+        }
     }
 }

@@ -56,6 +56,7 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        Log.d("Profile:", "onCreate Profile")
 
         // sharedPreferences data
         sharedPreferences = requireContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
