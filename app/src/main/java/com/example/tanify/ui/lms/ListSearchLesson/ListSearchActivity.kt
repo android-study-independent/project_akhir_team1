@@ -5,12 +5,15 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tanify.R
 import com.example.tanify.data.api.tanify.ApiConfig
+import com.example.tanify.data.response.lms.LmsDto
 import com.example.tanify.data.response.lms.ModulItem
 import com.example.tanify.data.response.lms.searchResponse
 import com.example.tanify.databinding.ActivityListSearchBinding
@@ -27,6 +30,7 @@ class ListSearchActivity : AppCompatActivity() {
 
     private lateinit var adapterLms: lessonAdapter
     private lateinit var recyclerviewSearch: RecyclerView
+    private var listModul: List<ModulItem>? = null
 
     companion object {
         private const val TAG = "lmsHome"
@@ -50,15 +54,46 @@ class ListSearchActivity : AppCompatActivity() {
             val editTextSearch = findViewById<EditText>(R.id.editTextSearch)
             editTextSearch.requestFocus()
         }
+        val modulItems = intent.getParcelableArrayListExtra<LmsDto>("data")
+        listModul = modulItems?.map { it.toModulObject() }
 
+        // starActin dan set data
+        setDataModul(listModul)
         startAction()
     }
 
+    fun LmsDto.toModulObject(): ModulItem {
+        return ModulItem(
+            cover = this.cover,
+            createdAt = this.createdAt,
+            view = this.view,
+            section = this.section,
+            id = this.id,
+            title = this.title,
+            totalsection = this.totalsection,
+            progres = this.progres
+        )
+    }
+
     private fun startAction() {
-        binding.btnsearchLesson.setOnClickListener{
-            val text = binding.editTextSearch.text.toString()
-            //api
-            getDataSearch(text)
+//        binding.btnsearchLesson.setOnClickListener{
+//            val text = binding.editTextSearch.text.toString()
+//            //api
+//            getDataSearch(text)
+//        }
+        binding.editTextSearch.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)
+            ) {
+                val text = binding.editTextSearch.text.toString()
+                if(text.length > 0){
+                    getDataSearch(text)
+                }else{
+                    setDataModul(this.listModul)
+                }
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
         }
         binding.btnBack.setOnClickListener {
             finish()
@@ -101,12 +136,17 @@ class ListSearchActivity : AppCompatActivity() {
     }
 
     private fun setDataSearch(body: searchResponse?) {
-        binding.textSearchNone.visibility = View.GONE
         val dataset = body?.data
+        setDataModul(dataset)
+    }
+
+    private fun setDataModul(dataset: List<ModulItem>?) {
+        binding.textSearchNone.visibility = View.GONE
         adapterLms = lessonAdapter(dataset!!, 2)
         recyclerviewSearch.adapter = adapterLms
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerviewSearch.layoutManager = layoutManager
     }
+
 
 }
