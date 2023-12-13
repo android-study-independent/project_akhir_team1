@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -106,6 +108,7 @@ class LmsActivity : AppCompatActivity() {
             })
     }
     private fun getDataAllModul() {
+        showLoading(true)
         val tag = "Get All Modul :"
         ApiConfig.instanceRetrofit.getAllLesson("Bearer $TOKEN")
             .enqueue(object : Callback<lessonAllResponse> {
@@ -114,6 +117,7 @@ class LmsActivity : AppCompatActivity() {
                     response: Response<lessonAllResponse>,
                 ) {
                     if (response.isSuccessful) {
+                        showLoading(false)
                         ModulLesson = response.body()!!
                         Log.d(tag, ModulLesson.msg)
 
@@ -121,11 +125,14 @@ class LmsActivity : AppCompatActivity() {
                         setListModul()
 
                         Log.d("tes tes :", "================================================== 4")
+                    } else {
+                        showLoading(true)
                     }
                 }
 
                 override fun onFailure(call: Call<lessonAllResponse>, t: Throwable) {
                     Log.e(tag, "onFailure: ${t.message.toString()}")
+                    showLoading(true)
                 }
 
             })
@@ -179,9 +186,9 @@ class LmsActivity : AppCompatActivity() {
         getUserProfil(TOKEN, object : GetUserProfilCallback {
             override fun onUserProfileReceived(userProfil: UserProfilResponse) {
                 binding.tvHalloUser.text = userProfil.nama
-                val foto = userProfil.photo?.removePrefix("../")
+                val foto = userProfil.photo
                 Glide.with(this@LmsActivity)
-                    .load("http://195.35.32.179:8001/" + foto)
+                    .load(foto)
                     .skipMemoryCache(false)
                     .placeholder(R.drawable.icon_user)
                     .error(R.drawable.icon_user)
@@ -235,6 +242,16 @@ class LmsActivity : AppCompatActivity() {
             intent.putParcelableArrayListExtra("data", ArrayList(listModul))
             intent.putExtra("search", true)
             startActivity(intent)
+        }
+    }
+
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.bodyLine.isGone = true
+            binding.shimmerView.isVisible = true
+        } else {
+            binding.bodyLine.isVisible = true
+            binding.shimmerView.isGone = true
         }
     }
 

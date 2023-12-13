@@ -55,6 +55,8 @@ class ForumFragment : Fragment() {
         _binding = FragmentForumBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        Log.d("Forum:", "onCreateForum")
+
         sharedPreferences = requireContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         TOKEN = sharedPreferences.getString("token", "").toString()
 
@@ -132,7 +134,7 @@ class ForumFragment : Fragment() {
                     showLoading(false)
                     val currentForum = response.body()
                     if (currentForum?.data != null) {
-                        forumAdapter.updateDataForumBeranda(currentForum.data)
+                        forumAdapter.updateDataForumBeranda(currentForum.data.reversed())
                     } else {
                         Toast.makeText(requireContext(), "Data tidak ditemukan", Toast.LENGTH_SHORT).show()
                     }
