@@ -200,15 +200,39 @@ class LmsActivity : AppCompatActivity() {
         }
         binding.btnLihatSemua.setOnClickListener{
             val lmsDto = LmsDto()
-            val listModul = ModulLesson.modul.toMutableList().mapNotNull {
-                lmsDto.cover = it.cover
+            val listModul = ModulLesson.modul.mapNotNull {
+                LmsDto(
+                    cover = it.cover,
+                    createdAt = it.createdAt,
+                    view = it.view,
+                    section = it.section,
+                    id = it.id,
+                    title = it.title,
+                    totalsection = it.totalsection,
+                    progres = it.progres
+                )
             }
             val intent = Intent(this, ListSearchActivity::class.java)
             intent.putExtra("search", false)
+            intent.putParcelableArrayListExtra("data", ArrayList(listModul))
             startActivity(intent)
         }
         binding.linearSearchlms.setOnClickListener{
+            val lmsDto = LmsDto()
+            val listModul = ModulLesson.modul.mapNotNull {
+                LmsDto(
+                    cover = it.cover,
+                    createdAt = it.createdAt,
+                    view = it.view,
+                    section = it.section,
+                    id = it.id,
+                    title = it.title,
+                    totalsection = it.totalsection,
+                    progres = it.progres
+                )
+            }
             val intent = Intent(this, ListSearchActivity::class.java)
+            intent.putParcelableArrayListExtra("data", ArrayList(listModul))
             intent.putExtra("search", true)
             startActivity(intent)
         }

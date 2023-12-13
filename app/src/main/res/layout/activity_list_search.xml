@@ -50,13 +50,8 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/grey1"
                 android:textSize="14sp"
+                android:drawableRight="@drawable/icon_search"
                 tools:ignore="TouchTargetSizeCheck" />
-
-            <ImageView
-                android:id="@+id/btnsearchLesson"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_search" />
 
         </LinearLayout>
 
