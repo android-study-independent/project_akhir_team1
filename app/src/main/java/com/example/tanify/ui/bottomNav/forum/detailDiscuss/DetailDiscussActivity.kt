@@ -20,8 +20,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.example.tanify.R
 import com.example.tanify.data.data.CommentData
+import com.example.tanify.data.data.LikeForumData
 import com.example.tanify.data.response.forum.CommentResponse
+import com.example.tanify.data.response.forum.LikeForumResponse
 import com.example.tanify.helper.formatDate
+import com.example.tanify.ui.bottomNav.forum.ForumFragment
 import com.google.android.material.snackbar.Snackbar
 
 @Suppress("DEPRECATION")
@@ -63,15 +66,21 @@ class DetailDiscussActivity : AppCompatActivity() {
         }
     }
 
-    private fun setForumData(nama: String, tanggal: String, judul: String, kontenForum: String, pathProfile: String, pathPoster: String) {
+    private fun setForumData(nama: String, tanggal: String, judul: String, kontenForum: String, pathProfile: String, pathPoster: String, likes: Boolean) {
         binding.tvNameCreatorForum.text = nama
         binding.tvTanggalForum.text = tanggal
         binding.tvJudulForum.text = judul
         binding.tvIsiKontenForum.text = kontenForum
 
+        if (likes) {
+            binding.icHeart.setImageResource(R.drawable.ic_heart_fill)
+        } else {
+            binding.icHeart.setImageResource(R.drawable.ic_like_empty)
+        }
+
         Glide.with(this)
             .load(pathProfile)
-            .placeholder(R.drawable.bg_load_profile)
+            .placeholder(R.drawable.ic_profile_blank)
             .into(binding.ivProfileForum)
 
         Glide.with(this)
@@ -88,7 +97,44 @@ class DetailDiscussActivity : AppCompatActivity() {
             hideKeyboard()
         }
         binding.btnBack.setOnClickListener {
-            onBackPressed()
+            finish()
+        }
+    }
+
+    private fun putLikeForum(id: String, likeStatus: Boolean) {
+        val like = LikeForumData(likeStatus)
+        ApiConfig.instanceRetrofit.postLikeForum(
+            "Bearer " + TOKEN,
+            id,
+            like
+        ).enqueue(object : Callback<LikeForumResponse>{
+            override fun onResponse(
+                call: Call<LikeForumResponse>,
+                response: Response<LikeForumResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val likeForum = response.body()
+                    getForumById(id.toInt())
+                    Log.d("Like", "Like : $likeForum")
+                } else {
+                    Log.e(TAG, "onFailure: ${response.code()}")
+                    showSnackbar("gagal!!")
+                }
+            }
+
+            override fun onFailure(call: Call<LikeForumResponse>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message}")
+                Log.e(TAG, "GAGAL PUT")
+            }
+        })
+    }
+
+    private fun likePost(id: String, likeStatus: Boolean){
+        binding.btnLike.setOnClickListener {
+            when(likeStatus) {
+                true -> putLikeForum(id, false)
+                else -> putLikeForum(id, true)
+            }
         }
     }
 
@@ -117,13 +163,15 @@ class DetailDiscussActivity : AppCompatActivity() {
                     if (currentForum != null) {
                         Log.d(TAG, "onSuccess: $currentForum")
                         val dataForum = currentForum.data
+                        likePost(id.toString(), dataForum?.likes!!)
                         setForumData(
-                            dataForum?.createdBy?.nama!!,
+                            dataForum.createdBy?.nama!!,
                             formatDate(dataForum.createdAt.toString()),
                             dataForum.title ?: "",
                             dataForum.content ?: "",
                             dataForum.createdBy.photo ?: "",
-                            dataForum.cover ?: ""
+                            dataForum.cover ?: "",
+                            dataForum.likes ?: false
                         )
                         if (dataForum.comment != null){
                             commentAdapter.updateDataComment(currentForum.data.comment)
@@ -155,7 +203,9 @@ class DetailDiscussActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     Log.d(TAG, "onSuccess: ${response.message()}")
+                    val bottomView: View = findViewById(R.id.bottomView)
                     getForumById(ID)
+                    bottomView.requestFocus()
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                     showSnackbar("Failed to post comment")

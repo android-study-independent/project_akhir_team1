@@ -21,9 +21,13 @@ import com.example.tanify.data.api.tanify.ApiConfig
 import com.example.tanify.data.data.NewForumData
 import com.example.tanify.data.response.forum.AddDiscussErrorResponse
 import com.example.tanify.data.response.forum.AddDiscussResponse
+import com.example.tanify.data.response.profile.UserProfilResponse
 import com.example.tanify.databinding.ActivityAddDiscussBinding
+import com.example.tanify.helper.GetUserProfilCallback
+import com.example.tanify.helper.getUserProfil
 import com.example.tanify.ui.bottomNav.forum.detailDiscuss.DetailDiscussActivity
 import com.example.tanify.ui.bottomNav.profile.editProfile.ChangeProfileActivity
+import com.example.tanify.ui.lms.LmsActivity
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.MediaType.Companion.parse
 import okhttp3.MediaType.Companion.toMediaType
@@ -62,6 +66,7 @@ class AddDiscussActivity : AppCompatActivity() {
 
         checkStoragePermission()
         setAction()
+        setProfil()
     }
 
     override fun onRequestPermissionsResult(
@@ -231,6 +236,24 @@ class AddDiscussActivity : AppCompatActivity() {
     private fun createCustomTempFile(context: Context): File {
         val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile("profil_user", ".jpg", storageDir)
+    }
+
+    private fun setProfil() {
+        getUserProfil(TOKEN, object : GetUserProfilCallback {
+            override fun onUserProfileReceived(userProfil: UserProfilResponse) {
+                val foto = userProfil.photo
+                Glide.with(this@AddDiscussActivity)
+                    .load(foto)
+                    .skipMemoryCache(false)
+                    .placeholder(R.drawable.ic_profile_blank)
+                    .error(R.drawable.ic_profile_blank)
+                    .into(binding.circleImageView)
+            }
+
+            override fun onFailed(message: String) {
+                Log.e(TAG, "get Profile: ${message}")
+            }
+        })
     }
 
     private fun showLoading(isLoading: Boolean){

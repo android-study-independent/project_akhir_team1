@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Profil"
+            android:text="@string/profil"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -49,7 +49,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/icon_user" />
+                    android:src="@drawable/ic_profile_blank" />
             </androidx.cardview.widget.CardView>
         </androidx.cardview.widget.CardView>
 
@@ -57,7 +57,6 @@
             android:id="@+id/profil.name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tasim"
             android:textColor="@color/white"
             android:textSize="17sp" />
 
@@ -65,7 +64,6 @@
             android:id="@+id/profil.email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="muktasim.elfatih@gmail.com"
             android:textColor="@color/white" />
 
     </LinearLayout>
@@ -79,7 +77,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></LinearLayout>
+            android:layout_height="match_parent">
+
+        </LinearLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

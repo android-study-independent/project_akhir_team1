@@ -35,12 +35,6 @@ data class DataItem(
 	val content: String? = null,
 
 	@field:SerializedName("likes")
-	val likes: List<LikesItem>? = null
-)
-
-data class LikesItem(
-
-	@field:SerializedName("id_user")
-	val idUser: Int? = null
+	val likes: Boolean? = null
 )
 

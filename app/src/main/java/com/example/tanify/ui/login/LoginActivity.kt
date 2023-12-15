@@ -80,10 +80,9 @@ class LoginActivity : AppCompatActivity() {
                     val message = response.body()?.message
                     Log.d(TAG, "onSuccess: $message")
                     Log.d(TAG, "onSuccess: $accessToken")
-                    showSnackbar(message.toString())
                     handledLogginSuccess(accessToken.toString())
                 } else {
-                    showSnackbar("Login gagal")
+                    showSnackbar("Email atau kata sandi invalid")
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
@@ -115,6 +114,7 @@ class LoginActivity : AppCompatActivity() {
             putString("token", token)
             apply()
         }
+        showSnackbar("Login berhasil")
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
