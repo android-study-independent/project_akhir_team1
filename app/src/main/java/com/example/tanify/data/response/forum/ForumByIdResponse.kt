@@ -56,7 +56,10 @@ data class Data(
 	val title: String? = null,
 
 	@field:SerializedName("content")
-	val content: String? = null
+	val content: String? = null,
+
+	@field:SerializedName("likes")
+	val likes: Boolean? = null
 )
 
 data class User(

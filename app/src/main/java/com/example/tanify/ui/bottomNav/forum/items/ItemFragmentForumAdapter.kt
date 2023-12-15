@@ -15,7 +15,7 @@ class ItemFragmentForumAdapter(
     private val context: Context,
     private var listForum: List<DataItem>,
     private var onClick: (forum: DataItem) -> Unit,
-    private var onClickLike: () -> Unit,
+    private var onClickLike: (forum: DataItem) -> Unit,
     private var onClickComment: (forum: DataItem) -> Unit
 ) : RecyclerView.Adapter<ItemFragmentForumAdapter.ItemFragmentForumHolder>(){
 
@@ -46,10 +46,15 @@ class ItemFragmentForumAdapter(
         holder.binding.tvJudulForum.text = currentForum.title
         holder.binding.tvIsiKontenForum.text = currentForum.content
         holder.binding.tvNameCreatorForum.text = currentForum.createdBy?.nama?.replace("\"","")
+        if (currentForum.likes == true) {
+            holder.binding.icHeart.setImageResource(R.drawable.ic_heart_fill)
+        } else {
+            holder.binding.icHeart.setImageResource(R.drawable.ic_like_empty)
+        }
 
         Glide.with(context)
             .load(currentForum.createdBy?.photo)
-            .placeholder(R.drawable.bg_load_profile)
+            .placeholder(R.drawable.ic_profile_blank)
             .into(holder.binding.ivProfileForum)
 
         Glide.with(context)
@@ -57,8 +62,8 @@ class ItemFragmentForumAdapter(
             .placeholder(R.drawable.bg_load_poster_forum)
             .into(holder.binding.ivItemForum)
 
-        holder.binding.heartForumButton.setOnClickListener {
-            onClickLike()
+        holder.binding.btnLike.setOnClickListener {
+            onClickLike(currentForum)
         }
 
         holder.binding.containerForum.setOnClickListener {

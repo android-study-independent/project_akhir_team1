@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +24,8 @@ import com.example.tanify.ui.bottomNav.forum.detailDiscuss.DetailDiscussActivity
 import com.example.tanify.ui.bottomNav.forum.items.ItemFragmentForumAdapter
 import com.google.android.material.snackbar.Snackbar
 import com.example.tanify.R
+import com.example.tanify.data.data.LikeForumData
+import com.example.tanify.data.response.forum.LikeForumResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -68,7 +71,7 @@ class ForumFragment : Fragment() {
 
         setAction()
         setRecyclerView()
-        getForum()
+        getForum(true)
     }
 
     private fun setAction() {
@@ -88,7 +91,7 @@ class ForumFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 val searchForum = p0.toString()
                 if (searchForum.isNotEmpty()) {
-                    getSearchForum(searchForum)
+                    getSearchForum(searchForum, true)
                 } else {
                     Log.e(TAG, "KOSONG")
                 }
@@ -102,14 +105,20 @@ class ForumFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        getForum()
+        getForum(true)
         binding.linearSearchlms.visibility = View.GONE
     }
 
     private fun setRecyclerView(){
         forumAdapter = ItemFragmentForumAdapter(requireContext(), emptyList(),
             {},
-            {},
+            { forum ->
+                val id = forum.id.toString()
+                when(forum.likes) {
+                    true -> putLikeForum(id, false)
+                    else -> putLikeForum(id, true)
+                }
+            },
             { forum ->
                 val id = forum.id
                 val intent = Intent(requireContext(), DetailDiscussActivity::class.java)
@@ -121,8 +130,8 @@ class ForumFragment : Fragment() {
         binding.rvForum.adapter = forumAdapter
     }
 
-    private fun getForum(){
-        showLoading(true)
+    private fun getForum(showShimmer: Boolean){
+        showLoading(true, showShimmer)
         ApiConfig.instanceRetrofit.getForum(
             "Bearer " + TOKEN
         ).enqueue(object : Callback<ForumItemsResponse>{
@@ -131,29 +140,58 @@ class ForumFragment : Fragment() {
                 response: Response<ForumItemsResponse>
             ) {
                 if (response.isSuccessful) {
-                    showLoading(false)
+                    showLoading(false, showShimmer)
                     val currentForum = response.body()
                     if (currentForum?.data != null) {
                         forumAdapter.updateDataForumBeranda(currentForum.data.reversed())
+                        Log.d(TAG, "SUKSES")
                     } else {
                         Toast.makeText(requireContext(), "Data tidak ditemukan", Toast.LENGTH_SHORT).show()
                     }
 
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
-                    showLoading(false)
+                    showLoading(false, showShimmer)
                 }
             }
 
             override fun onFailure(call: Call<ForumItemsResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
-                showLoading(false)
+                showLoading(false, showShimmer)
             }
         })
     }
 
-    private fun getSearchForum(query: String){
-        showLoading(true)
+    private fun putLikeForum(id: String, likeStatus: Boolean) {
+        val like = LikeForumData(likeStatus)
+        ApiConfig.instanceRetrofit.postLikeForum(
+            "Bearer " + TOKEN,
+            id,
+            like
+        ).enqueue(object : Callback<LikeForumResponse>{
+            override fun onResponse(
+                call: Call<LikeForumResponse>,
+                response: Response<LikeForumResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val likeForum = response.body()
+                    getForum(false)
+                    Log.d("Like", "Like : $likeForum")
+                } else {
+                    Log.e(TAG, "onFailure: ${response.code()}")
+                    showSnackbar("gagal!!")
+                }
+            }
+
+            override fun onFailure(call: Call<LikeForumResponse>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message}")
+                Log.e(TAG, "GAGAL PUT")
+            }
+        })
+    }
+
+    private fun getSearchForum(query: String, showShimmer: Boolean){
+        showLoading(true, showShimmer)
         ApiConfig.instanceRetrofit.getSearchForum(
             "Bearer " + TOKEN,
             query
@@ -164,7 +202,7 @@ class ForumFragment : Fragment() {
             ) {
                 val findForum = response.body()
                 if (response.isSuccessful) {
-                    showLoading(false)
+                    showLoading(false, showShimmer)
                     if (findForum != null) {
                         forumAdapter.updateDataForumBeranda(findForum.data)
                     } else {
@@ -172,13 +210,13 @@ class ForumFragment : Fragment() {
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
-                    showLoading(false)
+                    showLoading(false, showShimmer)
                 }
             }
 
             override fun onFailure(call: Call<ForumItemsResponse>, t: Throwable) {
                 Log.e(TAG, "OnFailure: ${t.message}")
-                showLoading(false)
+                showLoading(false, showShimmer)
             }
         })
     }
@@ -189,13 +227,17 @@ class ForumFragment : Fragment() {
         snackbar.show()
     }
 
-    private fun showLoading(isLoading: Boolean){
-        if (isLoading) {
-            binding.rvForum.visibility = View.GONE
-            binding.shimmerView.visibility = View.VISIBLE
+    private fun showLoading(isLoading: Boolean, showShimmer: Boolean){
+        if (showShimmer) {
+            if (isLoading) {
+                binding.rvForum.visibility = View.GONE
+                binding.shimmerView.visibility = View.VISIBLE
+            } else {
+                binding.rvForum.visibility = View.VISIBLE
+                binding.shimmerView.visibility = View.GONE
+            }
         } else {
-            binding.rvForum.visibility = View.VISIBLE
-            binding.shimmerView.visibility = View.GONE
+            binding.shimmerView.isGone = true
         }
     }
     override fun onDestroyView() {

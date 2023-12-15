@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@drawable/rounded_error_background">
+
+    <!-- Add any custom views or styling for your error message layout -->
+    <ImageView
+        android:id="@+id/errorIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"/>
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FFFFFF" /> <!-- Set the desired text color -->
+
+</LinearLayout>

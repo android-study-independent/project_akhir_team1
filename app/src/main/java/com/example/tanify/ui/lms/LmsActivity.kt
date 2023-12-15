@@ -190,8 +190,8 @@ class LmsActivity : AppCompatActivity() {
                 Glide.with(this@LmsActivity)
                     .load(foto)
                     .skipMemoryCache(false)
-                    .placeholder(R.drawable.icon_user)
-                    .error(R.drawable.icon_user)
+                    .placeholder(R.color.grey)
+                    .error(R.color.grey)
                     .into(binding.ivUserlms)
             }
 

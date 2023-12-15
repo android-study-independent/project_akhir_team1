@@ -2,6 +2,7 @@ package com.example.tanify.data.api.service
 
 import com.example.tanify.data.data.CommentData
 import com.example.tanify.data.data.EditPassword
+import com.example.tanify.data.data.LikeForumData
 import com.example.tanify.data.data.LoginData
 import com.example.tanify.data.data.RegisterData
 import com.example.tanify.data.data.putProgres
@@ -15,6 +16,7 @@ import com.example.tanify.data.response.lms.SectionyIdResponse
 import com.example.tanify.data.response.forum.CommentResponse
 import com.example.tanify.data.response.forum.ForumByIdResponse
 import com.example.tanify.data.response.forum.ForumItemsResponse
+import com.example.tanify.data.response.forum.LikeForumResponse
 import com.example.tanify.data.response.lms.dataPutProgres
 import com.example.tanify.data.response.lms.lessonAllResponse
 import com.example.tanify.data.response.lms.lessonByIdResponse
@@ -154,5 +156,12 @@ interface ApiService {
         @Part("content") content: RequestBody,
         @Part cover: MultipartBody.Part?
     ): Call<AddDiscussErrorResponse>
+
+    @POST("forum/{id}/like")
+    fun postLikeForum(
+        @Header("Authorization") authorization: String,
+        @Path("id") id: String,
+        @Body data: LikeForumData
+    ): Call<LikeForumResponse>
 
 }

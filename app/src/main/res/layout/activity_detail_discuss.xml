@@ -147,20 +147,36 @@
                     app:layout_constraintStart_toStartOf="@+id/imageView2"
                     app:layout_constraintTop_toBottomOf="@+id/iv_poster_forum">
 
-                    <ImageView
-                        android:id="@+id/heart_forum_button"
-                        android:layout_width="29dp"
-                        android:layout_height="29dp"
-                        android:src="@drawable/button_forum_heart" />
-
-                    <TextView
-                        android:id="@+id/tv_heart_button"
+                    <LinearLayout
+                        android:id="@+id/btn_like"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="11dp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="@string/suka"
-                        android:textSize="12sp" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <com.google.android.material.circularreveal.cardview.CircularRevealCardView
+                            android:layout_width="29dp"
+                            android:layout_height="29dp"
+                            app:cardCornerRadius="100dp"
+                            app:strokeColor="@color/transparant"
+                            android:backgroundTint="@color/grey">
+
+                            <ImageView
+                                android:id="@+id/ic_heart"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"/>
+                        </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
+
+                        <TextView
+                            android:id="@+id/tv_heart_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="11dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/suka"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/btn_comment"
@@ -208,6 +224,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/group_forum" />
+
+            <View
+                android:id="@+id/bottomView"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/rv_comment"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
     
